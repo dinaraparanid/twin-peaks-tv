@@ -94,11 +94,11 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
-  /// No description provided for @app_name.
+  /// No description provided for @splash_header.
   ///
   /// In en, this message translates to:
-  /// **'Twin Peaks TV'**
-  String get app_name;
+  /// **'TWIN PEAKS TV'**
+  String get splash_header;
 
   /// No description provided for @splash_subtext.
   ///

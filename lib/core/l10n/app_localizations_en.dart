@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get app_name => 'Twin Peaks TV';
+  String get splash_header => 'TWIN PEAKS TV';
 
   @override
   String get splash_subtext => 'Developed with Flutter';

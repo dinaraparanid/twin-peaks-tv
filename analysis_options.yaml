@@ -7,7 +7,5 @@ linter:
     depend_on_referenced_packages: false
     prefer_single_quotes: true
 
-flutter_gen:
-  output: lib/assets/
-  integrations:
-    flutter_svg: true
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
