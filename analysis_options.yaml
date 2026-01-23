@@ -1,0 +1,13 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    avoid_print: true
+    prefer_const_constructors: true
+    depend_on_referenced_packages: false
+    prefer_single_quotes: true
+
+flutter_gen:
+  output: lib/assets/
+  integrations:
+    flutter_svg: true
