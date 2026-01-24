@@ -105,6 +105,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Developed with Flutter'**
   String get splash_subtext;
+
+  /// No description provided for @main_menu_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get main_menu_home;
+
+  /// No description provided for @main_menu_encyclopedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Encyclopedia'**
+  String get main_menu_encyclopedia;
+
+  /// No description provided for @main_menu_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get main_menu_settings;
+
+  /// No description provided for @main_app_version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {appVersion}'**
+  String main_app_version(String appVersion);
 }
 
 class _AppLocalizationsDelegate

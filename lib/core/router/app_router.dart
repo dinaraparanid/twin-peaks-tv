@@ -5,11 +5,16 @@ import 'package:twin_peaks_tv/core/router/app_router.gr.dart';
 @lazySingleton
 @AutoRouterConfig(replaceInRouteName: 'Screen|Page,Route')
 final class AppRouter extends RootStackRouter {
-
   @override
-  List<AutoRoute> get routes {
-    return [
-      AutoRoute(page: SplashRoute.page, initial: true),
-    ];
-  }
+  List<AutoRoute> get routes => [
+    AutoRoute(page: SplashRoute.page, initial: true),
+    AutoRoute(
+      page: MainRoute.page,
+      children: [
+        AutoRoute(page: HomeRoute.page, initial: true),
+        AutoRoute(page: EncyclopediaRoute.page),
+        AutoRoute(page: SettingsRoute.page),
+      ],
+    ),
+  ];
 }

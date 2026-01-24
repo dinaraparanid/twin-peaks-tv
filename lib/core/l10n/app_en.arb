@@ -1,4 +1,17 @@
 {
   "splash_header": "TWIN PEAKS TV",
-  "splash_subtext": "Developed with Flutter"
+  "splash_subtext": "Developed with Flutter",
+
+  "main_menu_home": "Home",
+  "main_menu_encyclopedia": "Encyclopedia",
+  "main_menu_settings": "Settings",
+  "main_app_version": "Version {appVersion}",
+  "@main_app_version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String",
+        "example": "0.1.0"
+      }
+    }
+  }
 }

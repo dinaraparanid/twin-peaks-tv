@@ -13,4 +13,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get splash_subtext => 'Developed with Flutter';
+
+  @override
+  String get main_menu_home => 'Home';
+
+  @override
+  String get main_menu_encyclopedia => 'Encyclopedia';
+
+  @override
+  String get main_menu_settings => 'Settings';
+
+  @override
+  String main_app_version(String appVersion) {
+    return 'Version $appVersion';
+  }
 }

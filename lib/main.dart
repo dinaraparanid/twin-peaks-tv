@@ -5,5 +5,5 @@ import 'package:twin_peaks_tv/core/router/app_router.dart';
 
 void main() {
   final getIt = configureDependencies();
-  runApp(App(appRouter: getIt<AppRouter>()));
+  runApp(App(router: getIt<AppRouter>()));
 }

@@ -12,9 +12,11 @@ final class AppTypography {
         : 'Inter';
 
     splash = SplashTypography._(fontFamily: fontFamily);
+    navigationMenu = NavigationMenuTypography._(fontFamily: fontFamily);
   }
 
   late final SplashTypography splash;
+  late final NavigationMenuTypography navigationMenu;
 }
 
 @immutable
@@ -39,4 +41,26 @@ final class SplashTypography {
 
   late final TextStyle splashHeader;
   late final TextStyle splashSubText;
+}
+
+@immutable
+final class NavigationMenuTypography {
+  NavigationMenuTypography._({required String fontFamily}) {
+    item = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 18,
+    );
+
+    footer = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    );
+  }
+
+  late final TextStyle item;
+  late final TextStyle footer;
 }

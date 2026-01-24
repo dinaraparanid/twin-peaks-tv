@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stroke_text/stroke_text.dart';
+import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/strings.dart';
-import 'package:twin_peaks_tv/gen/assets.gen.dart';
+import 'package:twin_peaks_tv/core/router/app_router.gr.dart';
 
 const _durationTextAppear = Duration(milliseconds: 1500);
 const _durationEndSplash = Duration(milliseconds: 1000);
@@ -37,7 +38,9 @@ final class _SplashScreenState extends State<SplashScreen>
   void _animationListener(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
       Future.delayed(_durationEndSplash, () {
-        // TODO(paranid5): navigate to home screen
+        if (mounted) {
+          context.replaceRoute(const MainRoute());
+        }
       });
     }
   }
