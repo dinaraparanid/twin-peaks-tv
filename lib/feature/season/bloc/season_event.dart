@@ -1,0 +1,13 @@
+import 'package:flutter/foundation.dart';
+import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/ui_state.dart';
+
+@immutable
+sealed class SeasonEvent {
+  const SeasonEvent();
+}
+
+final class UpdateSeasonState extends SeasonEvent {
+  const UpdateSeasonState({required this.state});
+  final UiState<Season> state;
+}

@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:tv_plus/tv_plus.dart';
-import 'package:twin_peaks_tv/feature/home/material_tab_bar.dart';
-import 'package:twin_peaks_tv/feature/main/main_screen.dart';
+import 'package:twin_peaks_tv/feature/home/home_tab.dart';
+import 'package:twin_peaks_tv/feature/home/widget/material_tab_bar.dart';
 
 @RoutePage()
 final class HomeScreen extends StatefulWidget {
@@ -11,44 +11,45 @@ final class HomeScreen extends StatefulWidget {
   static const tabAnimationDuration = Duration(milliseconds: 300);
 
   @override
-  State<StatefulWidget> createState() => _HomeScreenState();
+  State<StatefulWidget> createState() => HomeScreenState();
 }
 
-final class _HomeScreenState extends State<HomeScreen> {
-  late final _tabController = TvTabBarController();
-  late final _tabFocusScopeNode = FocusScopeNode();
-  late final _contentFocusNode = FocusNode();
+final class HomeScreenState extends State<HomeScreen> {
+  late final tabController = TvTabBarController();
+  late final tabFocusScopeNode = FocusScopeNode();
+  late final _contentFocusScopeNode = FocusScopeNode();
 
-  late var _currentIndex = _tabController.selectedIndex;
+  late var _currentIndex = tabController.selectedIndex;
   var _tabBarHasFocus = false;
 
   @override
   void initState() {
-    _tabController.addListener(_tabListener);
-    _tabFocusScopeNode.addListener(_focusListener);
+    tabController.addListener(_tabListener);
+    tabFocusScopeNode.addListener(_focusListener);
     super.initState();
   }
 
   void _tabListener() {
-    if (_currentIndex != _tabController.selectedIndex) {
-      setState(() => _currentIndex = _tabController.selectedIndex);
+    if (_currentIndex != tabController.selectedIndex) {
+      setState(() => _currentIndex = tabController.selectedIndex);
+      context.replaceRoute(HomeTab.values[_currentIndex].buildRoute());
     }
   }
 
   void _focusListener() {
-    if (_tabBarHasFocus != _tabFocusScopeNode.hasFocus) {
-      setState(() => _tabBarHasFocus = _tabFocusScopeNode.hasFocus);
+    if (_tabBarHasFocus != tabFocusScopeNode.hasFocus) {
+      setState(() => _tabBarHasFocus = tabFocusScopeNode.hasFocus);
     }
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_tabListener);
-    _tabFocusScopeNode.removeListener(_focusListener);
+    tabController.removeListener(_tabListener);
+    tabFocusScopeNode.removeListener(_focusListener);
 
-    _tabController.dispose();
-    _tabFocusScopeNode.dispose();
-    _contentFocusNode.dispose();
+    tabController.dispose();
+    tabFocusScopeNode.dispose();
+    _contentFocusScopeNode.dispose();
     super.dispose();
   }
 
@@ -59,40 +60,23 @@ final class _HomeScreenState extends State<HomeScreen> {
       spacing: 8,
       children: [
         MaterialTabBar(
-          tabController: _tabController,
-          tabFocusScopeNode: _tabFocusScopeNode,
-          contentFocusNode: _contentFocusNode,
+          tabController: tabController,
+          tabFocusScopeNode: tabFocusScopeNode,
+          contentFocusNode: _contentFocusScopeNode,
           currentIndex: _currentIndex,
         ),
 
         Expanded(
-          child: Stack(
-            children: [
-              Align(
-                child: DpadFocus(
-                  focusNode: _contentFocusNode,
-                  onUp: (_, _) {
-                    _tabFocusScopeNode.requestFocus();
-                    return KeyEventResult.handled;
-                  },
-                  onLeft: (_, _) {
-                    mainNavigationDrawerKey.currentState?.controller
-                        .requestFocusOnMenu();
+          child: DpadFocusScope(
+            focusScopeNode: _contentFocusScopeNode,
+            onUp: (_, _, isOutOfScope) {
+              if (isOutOfScope) {
+                tabFocusScopeNode.requestFocus();
+              }
 
-                    return KeyEventResult.handled;
-                  },
-                  builder: (node) {
-                    return Container(
-                      width: 500,
-                      height: 500,
-                      color: node.hasFocus ? Colors.green : Colors.indigo,
-                      alignment: Alignment.center,
-                      child: const Text('TODO HomeScreen'),
-                    );
-                  },
-                ),
-              ),
-            ],
+              return KeyEventResult.handled;
+            },
+            builder: (_) => const AutoRouter(),
           ),
         ),
       ],

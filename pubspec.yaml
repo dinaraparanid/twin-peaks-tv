@@ -36,6 +36,7 @@ dependencies:
   stroke_text: ^1.0.0
   package_info_plus: ^9.0.0
   fpdart: ^1.2.0
+  pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
   flutter_test:

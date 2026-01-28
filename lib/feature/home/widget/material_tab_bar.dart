@@ -3,7 +3,6 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';
-import 'package:twin_peaks_tv/feature/main/main_screen.dart';
 
 final class MaterialTabBar extends StatelessWidget {
   const MaterialTabBar({
@@ -31,7 +30,6 @@ final class MaterialTabBar extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           spacing: 16,
-          autofocus: true,
           animationDuration: HomeScreen.tabAnimationDuration,
           indicatorBuilder: _buildIndicator,
           onDown: (_, _, isOutOfScope) {
@@ -43,7 +41,9 @@ final class MaterialTabBar extends StatelessWidget {
           },
           onLeft: (_, _, isOutOfScope) {
             if (isOutOfScope) {
-              mainNavigationDrawerKey.currentState?.controller
+              context
+                  .findAncestorStateOfType<TvNavigationDrawerState>()
+                  ?.controller
                   .requestFocusOnMenu();
             }
 

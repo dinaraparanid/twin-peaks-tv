@@ -11,7 +11,15 @@ final class AppRouter extends RootStackRouter {
     AutoRoute(
       page: MainRoute.page,
       children: [
-        AutoRoute(page: HomeRoute.page, initial: true),
+        AutoRoute(
+          page: HomeRoute.page,
+          initial: true,
+          children: [
+            AutoRoute(page: SeasonOneRoute.page, initial: true),
+            AutoRoute(page: SeasonTwoRoute.page),
+            AutoRoute(page: SeasonThreeRoute.page),
+          ],
+        ),
         AutoRoute(page: EncyclopediaRoute.page),
         AutoRoute(page: SettingsRoute.page),
       ],

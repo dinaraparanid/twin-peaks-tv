@@ -1,2 +1,2 @@
 export 'entity/entity.dart';
-export 'movie_repository.dart';
+export 'repository/movie_repository.dart';

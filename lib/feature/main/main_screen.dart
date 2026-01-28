@@ -6,9 +6,6 @@ import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 import 'package:twin_peaks_tv/feature/main/widgets/widgets.dart';
 
-final mainNavigationDrawerKey = GlobalKey<TvNavigationDrawerState>();
-final mainSidebarKey = GlobalKey<CupertinoTvSidebarState>();
-
 @RoutePage()
 final class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -69,7 +66,6 @@ final class _MaterialUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TvNavigationDrawer(
-      key: mainNavigationDrawerKey,
       controller: controller,
       backgroundColor: context.appTheme.colors.background.primary,
       drawerExpandDuration: MainScreen.drawerExpandDuration,

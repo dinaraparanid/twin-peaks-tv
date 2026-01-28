@@ -11,7 +11,7 @@ abstract class Season with _$Season {
     required int year,
     required double rating,
     required String description,
-    required String thumbnailUrls,
+    required List<String> thumbnailUrls,
     required List<Episode> episodes,
     required List<Actor> actors,
   }) = _Season;

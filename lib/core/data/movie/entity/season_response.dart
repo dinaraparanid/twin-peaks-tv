@@ -12,7 +12,7 @@ abstract class SeasonResponse with _$SeasonResponse {
     @JsonKey(name: 'year') required int year,
     @JsonKey(name: 'rating') required double rating,
     @JsonKey(name: 'description') required String description,
-    @JsonKey(name: 'thumbnail_urls') required String thumbnailUrls,
+    @JsonKey(name: 'thumbnail_urls') required List<String> thumbnailUrls,
     @JsonKey(name: 'episodes') required List<EpisodeResponse> episodes,
     @JsonKey(name: 'actors') required List<ActorResponse> actors,
   }) = _SeasonResponse;
