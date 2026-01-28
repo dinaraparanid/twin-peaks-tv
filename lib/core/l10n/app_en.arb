@@ -13,5 +13,10 @@
         "example": "0.1.0"
       }
     }
-  }
+  },
+
+  "home_tab_season1": "Season 1",
+  "home_tab_season2": "Season 2",
+  "home_tab_movie": "Fire Walk With Me",
+  "home_tab_season3": "Season 3"
 }

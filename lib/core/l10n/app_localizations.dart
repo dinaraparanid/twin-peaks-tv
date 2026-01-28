@@ -129,6 +129,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {appVersion}'**
   String main_app_version(String appVersion);
+
+  /// No description provided for @home_tab_season1.
+  ///
+  /// In en, this message translates to:
+  /// **'Season 1'**
+  String get home_tab_season1;
+
+  /// No description provided for @home_tab_season2.
+  ///
+  /// In en, this message translates to:
+  /// **'Season 2'**
+  String get home_tab_season2;
+
+  /// No description provided for @home_tab_movie.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire Walk With Me'**
+  String get home_tab_movie;
+
+  /// No description provided for @home_tab_season3.
+  ///
+  /// In en, this message translates to:
+  /// **'Season 3'**
+  String get home_tab_season3;
 }
 
 class _AppLocalizationsDelegate

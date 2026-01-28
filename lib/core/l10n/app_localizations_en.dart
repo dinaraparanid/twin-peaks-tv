@@ -27,4 +27,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String main_app_version(String appVersion) {
     return 'Version $appVersion';
   }
+
+  @override
+  String get home_tab_season1 => 'Season 1';
+
+  @override
+  String get home_tab_season2 => 'Season 2';
+
+  @override
+  String get home_tab_movie => 'Fire Walk With Me';
+
+  @override
+  String get home_tab_season3 => 'Season 3';
 }

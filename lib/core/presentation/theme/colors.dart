@@ -15,6 +15,7 @@ const _elegantBlack80 = Color(0xCC131313);
 const _elegantBlack60 = Color(0x99131313);
 const _elegantBlack30 = Color(0x4D131313);
 const _elegantBlack01 = Color(0x03131313);
+const _royalWhite50 = Color(0x80FEFFFE);
 
 @immutable
 final class AppColors {
@@ -24,6 +25,7 @@ final class AppColors {
     this.splash = const AppSplashColors(),
     this.text = const AppTextColors(),
     this.navigationMenu = const AppNavigationMenuColors(),
+    this.tabBar = const AppTabBarColors(),
   });
 
   final Color primary;
@@ -31,6 +33,7 @@ final class AppColors {
   final AppSplashColors splash;
   final AppTextColors text;
   final AppNavigationMenuColors navigationMenu;
+  final AppTabBarColors tabBar;
 }
 
 @immutable
@@ -80,4 +83,16 @@ final class AppNavigationMenuColors {
   final Color itemFocused;
   final Color itemSelectedUnfocused;
   final Color itemSelectedFocused;
+}
+
+final class AppTabBarColors {
+  const AppTabBarColors({
+    this.selectedFocused = _limeGreen80,
+    this.selectedUnfocused = _limeGreen50,
+    this.unselected = _royalWhite50,
+  });
+
+  final Color selectedFocused;
+  final Color selectedUnfocused;
+  final Color unselected;
 }

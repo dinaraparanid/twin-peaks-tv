@@ -13,10 +13,12 @@ final class AppTypography {
 
     splash = SplashTypography._(fontFamily: fontFamily);
     navigationMenu = NavigationMenuTypography._(fontFamily: fontFamily);
+    tabBar = TabBarTypography._(fontFamily: fontFamily);
   }
 
   late final SplashTypography splash;
   late final NavigationMenuTypography navigationMenu;
+  late final TabBarTypography tabBar;
 }
 
 @immutable
@@ -63,4 +65,18 @@ final class NavigationMenuTypography {
 
   late final TextStyle item;
   late final TextStyle footer;
+}
+
+@immutable
+final class TabBarTypography {
+  TabBarTypography._({required String fontFamily}) {
+    primary = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
+    );
+  }
+
+  late final TextStyle primary;
 }
