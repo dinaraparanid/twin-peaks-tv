@@ -92,7 +92,7 @@ final class _MaterialUi extends StatelessWidget {
       },
       builder: (_, _) => DpadFocusScope(
         focusScopeNode: contentScopeNode,
-        builder: (_) => const AutoRouter(),
+        builder: (_) => const AutoRouter(requestFocus: false),
       ),
     );
   }

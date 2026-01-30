@@ -76,7 +76,7 @@ final class HomeScreenState extends State<HomeScreen> {
 
               return KeyEventResult.handled;
             },
-            builder: (_) => const AutoRouter(),
+            builder: (_) => const AutoRouter(requestFocus: false),
           ),
         ),
       ],
