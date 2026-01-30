@@ -32,11 +32,8 @@ final class MaterialTabBar extends StatelessWidget {
           spacing: 16,
           animationDuration: HomeScreen.tabAnimationDuration,
           indicatorBuilder: _buildIndicator,
-          onDown: (_, _, isOutOfScope) {
-            if (isOutOfScope) {
-              contentFocusNode.requestFocus();
-            }
-
+          onDown: (_, _, _) {
+            contentFocusNode.requestFocus();
             return KeyEventResult.handled;
           },
           onLeft: (_, _, isOutOfScope) {

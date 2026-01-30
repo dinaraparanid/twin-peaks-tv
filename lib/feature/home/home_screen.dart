@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tv_plus/tv_plus.dart';
+import 'package:twin_peaks_tv/core/constants/constants.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';
 import 'package:twin_peaks_tv/feature/home/widget/material_tab_bar.dart';
 
@@ -26,6 +27,13 @@ final class HomeScreenState extends State<HomeScreen> {
   void initState() {
     tabController.addListener(_tabListener);
     tabFocusScopeNode.addListener(_focusListener);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(FocusConstants.navigatorDelay, () {
+        tabFocusScopeNode.requestFocus();
+      });
+    });
+
     super.initState();
   }
 
@@ -67,16 +75,19 @@ final class HomeScreenState extends State<HomeScreen> {
         ),
 
         Expanded(
-          child: DpadFocusScope(
-            focusScopeNode: _contentFocusScopeNode,
-            onUp: (_, _, isOutOfScope) {
-              if (isOutOfScope) {
-                tabFocusScopeNode.requestFocus();
-              }
+          child: AutoRouter(
+            requestFocus: false,
+            builder: (context, child) => DpadFocusScope(
+              focusScopeNode: _contentFocusScopeNode,
+              onUp: (_, _, isOutOfScope) {
+                if (isOutOfScope) {
+                  tabFocusScopeNode.requestFocus();
+                }
 
-              return KeyEventResult.handled;
-            },
-            builder: (_) => const AutoRouter(requestFocus: false),
+                return KeyEventResult.handled;
+              },
+              builder: (_) => child,
+            ),
           ),
         ),
       ],
