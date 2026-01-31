@@ -20,6 +20,10 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState> {
       emit(state.copyWith(isDescriptionExpanded: !state.isDescriptionExpanded));
     });
 
+    on<CollapseDescription>((event, emit) {
+      emit(state.copyWith(isDescriptionExpanded: false));
+    });
+
     _loadSeasonUseCase(
       season: season,
       onSuccess: (data) {

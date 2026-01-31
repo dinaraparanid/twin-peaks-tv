@@ -15,3 +15,7 @@ final class UpdateSeasonState extends SeasonEvent {
 final class SwitchDescriptionExpanded extends SeasonEvent {
   const SwitchDescriptionExpanded();
 }
+
+final class CollapseDescription extends SeasonEvent {
+  const CollapseDescription();
+}

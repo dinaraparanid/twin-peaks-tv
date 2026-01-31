@@ -2,29 +2,31 @@ import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gradient_borders/box_borders/gradient_box_border.dart';
-import 'package:tv_plus/tv_plus.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
+import 'package:twin_peaks_tv/feature/season/widget/season_screen_content.dart';
 
 const _expandDuration = Duration(milliseconds: 300);
 
 final class SeasonDescription extends StatefulWidget {
-  const SeasonDescription({super.key, required this.description});
+  const SeasonDescription({
+    super.key,
+    required this.description,
+    required this.focusNode,
+  });
+
   final String description;
+  final FocusNode focusNode;
 
   @override
   State<StatefulWidget> createState() => _SeasonDescriptionState();
 }
 
-final class _SeasonDescriptionState extends State<SeasonDescription>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _borderAnimation;
-
-  late final _focusNode = FocusNode();
+final class _SeasonDescriptionState extends State<SeasonDescription> {
+  late var _focusNode = widget.focusNode;
 
   late final _focusScopeNode = context
       .findAncestorStateOfType<HomeScreenState>()!
@@ -32,15 +34,29 @@ final class _SeasonDescriptionState extends State<SeasonDescription>
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this, duration: _expandDuration);
-
-    _borderAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+    _focusNode.addListener(_focusListener);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusScopeNode.addListener(_scopeListener);
     });
 
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant SeasonDescription oldWidget) {
+    if (widget.focusNode != _focusNode) {
+      _focusNode.removeListener(_focusListener);
+      _focusNode = widget.focusNode..addListener(_focusListener);
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _focusListener() {
+    if (!_focusNode.hasFocus) {
+      context.seasonBloc.add(const CollapseDescription());
+    }
   }
 
   void _scopeListener() {
@@ -50,53 +66,55 @@ final class _SeasonDescriptionState extends State<SeasonDescription>
         child == null || child.toStringShort().contains('Navigator');
 
     if (_focusScopeNode.hasFocus && noFocusedChild) {
-      _focusNode.requestFocus();
+      widget.focusNode.requestFocus();
     }
   }
 
   @override
   void dispose() {
+    _focusNode.removeListener(_focusListener);
     _focusScopeNode.removeListener(_scopeListener);
-    _controller.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DpadFocus(
+    return AnimatedSelectionBorders(
       focusNode: _focusNode,
-      onFocusChanged: (_, isFocused) {
-        if (isFocused) {
-          _controller.forward();
-        } else {
-          _controller.reverse();
-        }
+      duration: _expandDuration,
+      paddingBuilder: (animationValue) {
+        return EdgeInsets.all(lerpDouble(0, 8, animationValue)!);
+      },
+      onDown: (_, _) {
+        context
+            .findAncestorStateOfType<SeasonScreenContentState>()!
+            .castScopeNode
+            .requestFocus();
+
+        return KeyEventResult.handled;
       },
       onSelect: (node, _) {
         context.seasonBloc.add(const SwitchDescriptionExpanded());
         return KeyEventResult.handled;
       },
-      builder: (node) => BlocBuilder<SeasonBloc, SeasonState>(
+      builder: (context, node) => BlocBuilder<SeasonBloc, SeasonState>(
         buildWhen: distinctState((s) => s.isDescriptionExpanded),
         builder: (context, state) => _DescriptionContent(
           node: node,
           isDescriptionExpanded: state.isDescriptionExpanded,
           description: widget.description,
-          borderAnimation: _borderAnimation,
         ),
       ),
     );
   }
 }
 
-final class _DescriptionContent extends AnimatedWidget {
+final class _DescriptionContent extends StatelessWidget {
   const _DescriptionContent({
     required this.node,
     required this.isDescriptionExpanded,
     required this.description,
-    required Animation<double> borderAnimation,
-  }) : super(listenable: borderAnimation);
+  });
 
   final FocusNode node;
   final bool isDescriptionExpanded;
@@ -115,42 +133,21 @@ final class _DescriptionContent extends AnimatedWidget {
       color: textColors.primary,
     );
 
-    final borderAnimation = listenable as Animation<double>;
-
-    return Container(
-      padding: EdgeInsets.all(lerpDouble(0, 8, borderAnimation.value)!),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
-        border: GradientBoxBorder(
-          gradient: Gradient.lerp(
-            context.appTheme.colors.gradients.transparent,
-            context.appTheme.colors.gradients.selection,
-            borderAnimation.value,
-          )!,
-          width: 2,
-        ),
+    return AnimatedCrossFade(
+      duration: _expandDuration,
+      alignment: Alignment.topLeft,
+      crossFadeState: isDescriptionExpanded
+          ? CrossFadeState.showSecond
+          : CrossFadeState.showFirst,
+      firstChild: _CollapsedDescription(
+        description: description,
+        descriptionStyle: descriptionStyle,
+        moreLessStyle: moreLessStyle,
       ),
-      child: Stack(
-        children: [
-          const SizedBox(width: double.infinity, height: 10),
-          AnimatedCrossFade(
-            duration: _expandDuration,
-            alignment: Alignment.topLeft,
-            crossFadeState: isDescriptionExpanded
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            firstChild: _CollapsedDescription(
-              description: description,
-              descriptionStyle: descriptionStyle,
-              moreLessStyle: moreLessStyle,
-            ),
-            secondChild: _ExpandedDescription(
-              description: description,
-              descriptionStyle: descriptionStyle,
-              moreLessStyle: moreLessStyle,
-            ),
-          ),
-        ],
+      secondChild: _ExpandedDescription(
+        description: description,
+        descriptionStyle: descriptionStyle,
+        moreLessStyle: moreLessStyle,
       ),
     );
   }

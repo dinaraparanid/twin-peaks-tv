@@ -15,12 +15,14 @@ final class AppTypography {
     navigationMenu = NavigationMenuTypography._(fontFamily: fontFamily);
     tabBar = TabBarTypography._(fontFamily: fontFamily);
     movieInfo = MovieInfoTypography._(fontFamily: fontFamily);
+    actor = ActorTypography._(fontFamily: fontFamily);
   }
 
   late final SplashTypography splash;
   late final NavigationMenuTypography navigationMenu;
   late final TabBarTypography tabBar;
   late final MovieInfoTypography movieInfo;
+  late final ActorTypography actor;
 }
 
 @immutable
@@ -111,4 +113,34 @@ final class MovieInfoTypography {
   late final TextStyle title;
   late final TextStyle properties;
   late final TextStyle description;
+}
+
+@immutable
+final class ActorTypography {
+  ActorTypography._({required String fontFamily}) {
+    name = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    );
+
+    character = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 10,
+    );
+
+    castLabel = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 20,
+    );
+  }
+
+  late final TextStyle name;
+  late final TextStyle character;
+  late final TextStyle castLabel;
 }

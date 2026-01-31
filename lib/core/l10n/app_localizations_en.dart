@@ -50,4 +50,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String season_year_episodes_rating(int year, int episodesNum) {
     return '$year • $episodesNum episodes • ';
   }
+
+  @override
+  String get movie_cast => 'Cast';
 }

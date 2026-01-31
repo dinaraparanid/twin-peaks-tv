@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
-import 'package:twin_peaks_tv/core/presentation/foundation/star_rating.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 
 final class SeasonProperties extends StatelessWidget {

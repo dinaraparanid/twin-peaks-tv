@@ -171,6 +171,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{year} • {episodesNum} episodes • '**
   String season_year_episodes_rating(int year, int episodesNum);
+
+  /// No description provided for @movie_cast.
+  ///
+  /// In en, this message translates to:
+  /// **'Cast'**
+  String get movie_cast;
 }
 
 class _AppLocalizationsDelegate
