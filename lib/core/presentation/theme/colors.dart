@@ -1,12 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart';
 
 const _limeGreen = Color(0xFF39C43C);
 const _limeGreen50 = Color(0x8039C43C);
+const _limeGreen60 = Color(0x9939C43C);
 const _limeGreen80 = Color(0xCC39C43C);
 const _intenseCocoa = Color(0xFF593C39);
 const _white = Color(0xFFFFFFFF);
+const _white80 = Color(0xCCFFFFFF);
 const _pureSilver = Color(0xFFC4C7C5);
 const _pearlBlack = Color(0xFF303030);
 const _gray50 = Color(0x80808080);
@@ -16,29 +17,32 @@ const _elegantBlack60 = Color(0x99131313);
 const _elegantBlack30 = Color(0x4D131313);
 const _elegantBlack01 = Color(0x03131313);
 const _royalWhite50 = Color(0x80FEFFFE);
+const _transparent = Color(0x00000000);
 
 @immutable
 final class AppColors {
   const AppColors({
     this.primary = _limeGreen,
-    this.background = const AppBackgroundColors(),
-    this.splash = const AppSplashColors(),
-    this.text = const AppTextColors(),
-    this.navigationMenu = const AppNavigationMenuColors(),
-    this.tabBar = const AppTabBarColors(),
+    this.background = const BackgroundColors(),
+    this.splash = const SplashColors(),
+    this.text = const TextColors(),
+    this.navigationMenu = const NavigationMenuColors(),
+    this.tabBar = const TabBarColors(),
+    this.gradients = const Gradients(),
   });
 
   final Color primary;
-  final AppBackgroundColors background;
-  final AppSplashColors splash;
-  final AppTextColors text;
-  final AppNavigationMenuColors navigationMenu;
-  final AppTabBarColors tabBar;
+  final BackgroundColors background;
+  final SplashColors splash;
+  final TextColors text;
+  final NavigationMenuColors navigationMenu;
+  final TabBarColors tabBar;
+  final Gradients gradients;
 }
 
 @immutable
-final class AppBackgroundColors {
-  const AppBackgroundColors({
+final class BackgroundColors {
+  const BackgroundColors({
     this.primary = _elegantBlack,
     this.primary80 = _elegantBlack80,
     this.primary60 = _elegantBlack60,
@@ -54,23 +58,28 @@ final class AppBackgroundColors {
 }
 
 @immutable
-final class AppSplashColors {
-  const AppSplashColors({this.text = _intenseCocoa});
+final class SplashColors {
+  const SplashColors({this.text = _intenseCocoa});
 
   final Color text;
 }
 
 @immutable
-final class AppTextColors {
-  const AppTextColors({this.primary = _white, this.secondary = _pureSilver});
+final class TextColors {
+  const TextColors({
+    this.primary = _white,
+    this.secondary = _pureSilver,
+    this.tertiary = _white80,
+  });
 
   final Color primary;
   final Color secondary;
+  final Color tertiary;
 }
 
 @immutable
-final class AppNavigationMenuColors {
-  const AppNavigationMenuColors({
+final class NavigationMenuColors {
+  const NavigationMenuColors({
     this.itemContent = _pureSilver,
     this.itemContentSelected = _pearlBlack,
     this.itemFocused = _gray50,
@@ -85,8 +94,9 @@ final class AppNavigationMenuColors {
   final Color itemSelectedFocused;
 }
 
-final class AppTabBarColors {
-  const AppTabBarColors({
+@immutable
+final class TabBarColors {
+  const TabBarColors({
     this.selectedFocused = _limeGreen80,
     this.selectedUnfocused = _limeGreen50,
     this.unselected = _royalWhite50,
@@ -95,4 +105,17 @@ final class AppTabBarColors {
   final Color selectedFocused;
   final Color selectedUnfocused;
   final Color unselected;
+}
+
+@immutable
+final class Gradients {
+  const Gradients({
+    this.selection = const LinearGradient(colors: [_limeGreen, _limeGreen60]),
+    this.transparent = const LinearGradient(
+      colors: [_transparent, _transparent],
+    ),
+  });
+
+  final Gradient selection;
+  final Gradient transparent;
 }

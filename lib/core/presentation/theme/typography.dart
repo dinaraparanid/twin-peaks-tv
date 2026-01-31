@@ -14,11 +14,13 @@ final class AppTypography {
     splash = SplashTypography._(fontFamily: fontFamily);
     navigationMenu = NavigationMenuTypography._(fontFamily: fontFamily);
     tabBar = TabBarTypography._(fontFamily: fontFamily);
+    movieInfo = MovieInfoTypography._(fontFamily: fontFamily);
   }
 
   late final SplashTypography splash;
   late final NavigationMenuTypography navigationMenu;
   late final TabBarTypography tabBar;
+  late final MovieInfoTypography movieInfo;
 }
 
 @immutable
@@ -79,4 +81,34 @@ final class TabBarTypography {
   }
 
   late final TextStyle primary;
+}
+
+@immutable
+final class MovieInfoTypography {
+  MovieInfoTypography._({required String fontFamily}) {
+    title = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w400,
+      fontSize: 28,
+    );
+
+    properties = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 12,
+    );
+
+    description = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
+    );
+  }
+
+  late final TextStyle title;
+  late final TextStyle properties;
+  late final TextStyle description;
 }

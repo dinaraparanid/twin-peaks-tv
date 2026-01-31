@@ -11,3 +11,7 @@ final class UpdateSeasonState extends SeasonEvent {
   const UpdateSeasonState({required this.state});
   final UiState<Season> state;
 }
+
+final class SwitchDescriptionExpanded extends SeasonEvent {
+  const SwitchDescriptionExpanded();
+}

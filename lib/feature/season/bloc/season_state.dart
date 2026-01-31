@@ -9,5 +9,6 @@ abstract class SeasonState with _$SeasonState {
   const factory SeasonState({
     required Seasons season,
     @Default(UiState.initial()) UiState<Season> seasonState,
+    @Default(false) bool isDescriptionExpanded,
   }) = _SeasonState;
 }

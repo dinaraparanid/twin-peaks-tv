@@ -40,6 +40,8 @@ dependencies:
   package_info_plus: ^9.0.0
   fpdart: ^1.2.0
   pretty_dio_logger: ^1.4.0
+  gradient_borders:
+    git: git@github.com:dinaraparanid/gradient-borders.git
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +64,7 @@ flutter:
   generate: true
   assets:
     - assets/icons/
+    - assets/icons/star/
     - assets/images/
 
 flutter_gen:

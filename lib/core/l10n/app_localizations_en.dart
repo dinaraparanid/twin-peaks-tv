@@ -9,6 +9,12 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get general_more => 'More';
+
+  @override
+  String get general_less => 'Less';
+
+  @override
   String get splash_header => 'TWIN PEAKS TV';
 
   @override
@@ -39,4 +45,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get home_tab_season3 => 'Season 3';
+
+  @override
+  String season_year_episodes_rating(int year, int episodesNum) {
+    return '$year • $episodesNum episodes • ';
+  }
 }

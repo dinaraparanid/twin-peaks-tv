@@ -92,6 +92,10 @@ final class _MaterialUi extends StatelessWidget {
       },
       builder: (_, _) => DpadFocusScope(
         focusScopeNode: contentScopeNode,
+        onLeft: (_, _, isOutOfScope) {
+          controller.requestFocusOnMenu();
+          return KeyEventResult.handled;
+        },
         builder: (_) => const AutoRouter(requestFocus: false),
       ),
     );

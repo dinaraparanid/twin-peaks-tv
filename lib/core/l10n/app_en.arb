@@ -1,4 +1,7 @@
 {
+  "general_more": "More",
+  "general_less": "Less",
+
   "splash_header": "TWIN PEAKS TV",
   "splash_subtext": "Developed with Flutter",
 
@@ -18,5 +21,19 @@
   "home_tab_season1": "Season 1",
   "home_tab_season2": "Season 2",
   "home_tab_movie": "Fire Walk With Me",
-  "home_tab_season3": "Season 3"
+  "home_tab_season3": "Season 3",
+
+  "season_year_episodes_rating": "{year} • {episodesNum} episodes • ",
+  "@season_year_episodes_rating": {
+    "placeholders": {
+      "year": {
+        "type": "int",
+        "example": "1990"
+      },
+      "episodesNum": {
+        "type": "int",
+        "example": "8"
+      }
+    }
+  }
 }

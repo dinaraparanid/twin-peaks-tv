@@ -14,7 +14,9 @@ final class MovieRepositoryImpl extends MovieRepository {
   @override
   Future<Either<Exception, Movie>> fetchMovie() async {
     try {
-      final response = await dio.value.get<Map<String, dynamic>>('/movie');
+      final response = await dio.value.get<Map<String, dynamic>>(
+        '/movies/movie',
+      );
       final data = MovieMapper.fromResponse(
         MovieResponse.fromJson(response.data!),
       );
@@ -30,7 +32,7 @@ final class MovieRepositoryImpl extends MovieRepository {
   }) async {
     try {
       final response = await dio.value.get<Map<String, dynamic>>(
-        '/${season.path}',
+        '/movies/${season.path}',
       );
 
       final data = SeasonMapper.fromResponse(

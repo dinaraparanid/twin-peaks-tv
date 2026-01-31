@@ -18,7 +18,7 @@ final class HomeScreen extends StatefulWidget {
 final class HomeScreenState extends State<HomeScreen> {
   late final tabController = TvTabBarController();
   late final tabFocusScopeNode = FocusScopeNode();
-  late final _contentFocusScopeNode = FocusScopeNode();
+  late final contentFocusScopeNode = FocusScopeNode();
 
   late var _currentIndex = tabController.selectedIndex;
   var _tabBarHasFocus = false;
@@ -57,37 +57,36 @@ final class HomeScreenState extends State<HomeScreen> {
 
     tabController.dispose();
     tabFocusScopeNode.dispose();
-    _contentFocusScopeNode.dispose();
+    contentFocusScopeNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 8,
+    return Stack(
       children: [
-        MaterialTabBar(
-          tabController: tabController,
-          tabFocusScopeNode: tabFocusScopeNode,
-          contentFocusNode: _contentFocusScopeNode,
-          currentIndex: _currentIndex,
+        Align(
+          alignment: Alignment.topLeft,
+          child: MaterialTabBar(
+            tabController: tabController,
+            tabFocusScopeNode: tabFocusScopeNode,
+            contentFocusNode: contentFocusScopeNode,
+            currentIndex: _currentIndex,
+          ),
         ),
 
-        Expanded(
-          child: AutoRouter(
-            requestFocus: false,
-            builder: (context, child) => DpadFocusScope(
-              focusScopeNode: _contentFocusScopeNode,
-              onUp: (_, _, isOutOfScope) {
-                if (isOutOfScope) {
-                  tabFocusScopeNode.requestFocus();
-                }
+        AutoRouter(
+          requestFocus: false,
+          builder: (context, child) => DpadFocusScope(
+            focusScopeNode: contentFocusScopeNode,
+            onUp: (_, _, isOutOfScope) {
+              if (isOutOfScope) {
+                tabFocusScopeNode.requestFocus();
+              }
 
-                return KeyEventResult.handled;
-              },
-              builder: (_) => child,
-            ),
+              return KeyEventResult.handled;
+            },
+            builder: (_) => child,
           ),
         ),
       ],

@@ -6,6 +6,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 final class AppDio {
   AppDio();
 
-  late final value = Dio(BaseOptions(baseUrl: 'http://0.0.0.0:8080'))
+  // Localhost for android emulator is 10.0.2.2
+  late final value = Dio(BaseOptions(baseUrl: 'http://10.0.2.2:8080'))
     ..interceptors.add(PrettyDioLogger());
 }

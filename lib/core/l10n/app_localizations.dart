@@ -94,6 +94,18 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
+  /// No description provided for @general_more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get general_more;
+
+  /// No description provided for @general_less.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get general_less;
+
   /// No description provided for @splash_header.
   ///
   /// In en, this message translates to:
@@ -153,6 +165,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Season 3'**
   String get home_tab_season3;
+
+  /// No description provided for @season_year_episodes_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'{year} • {episodesNum} episodes • '**
+  String season_year_episodes_rating(int year, int episodesNum);
 }
 
 class _AppLocalizationsDelegate
