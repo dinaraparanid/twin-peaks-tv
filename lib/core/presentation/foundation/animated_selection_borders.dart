@@ -112,15 +112,13 @@ final class _AnimatedSelectionBordersState
         widget.onFocusChanged?.call(node, hasFocus);
       },
       onFocusDisabledWhenWasFocused: widget.onFocusDisabledWhenWasFocused,
-      builder: (node) => Builder(
-        builder: (context) => _Content(
-          borderAnimation: _borderAnimation,
-          paddingBuilder: widget.paddingBuilder,
-          borderRadius: widget.borderRadius,
-          borderWidth: widget.borderWidth,
-          shape: widget.shape,
-          child: widget.builder(context, node),
-        ),
+      builder: (context, node) => _Content(
+        borderAnimation: _borderAnimation,
+        paddingBuilder: widget.paddingBuilder,
+        borderRadius: widget.borderRadius,
+        borderWidth: widget.borderWidth,
+        shape: widget.shape,
+        child: widget.builder(context, node),
       ),
     );
   }

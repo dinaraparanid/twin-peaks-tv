@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:tv_plus/foundation/foundation.dart';
+import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
@@ -125,7 +125,7 @@ final class _CastState extends State<Cast> {
               padding: contentPadding,
               separatorBuilder: (_, _) => const SizedBox(width: 12),
               itemBuilder: (_, index) => ScrollGroupDpadFocus(
-                builder: (_) => ActorItem(
+                builder: (context, _) => ActorItem(
                   focusNode: _focusNodes[index],
                   actor: widget.actors[index],
                 ),

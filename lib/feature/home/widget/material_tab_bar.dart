@@ -38,10 +38,7 @@ final class MaterialTabBar extends StatelessWidget {
           },
           onLeft: (_, _, isOutOfScope) {
             if (isOutOfScope) {
-              context
-                  .findAncestorStateOfType<TvNavigationDrawerState>()
-                  ?.controller
-                  .requestFocusOnMenu();
+              TvNavigationDrawer.of(context).requestFocusOnMenu();
             }
 
             return KeyEventResult.handled;
