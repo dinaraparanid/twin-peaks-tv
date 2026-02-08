@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 
 const _limeGreen = Color(0xFF39C43C);
 const _limeGreen50 = Color(0x8039C43C);
@@ -15,6 +16,7 @@ const _elegantBlack = Color(0xFF131313);
 const _elegantBlack80 = Color(0xCC131313);
 const _elegantBlack60 = Color(0x99131313);
 const _elegantBlack30 = Color(0x4D131313);
+const _elegantBlack10 = Color(0x1A131313);
 const _elegantBlack01 = Color(0x03131313);
 const _royalWhite50 = Color(0x80FEFFFE);
 const _transparent = Color(0x00000000);
@@ -114,8 +116,19 @@ final class Gradients {
     this.transparent = const LinearGradient(
       colors: [_transparent, _transparent],
     ),
+    this.wallpaperScrim = const RadialGradient(
+      radius: 1,
+      center: Alignment.topRight,
+      colors: [_elegantBlack10, _elegantBlack],
+      stops: [0.0, 0.8],
+      transform: EllipticalGradientTransform(
+        relativeCenter: Offset(1, 1),
+        scale: Scale(widthFactor: 1.2, heightFactor: 1),
+      ),
+    ),
   });
 
   final Gradient selection;
   final Gradient transparent;
+  final Gradient wallpaperScrim;
 }

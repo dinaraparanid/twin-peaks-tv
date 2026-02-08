@@ -65,16 +65,6 @@ final class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Align(
-          alignment: Alignment.topLeft,
-          child: MaterialTabBar(
-            tabController: tabController,
-            tabFocusScopeNode: tabFocusScopeNode,
-            contentFocusNode: contentFocusScopeNode,
-            currentIndex: _currentIndex,
-          ),
-        ),
-
         AutoRouter(
           requestFocus: false,
           builder: (context, child) => DpadFocusScope(
@@ -87,6 +77,16 @@ final class HomeScreenState extends State<HomeScreen> {
               return KeyEventResult.handled;
             },
             builder: (_) => child,
+          ),
+        ),
+
+        Align(
+          alignment: Alignment.topLeft,
+          child: MaterialTabBar(
+            tabController: tabController,
+            tabFocusScopeNode: tabFocusScopeNode,
+            contentFocusNode: contentFocusScopeNode,
+            currentIndex: _currentIndex,
           ),
         ),
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/movie/cast.dart';
+import 'package:twin_peaks_tv/feature/season/widget/material_season_wallpaper.dart';
 import 'package:twin_peaks_tv/feature/season/widget/season_description.dart';
 import 'package:twin_peaks_tv/feature/season/widget/season_properties.dart';
 import 'package:twin_peaks_tv/feature/season/widget/season_title.dart';
@@ -29,7 +30,14 @@ final class SeasonScreenContentState extends State<SeasonScreenContent> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // TODO(paranid5): Image with carousel
+        const Align(
+          alignment: Alignment.topRight,
+          child: MaterialSeasonWallpaper(
+            thumbnailUrl:
+                'https://platform.eater.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/8537465/twin_peaks_abc_archives.jpg?quality=90&strip=all&crop=0%2C16.722222222222%2C100%2C66.555555555556&w=2400',
+          ),
+        ),
+
         CustomScrollView(
           slivers: [
             SliverPadding(
