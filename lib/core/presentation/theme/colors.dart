@@ -8,6 +8,8 @@ const _limeGreen60 = Color(0x9939C43C);
 const _limeGreen80 = Color(0xCC39C43C);
 const _intenseCocoa = Color(0xFF593C39);
 const _white = Color(0xFFFFFFFF);
+const _white20 = Color(0x33FFFFFF);
+const _white50 = Color(0x80FFFFFF);
 const _white80 = Color(0xCCFFFFFF);
 const _pureSilver = Color(0xFFC4C7C5);
 const _pearlBlack = Color(0xFF303030);
@@ -30,6 +32,7 @@ final class AppColors {
     this.text = const TextColors(),
     this.navigationMenu = const NavigationMenuColors(),
     this.tabBar = const TabBarColors(),
+    this.carousel = const CarouselColors(),
     this.gradients = const Gradients(),
   });
 
@@ -39,6 +42,7 @@ final class AppColors {
   final TextColors text;
   final NavigationMenuColors navigationMenu;
   final TabBarColors tabBar;
+  final CarouselColors carousel;
   final Gradients gradients;
 }
 
@@ -107,6 +111,21 @@ final class TabBarColors {
   final Color selectedFocused;
   final Color selectedUnfocused;
   final Color unselected;
+}
+
+@immutable
+final class CarouselColors {
+  const CarouselColors({
+    this.content = _white20,
+    this.selectedContent = _white50,
+    this.focusedContent = _white,
+    this.background = _elegantBlack60,
+  });
+
+  final Color content;
+  final Color selectedContent;
+  final Color focusedContent;
+  final Color background;
 }
 
 @immutable

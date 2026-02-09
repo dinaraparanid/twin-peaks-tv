@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/domain/movie/use_case/use_case.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/ui_state.dart';
@@ -28,6 +29,7 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState> {
       season: season,
       onSuccess: (data) {
         add(UpdateSeasonState(state: UiState.data(value: data)));
+        carouselController.reset(count: data.thumbnailUrls.length);
       },
       onFailure: (e) {
         add(UpdateSeasonState(state: UiState.error(e)));
@@ -36,6 +38,20 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState> {
   }
 
   final LoadSeasonUseCase _loadSeasonUseCase;
+
+  final descriptionNode = FocusNode();
+  final castScopeNode = FocusScopeNode();
+  final carouselNode = FocusNode();
+  final carouselController = TvCarouselController(itemCount: 1);
+
+  @override
+  Future<void> close() {
+    descriptionNode.dispose();
+    castScopeNode.dispose();
+    carouselNode.dispose();
+    carouselController.dispose();
+    return super.close();
+  }
 }
 
 extension SeasonBlocProvider on BuildContext {

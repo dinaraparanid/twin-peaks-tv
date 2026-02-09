@@ -7,26 +7,20 @@ import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
-import 'package:twin_peaks_tv/feature/season/widget/season_screen_content.dart';
 
 const _expandDuration = Duration(milliseconds: 300);
 
 final class SeasonDescription extends StatefulWidget {
-  const SeasonDescription({
-    super.key,
-    required this.description,
-    required this.focusNode,
-  });
+  const SeasonDescription({super.key, required this.description});
 
   final String description;
-  final FocusNode focusNode;
 
   @override
   State<StatefulWidget> createState() => _SeasonDescriptionState();
 }
 
 final class _SeasonDescriptionState extends State<SeasonDescription> {
-  late var _focusNode = widget.focusNode;
+  late final _focusNode = context.seasonBloc.descriptionNode;
 
   late final _focusScopeNode = context
       .findAncestorStateOfType<HomeScreenState>()!
@@ -43,16 +37,6 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
     super.initState();
   }
 
-  @override
-  void didUpdateWidget(covariant SeasonDescription oldWidget) {
-    if (widget.focusNode != _focusNode) {
-      _focusNode.removeListener(_focusListener);
-      _focusNode = widget.focusNode..addListener(_focusListener);
-    }
-
-    super.didUpdateWidget(oldWidget);
-  }
-
   void _focusListener() {
     if (!_focusNode.hasFocus) {
       context.seasonBloc.add(const CollapseDescription());
@@ -66,7 +50,7 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
         child == null || child.toStringShort().contains('Navigator');
 
     if (_focusScopeNode.hasFocus && noFocusedChild) {
-      widget.focusNode.requestFocus();
+      _focusNode.requestFocus();
     }
   }
 
@@ -86,11 +70,11 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
         return EdgeInsets.all(lerpDouble(0, 8, animationValue)!);
       },
       onDown: (_, _) {
-        context
-            .findAncestorStateOfType<SeasonScreenContentState>()!
-            .castScopeNode
-            .requestFocus();
-
+        context.seasonBloc.castScopeNode.requestFocus();
+        return KeyEventResult.handled;
+      },
+      onRight: (_, _) {
+        context.seasonBloc.carouselNode.requestFocus();
         return KeyEventResult.handled;
       },
       onSelect: (node, _) {
