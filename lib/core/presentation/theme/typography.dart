@@ -16,6 +16,7 @@ final class AppTypography {
     tabBar = TabBarTypography._(fontFamily: fontFamily);
     movieInfo = MovieInfoTypography._(fontFamily: fontFamily);
     actor = ActorTypography._(fontFamily: fontFamily);
+    episode = EpisodeTypography._(fontFamily: fontFamily);
   }
 
   late final SplashTypography splash;
@@ -23,6 +24,7 @@ final class AppTypography {
   late final TabBarTypography tabBar;
   late final MovieInfoTypography movieInfo;
   late final ActorTypography actor;
+  late final EpisodeTypography episode;
 }
 
 @immutable
@@ -143,4 +145,34 @@ final class ActorTypography {
   late final TextStyle name;
   late final TextStyle character;
   late final TextStyle castLabel;
+}
+
+@immutable
+final class EpisodeTypography {
+  EpisodeTypography._({required String fontFamily}) {
+    title = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 20,
+    );
+
+    rating = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    );
+
+    description = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    );
+  }
+
+  late final TextStyle title;
+  late final TextStyle rating;
+  late final TextStyle description;
 }

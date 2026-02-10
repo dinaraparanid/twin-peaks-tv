@@ -4,6 +4,7 @@ import 'package:twin_peaks_tv/core/presentation/foundation/movie/cast.dart';
 import 'package:twin_peaks_tv/core/utils/ext/key_ext.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/season/widget/carousel/wallpaper_carousel.dart';
+import 'package:twin_peaks_tv/feature/season/widget/episodes/episode_list.dart';
 import 'package:twin_peaks_tv/feature/season/widget/material_season_wallpaper.dart';
 import 'package:twin_peaks_tv/feature/season/widget/season_description.dart';
 import 'package:twin_peaks_tv/feature/season/widget/season_properties.dart';
@@ -16,11 +17,15 @@ final class SeasonScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CustomScrollView(
-          slivers: [SliverToBoxAdapter(child: _Info(season: season))],
+    return CustomScrollView(
+      controller: context.seasonBloc.scrollController,
+      slivers: [
+        SliverToBoxAdapter(child: _Info(season: season)),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          sliver: EpisodeList(episodes: season.episodes),
         ),
+        const SliverToBoxAdapter(child: SizedBox(height: 32)),
       ],
     );
   }
@@ -100,7 +105,11 @@ final class _InfoState extends State<_Info> {
               actors: widget.season.actors,
               focusScopeNode: context.seasonBloc.castScopeNode,
               onUp: (_, _, _) {
-                context.seasonBloc.descriptionNode.requestFocus();
+                context.seasonBloc.add(const RequestFocusOnDescription());
+                return KeyEventResult.handled;
+              },
+              onDown: (_, _, _) {
+                context.seasonBloc.add(const RequestFocusOnEpisodes());
                 return KeyEventResult.handled;
               },
             ),

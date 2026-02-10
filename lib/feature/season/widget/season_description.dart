@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
@@ -63,30 +64,32 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSelectionBorders(
-      focusNode: _focusNode,
-      duration: _expandDuration,
-      paddingBuilder: (animationValue) {
-        return EdgeInsets.all(lerpDouble(0, 8, animationValue)!);
-      },
-      onDown: (_, _) {
-        context.seasonBloc.castScopeNode.requestFocus();
-        return KeyEventResult.handled;
-      },
-      onRight: (_, _) {
-        context.seasonBloc.carouselNode.requestFocus();
-        return KeyEventResult.handled;
-      },
-      onSelect: (node, _) {
-        context.seasonBloc.add(const SwitchDescriptionExpanded());
-        return KeyEventResult.handled;
-      },
-      builder: (context, node) => BlocBuilder<SeasonBloc, SeasonState>(
-        buildWhen: distinctState((s) => s.isDescriptionExpanded),
-        builder: (context, state) => _DescriptionContent(
-          node: node,
-          isDescriptionExpanded: state.isDescriptionExpanded,
-          description: widget.description,
+    return ScrollGroupDpadFocus(
+      builder: (context, node) => AnimatedSelectionBorders(
+        focusNode: _focusNode,
+        duration: _expandDuration,
+        paddingBuilder: (animationValue) {
+          return EdgeInsets.all(lerpDouble(0, 8, animationValue)!);
+        },
+        onDown: (_, _) {
+          context.seasonBloc.add(const RequestFocusOnCast());
+          return KeyEventResult.handled;
+        },
+        onRight: (_, _) {
+          context.seasonBloc.add(const RequestFocusOnCarousel());
+          return KeyEventResult.handled;
+        },
+        onSelect: (node, _) {
+          context.seasonBloc.add(const SwitchDescriptionExpanded());
+          return KeyEventResult.handled;
+        },
+        builder: (context, node) => BlocBuilder<SeasonBloc, SeasonState>(
+          buildWhen: distinctState((s) => s.isDescriptionExpanded),
+          builder: (context, state) => _DescriptionContent(
+            node: node,
+            isDescriptionExpanded: state.isDescriptionExpanded,
+            description: widget.description,
+          ),
         ),
       ),
     );

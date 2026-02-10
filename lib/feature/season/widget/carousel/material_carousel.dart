@@ -3,6 +3,7 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/season_bloc.dart';
+import 'package:twin_peaks_tv/feature/season/bloc/season_event.dart';
 
 final class MaterialCarousel extends StatelessWidget {
   const MaterialCarousel({super.key, required this.season});
@@ -24,12 +25,12 @@ final class MaterialCarousel extends StatelessWidget {
         focusNode: context.seasonBloc.carouselNode,
         spacing: 8,
         onDown: (_, _) {
-          context.seasonBloc.castScopeNode.requestFocus();
+          context.seasonBloc.add(const RequestFocusOnCast());
           return KeyEventResult.handled;
         },
         onLeft: (_, _, hasReachedBoundary) {
           if (hasReachedBoundary) {
-            context.seasonBloc.descriptionNode.requestFocus();
+            context.seasonBloc.add(const RequestFocusOnDescription());
           }
 
           return KeyEventResult.handled;

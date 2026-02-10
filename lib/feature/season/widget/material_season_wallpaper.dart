@@ -36,7 +36,7 @@ final class _MaterialSeasonWallpaperState
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width * 0.68;
-    final height = MediaQuery.sizeOf(context).width * 0.5;
+    final height = MediaQuery.sizeOf(context).width * 0.45;
 
     return SizedBox(
       width: width,

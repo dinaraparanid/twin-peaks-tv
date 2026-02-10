@@ -19,3 +19,19 @@ final class SwitchDescriptionExpanded extends SeasonEvent {
 final class CollapseDescription extends SeasonEvent {
   const CollapseDescription();
 }
+
+final class RequestFocusOnDescription extends SeasonEvent {
+  const RequestFocusOnDescription();
+}
+
+final class RequestFocusOnCarousel extends SeasonEvent {
+  const RequestFocusOnCarousel();
+}
+
+final class RequestFocusOnCast extends SeasonEvent {
+  const RequestFocusOnCast();
+}
+
+final class RequestFocusOnEpisodes extends SeasonEvent {
+  const RequestFocusOnEpisodes();
+}
