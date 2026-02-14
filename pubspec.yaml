@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
   tv_plus:
     git:
-      url: git@github.com:dinaraparanid/tv_plus.git
+      url: https://github.com/dinaraparanid/tv_plus.git
       ref: dev
 
   cupertino_icons: ^1.0.8
@@ -23,7 +23,7 @@ dependencies:
   injectable: ^2.7.1+4
   auto_route:
     git:
-      url: git@github.com:dinaraparanid/auto_route_library.git
+      url: https://github.com/dinaraparanid/auto_route_library.git
       path: auto_route
   freezed_annotation: ^3.0.0
   rx_shared_preferences: ^4.0.0
@@ -41,7 +41,7 @@ dependencies:
   fpdart: ^1.2.0
   pretty_dio_logger: ^1.4.0
   gradient_borders:
-    git: git@github.com:dinaraparanid/gradient-borders.git
+    git: https://github.com/dinaraparanid/gradient-borders.git
 
 dev_dependencies:
   flutter_test:
@@ -55,7 +55,7 @@ dev_dependencies:
   injectable_generator: ^2.12.0
   auto_route_generator:
     git:
-      url: git@github.com:dinaraparanid/auto_route_library.git
+      url: https://github.com/dinaraparanid/auto_route_library.git
       path: auto_route_generator
   json_serializable: ^6.11.4
 
@@ -75,5 +75,5 @@ flutter_gen:
 dependency_overrides:
   auto_route:
     git:
-      url: git@github.com:dinaraparanid/auto_route_library.git
+      url: https://github.com/dinaraparanid/auto_route_library.git
       path: auto_route
