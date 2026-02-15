@@ -7,6 +7,7 @@ final class AppDio {
   AppDio();
 
   // Localhost for android emulator is 10.0.2.2
-  late final value = Dio(BaseOptions(baseUrl: 'http://10.0.2.2:8080'))
-    ..interceptors.add(PrettyDioLogger());
+  late final value = Dio(
+    BaseOptions(baseUrl: 'https://t9sk0mds-8080.euw.devtunnels.ms'),
+  )..interceptors.add(PrettyDioLogger());
 }
