@@ -14,9 +14,15 @@ const _durationThumbnailScale = Duration(milliseconds: 300);
 const _starSize = 12.0;
 
 final class EpisodeItem extends StatefulWidget {
-  const EpisodeItem({super.key, this.focusNode, required this.episode});
+  const EpisodeItem({
+    super.key,
+    this.focusNode,
+    required this.scrollNode,
+    required this.episode,
+  });
 
   final FocusNode? focusNode;
+  final FocusNode scrollNode;
   final Episode episode;
 
   @override
@@ -28,6 +34,11 @@ final class _EpisodeItemState extends State<EpisodeItem>
   late final AnimationController _controller;
   late final Animation<double> _thumbnailScale;
 
+  late FocusNode _focusNode;
+  var _ownsNode = false;
+
+  late FocusNode _scrollNode;
+
   @override
   void initState() {
     _controller = AnimationController(
@@ -37,12 +48,49 @@ final class _EpisodeItemState extends State<EpisodeItem>
 
     _thumbnailScale = Tween<double>(begin: 1.0, end: 1.2).animate(_controller);
 
+    _focusNode = widget.focusNode ?? FocusNode();
+    _ownsNode = widget.focusNode == null;
+
+    _scrollNode = widget.scrollNode..addListener(_scrollNodeListener);
+
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant EpisodeItem oldWidget) {
+    final passedNode = widget.focusNode;
+
+    if (passedNode != null && passedNode != _focusNode) {
+      if (_ownsNode) {
+        _focusNode.dispose();
+      }
+
+      _focusNode = passedNode;
+      _ownsNode = false;
+    }
+
+    if (widget.scrollNode != oldWidget.scrollNode) {
+      _scrollNode.removeListener(_scrollNodeListener);
+      _scrollNode = widget.scrollNode..addListener(_scrollNodeListener);
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _scrollNodeListener() {
+    if (widget.scrollNode.hasFocus) {
+      _focusNode.requestFocus();
+    }
   }
 
   @override
   void dispose() {
     _controller.dispose();
+
+    if (_ownsNode) {
+      _focusNode.dispose();
+    }
+
     super.dispose();
   }
 
@@ -56,7 +104,7 @@ final class _EpisodeItemState extends State<EpisodeItem>
           height: _thumbnailFocusedHeight,
           alignment: Alignment.center,
           child: AnimatedSelectionBorders(
-            focusNode: widget.focusNode,
+            focusNode: _focusNode,
             onSelect: (_, _) {
               // TODO(paranid5): экран с плеером
               return KeyEventResult.handled;

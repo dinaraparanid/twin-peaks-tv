@@ -42,6 +42,15 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   gradient_borders:
     git: https://github.com/dinaraparanid/gradient-borders.git
+  flutter_tizen: ^0.2.7
+  package_info_plus_tizen: ^1.0.5
+  shared_preferences_tizen: ^2.3.2
+  path_provider_tizen: ^2.2.1
+  url_launcher_tizen: ^2.1.4
+  video_player_tizen: ^2.5.8
+  device_info_plus_tizen: ^1.3.0
+  connectivity_plus_tizen: ^1.2.2
+  sqflite_tizen: ^0.1.3
 
 dev_dependencies:
   flutter_test:

@@ -205,10 +205,7 @@ final class _ExpandedDescription extends StatelessWidget {
           text: TextSpan(text: description, style: descriptionStyle),
         ),
         RichText(
-          text: TextSpan(
-            text: context.ln.general_less,
-            style: descriptionStyle,
-          ),
+          text: TextSpan(text: context.ln.general_less, style: moreLessStyle),
         ),
       ],
     );

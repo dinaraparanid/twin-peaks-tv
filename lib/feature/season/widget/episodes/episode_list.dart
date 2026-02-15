@@ -23,7 +23,9 @@ final class EpisodeList extends StatelessWidget {
         itemCount: episodes.length,
         separatorBuilder: (context, index) => const SizedBox(height: 8),
         itemBuilder: (context, index) => ScrollGroupDpadFocus(
-          builder: (context, _) => EpisodeItem(episode: episodes[index]),
+          builder: (context, node) {
+            return EpisodeItem(scrollNode: node, episode: episodes[index]);
+          },
         ),
       ),
     );
