@@ -22,11 +22,7 @@ final class EpisodeList extends StatelessWidget {
       sliver: SliverList.separated(
         itemCount: episodes.length,
         separatorBuilder: (context, index) => const SizedBox(height: 8),
-        itemBuilder: (context, index) => ScrollGroupDpadFocus(
-          builder: (context, node) {
-            return EpisodeItem(scrollNode: node, episode: episodes[index]);
-          },
-        ),
+        itemBuilder: (context, index) => EpisodeItem(episode: episodes[index]),
       ),
     );
   }

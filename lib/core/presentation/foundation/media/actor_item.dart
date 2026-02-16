@@ -20,6 +20,7 @@ final class ActorItem extends StatelessWidget {
       children: [
         AnimatedSelectionBorders(
           focusNode: focusNode,
+          autoScroll: true,
           shape: BoxShape.circle,
           builder: (context, node) => ClipOval(
             child: CachedNetworkImage(

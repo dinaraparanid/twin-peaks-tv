@@ -16,7 +16,7 @@ extension Properties on HomeTab {
   PageRouteInfo buildRoute() => switch (this) {
     HomeTab.season1 => const SeasonOneRoute(),
     HomeTab.season2 => const SeasonTwoRoute(),
-    HomeTab.movie => const SeasonTwoRoute(), // TODO(paranid5): Movie route
+    HomeTab.movie => const MovieRoute(),
     HomeTab.season3 => const SeasonThreeRoute(),
   };
 }

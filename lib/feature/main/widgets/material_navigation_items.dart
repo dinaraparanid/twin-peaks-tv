@@ -4,6 +4,7 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/router/app_router.gr.dart';
+import 'package:twin_peaks_tv/core/utils/ext/color_ext.dart';
 import 'package:twin_peaks_tv/feature/main/main_screen.dart';
 import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 
@@ -27,7 +28,7 @@ List<TvNavigationMenuItem> buildMaterialNavigationItems({
           width: 28.0,
           height: 20.0,
           fit: BoxFit.fitHeight,
-          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+          colorFilter: color.toColorFilter(),
         ),
       ),
     ),
@@ -42,7 +43,7 @@ List<TvNavigationMenuItem> buildMaterialNavigationItems({
           width: 28.0,
           height: 28.0,
           fit: BoxFit.fitWidth,
-          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+          colorFilter: color.toColorFilter(),
         ),
       ),
     ),

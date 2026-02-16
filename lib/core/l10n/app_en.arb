@@ -37,5 +37,20 @@
     }
   },
 
-  "movie_cast": "Cast"
+  "movie_year_duration_rating": "{year} • {duration} • ",
+  "@movie_year_duration_rating": {
+    "placeholders": {
+      "year": {
+        "type": "int",
+        "example": "1990"
+      },
+      "duration": {
+        "type": "String",
+        "example": "2 h 15 min"
+      }
+    }
+  },
+  "movie_cast": "Cast",
+  "movie_watch": "Watch",
+  "movie_scenes_from_movie": "Scenes from the movie"
 }

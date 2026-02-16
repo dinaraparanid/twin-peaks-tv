@@ -52,5 +52,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String movie_year_duration_rating(int year, String duration) {
+    return '$year • $duration • ';
+  }
+
+  @override
   String get movie_cast => 'Cast';
+
+  @override
+  String get movie_watch => 'Watch';
+
+  @override
+  String get movie_scenes_from_movie => 'Scenes from the movie';
 }

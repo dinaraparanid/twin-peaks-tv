@@ -13,7 +13,7 @@ abstract class MovieResponse with _$MovieResponse {
     @JsonKey(name: 'rating') required double rating,
     @JsonKey(name: 'description') required String description,
     @JsonKey(name: 'video_url') required String videoUrl,
-    @JsonKey(name: 'thumbnail_urls') required String thumbnailUrls,
+    @JsonKey(name: 'wallpaper_url') required String wallpaperUrl,
     @JsonKey(name: 'scenes_urls') required List<String> scenesUrls,
     @JsonKey(name: 'actors') required List<ActorResponse> actors,
   }) = _MovieResponse;

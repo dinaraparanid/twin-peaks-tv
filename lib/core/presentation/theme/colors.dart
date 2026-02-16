@@ -15,6 +15,7 @@ const _pureSilver = Color(0xFFC4C7C5);
 const _pearlBlack = Color(0xFF303030);
 const _gray50 = Color(0x80808080);
 const _elegantBlack = Color(0xFF131313);
+const _elegantBlack90 = Color(0xE6131313);
 const _elegantBlack80 = Color(0xCC131313);
 const _elegantBlack60 = Color(0x99131313);
 const _elegantBlack30 = Color(0x4D131313);
@@ -33,6 +34,7 @@ final class AppColors {
     this.navigationMenu = const NavigationMenuColors(),
     this.tabBar = const TabBarColors(),
     this.carousel = const CarouselColors(),
+    this.button = const ButtonColors(),
     this.gradients = const Gradients(),
   });
 
@@ -43,6 +45,7 @@ final class AppColors {
   final NavigationMenuColors navigationMenu;
   final TabBarColors tabBar;
   final CarouselColors carousel;
+  final ButtonColors button;
   final Gradients gradients;
 }
 
@@ -129,13 +132,35 @@ final class CarouselColors {
 }
 
 @immutable
+final class ButtonColors {
+  const ButtonColors({this.filled = const FilledButtonColors()});
+
+  final FilledButtonColors filled;
+}
+
+@immutable
+final class FilledButtonColors {
+  const FilledButtonColors({
+    this.container = _gray50,
+    this.focusedContainer = _limeGreen80,
+    this.content = _pureSilver,
+    this.focusedContent = _pearlBlack,
+  });
+
+  final Color container;
+  final Color focusedContainer;
+  final Color content;
+  final Color focusedContent;
+}
+
+@immutable
 final class Gradients {
   const Gradients({
     this.selection = const LinearGradient(colors: [_limeGreen, _limeGreen60]),
     this.transparent = const LinearGradient(
       colors: [_transparent, _transparent],
     ),
-    this.wallpaperScrim = const RadialGradient(
+    this.materialWallpaperScrim = const RadialGradient(
       radius: 1,
       center: Alignment.topRight,
       colors: [_elegantBlack10, _elegantBlack],
@@ -145,9 +170,30 @@ final class Gradients {
         scale: Scale(widthFactor: 1.2, heightFactor: 1),
       ),
     ),
+    this.oneUiWallpaperScrim = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [_elegantBlack10, _elegantBlack90, _elegantBlack],
+      stops: [0.0, 0.9, 1],
+    ),
+    this.cupertinoBottomWallpaperScrim = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [_elegantBlack10, _elegantBlack90, _elegantBlack],
+      stops: [0.0, 0.9, 1],
+    ),
+    this.cupertinoStartWallpaperScrim = const LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: [_elegantBlack10, _elegantBlack],
+      stops: [0.0, 1],
+    ),
   });
 
   final Gradient selection;
   final Gradient transparent;
-  final Gradient wallpaperScrim;
+  final Gradient materialWallpaperScrim;
+  final Gradient oneUiWallpaperScrim;
+  final Gradient cupertinoBottomWallpaperScrim;
+  final Gradient cupertinoStartWallpaperScrim;
 }

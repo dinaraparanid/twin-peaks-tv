@@ -10,6 +10,7 @@ final class AnimatedSelectionBorders extends StatefulWidget {
     super.key,
     this.focusNode,
     this.duration = _defaultDuration,
+    this.autoScroll = false,
     this.paddingBuilder,
     this.borderRadius = const BorderRadius.all(Radius.circular(16)),
     this.borderWidth = 2,
@@ -28,6 +29,7 @@ final class AnimatedSelectionBorders extends StatefulWidget {
 
   final FocusNode? focusNode;
   final Duration duration;
+  final bool autoScroll;
   final EdgeInsetsGeometry Function(double)? paddingBuilder;
   final BorderRadiusGeometry borderRadius;
   final double borderWidth;
@@ -93,7 +95,9 @@ final class _AnimatedSelectionBordersState
 
   @override
   Widget build(BuildContext context) {
-    return DpadFocus(
+    final focus = widget.autoScroll ? ScrollGroupDpadFocus.new : DpadFocus.new;
+
+    return focus(
       focusNode: _focusNode,
       onUp: widget.onUp,
       onDown: widget.onDown,

@@ -110,11 +110,27 @@ final class MovieInfoTypography {
       fontWeight: FontWeight.w500,
       fontSize: 16,
     );
+
+    playButton = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    );
+
+    label = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 20,
+    );
   }
 
   late final TextStyle title;
   late final TextStyle properties;
   late final TextStyle description;
+  late final TextStyle playButton;
+  late final TextStyle label;
 }
 
 @immutable
@@ -133,18 +149,10 @@ final class ActorTypography {
       fontWeight: FontWeight.w500,
       fontSize: 10,
     );
-
-    castLabel = TextStyle(
-      fontFamily: fontFamily,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      fontSize: 20,
-    );
   }
 
   late final TextStyle name;
   late final TextStyle character;
-  late final TextStyle castLabel;
 }
 
 @immutable

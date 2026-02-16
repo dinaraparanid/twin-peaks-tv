@@ -111,7 +111,7 @@ final class _CastState extends State<Cast> {
             padding: contentPadding,
             child: Text(
               context.ln.movie_cast,
-              style: context.appTheme.typography.actor.castLabel.copyWith(
+              style: context.appTheme.typography.movieInfo.label.copyWith(
                 color: context.appTheme.colors.text.primary,
               ),
             ),
@@ -124,11 +124,9 @@ final class _CastState extends State<Cast> {
               itemCount: widget.actors.length,
               padding: contentPadding,
               separatorBuilder: (_, _) => const SizedBox(width: 12),
-              itemBuilder: (_, index) => ScrollGroupDpadFocus(
-                builder: (context, _) => ActorItem(
-                  focusNode: _focusNodes[index],
-                  actor: widget.actors[index],
-                ),
+              itemBuilder: (_, index) => ActorItem(
+                focusNode: _focusNodes[index],
+                actor: widget.actors[index],
               ),
             ),
           ),

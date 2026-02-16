@@ -6,21 +6,20 @@ import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
-import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
+import 'package:twin_peaks_tv/feature/movie/bloc/bloc.dart';
 
 const _expandDuration = Duration(milliseconds: 300);
 
-final class SeasonDescription extends StatefulWidget {
-  const SeasonDescription({super.key, required this.description});
-
+final class MovieDescription extends StatefulWidget {
+  const MovieDescription({super.key, required this.description});
   final String description;
 
   @override
-  State<StatefulWidget> createState() => _SeasonDescriptionState();
+  State<StatefulWidget> createState() => _MovieDescriptionState();
 }
 
-final class _SeasonDescriptionState extends State<SeasonDescription> {
-  late final _focusNode = context.seasonBloc.descriptionNode;
+final class _MovieDescriptionState extends State<MovieDescription> {
+  late final _focusNode = context.movieBloc.descriptionNode;
 
   late final _focusScopeNode = context
       .findAncestorStateOfType<HomeScreenState>()!
@@ -39,7 +38,7 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
 
   void _focusListener() {
     if (!_focusNode.hasFocus) {
-      context.seasonBloc.add(const CollapseDescription());
+      context.movieBloc.add(const CollapseDescription());
     }
   }
 
@@ -71,18 +70,14 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
         return EdgeInsets.all(lerpDouble(0, 8, animationValue)!);
       },
       onDown: (_, _) {
-        context.seasonBloc.add(const RequestFocusOnCast());
-        return KeyEventResult.handled;
-      },
-      onRight: (_, _) {
-        context.seasonBloc.add(const RequestFocusOnCarousel());
+        context.movieBloc.add(const RequestFocusOnPlayButton());
         return KeyEventResult.handled;
       },
       onSelect: (node, _) {
-        context.seasonBloc.add(const SwitchDescriptionExpanded());
+        context.movieBloc.add(const SwitchDescriptionExpanded());
         return KeyEventResult.handled;
       },
-      builder: (context, node) => BlocBuilder<SeasonBloc, SeasonState>(
+      builder: (context, node) => BlocBuilder<MovieBloc, MovieState>(
         buildWhen: distinctState((s) => s.isDescriptionExpanded),
         builder: (context, state) => _DescriptionContent(
           node: node,

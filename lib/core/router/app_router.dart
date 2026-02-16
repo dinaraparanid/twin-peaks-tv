@@ -20,6 +20,7 @@ final class AppRouter extends RootStackRouter {
           children: [
             AutoRoute(page: SeasonOneRoute.page, initial: true),
             AutoRoute(page: SeasonTwoRoute.page),
+            AutoRoute(page: MovieRoute.page),
             AutoRoute(page: SeasonThreeRoute.page),
           ],
         ),

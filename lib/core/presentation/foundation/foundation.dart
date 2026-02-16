@@ -1,4 +1,4 @@
 export 'animated_selection_borders.dart';
 export 'gradient/gradient.dart';
-export 'movie/movie.dart';
+export 'media/media.dart';
 export 'ui_state.dart';

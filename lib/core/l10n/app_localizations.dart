@@ -172,11 +172,29 @@ abstract class AppLocalizations {
   /// **'{year} • {episodesNum} episodes • '**
   String season_year_episodes_rating(int year, int episodesNum);
 
+  /// No description provided for @movie_year_duration_rating.
+  ///
+  /// In en, this message translates to:
+  /// **'{year} • {duration} • '**
+  String movie_year_duration_rating(int year, String duration);
+
   /// No description provided for @movie_cast.
   ///
   /// In en, this message translates to:
   /// **'Cast'**
   String get movie_cast;
+
+  /// No description provided for @movie_watch.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get movie_watch;
+
+  /// No description provided for @movie_scenes_from_movie.
+  ///
+  /// In en, this message translates to:
+  /// **'Scenes from the movie'**
+  String get movie_scenes_from_movie;
 }
 
 class _AppLocalizationsDelegate
