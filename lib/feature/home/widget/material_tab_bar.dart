@@ -29,8 +29,8 @@ final class MaterialTabBar extends StatelessWidget {
           focusScopeNode: tabFocusScopeNode,
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
-          spacing: 16,
           animationDuration: HomeScreen.tabAnimationDuration,
+          separatorBuilder: (_, _) => const SizedBox(width: 16),
           indicatorBuilder: _buildIndicator,
           onDown: (_, _, _) {
             contentFocusNode.requestFocus();

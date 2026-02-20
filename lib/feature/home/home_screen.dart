@@ -88,7 +88,9 @@ final class HomeScreenState extends State<HomeScreen> {
           ),
 
           Align(
-            alignment: Alignment.topLeft,
+            alignment: AppPlatform.isAndroid
+                ? Alignment.topLeft
+                : Alignment.topCenter,
             child: BlocBuilder<HomeBloc, HomeState>(
               buildWhen: distinctState((x) => x.tabBarOpacity),
               builder: (context, state) => AnimatedOpacity(

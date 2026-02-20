@@ -4,6 +4,8 @@ import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';
 
+const _colorDivider = Color(0x80D9D9D9);
+
 final class OneUiTabBar extends StatelessWidget {
   const OneUiTabBar({
     super.key,
@@ -29,8 +31,8 @@ final class OneUiTabBar extends StatelessWidget {
           focusScopeNode: tabFocusScopeNode,
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
-          spacing: 16,
           animationDuration: HomeScreen.tabAnimationDuration,
+          separatorBuilder: (_, _) => const _Separator(),
           indicatorBuilder: _buildIndicator,
           onDown: (_, _, _) {
             contentFocusNode.requestFocus();
@@ -142,6 +144,24 @@ final class _TabIndicator extends StatelessWidget {
             ? color.resolve({WidgetState.focused})
             : color.resolve({WidgetState.selected}),
         borderRadius: _radius,
+      ),
+    );
+  }
+}
+
+final class _Separator extends StatelessWidget {
+  const _Separator();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: _colorDivider,
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+        child: SizedBox(width: 1.5, height: 16),
       ),
     );
   }

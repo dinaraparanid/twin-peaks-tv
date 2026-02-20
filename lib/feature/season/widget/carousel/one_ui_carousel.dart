@@ -5,8 +5,8 @@ import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/season_bloc.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/season_event.dart';
 
-final class MaterialCarousel extends StatelessWidget {
-  const MaterialCarousel({super.key, required this.season});
+final class OneUiCarousel extends StatelessWidget {
+  const OneUiCarousel({super.key, required this.season});
   final Season season;
 
   @override
@@ -37,8 +37,8 @@ final class MaterialCarousel extends StatelessWidget {
         },
         onRight: (_, _, _) => KeyEventResult.handled,
         itemBuilder: (context, index, isSelected, isFocused) => Container(
-          width: 8,
-          height: 8,
+          width: isSelected ? 8 : 6,
+          height: isSelected ? 8 : 6,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: switch ((isSelected, isFocused)) {
