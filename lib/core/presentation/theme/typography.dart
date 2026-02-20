@@ -1,15 +1,15 @@
-import 'dart:io';
-
 import 'package:flutter/widgets.dart';
+import 'package:twin_peaks_tv/core/utils/platform.dart';
 
 @immutable
 final class AppTypography {
   AppTypography({required BuildContext context}) {
-    final fontFamily = Platform.isAndroid
-        ? 'Roboto'
-        : Platform.isIOS
-        ? 'SF Pro'
-        : 'Inter';
+    final fontFamily = switch (AppPlatform.targetPlatform) {
+      AppPlatforms.android => 'Roboto',
+      AppPlatforms.tvos => 'SF Pro',
+      AppPlatforms.tizen => 'Inter',
+      _ => 'Inter',
+    };
 
     splash = SplashTypography._(fontFamily: fontFamily);
     navigationMenu = NavigationMenuTypography._(fontFamily: fontFamily);

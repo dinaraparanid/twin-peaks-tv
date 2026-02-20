@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
+import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 
 final class MaterialMainMenu extends StatelessWidget {
   const MaterialMainMenu({super.key, required this.child});
-
   final Widget child;
 
   @override
@@ -23,7 +22,15 @@ final class MaterialMainMenu extends StatelessWidget {
           bottomRight: Radius.circular(12),
         ),
       ),
-      child: Padding(padding: const EdgeInsets.all(20), child: child),
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 24,
+          bottom: 8,
+          left: 8,
+          right: 8,
+        ),
+        child: child,
+      ),
     );
   }
 }

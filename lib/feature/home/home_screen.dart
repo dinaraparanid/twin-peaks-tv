@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/constants/constants.dart';
 import 'package:twin_peaks_tv/core/di/app_module.dart';
+import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/home/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';
-import 'package:twin_peaks_tv/feature/home/widget/material_tab_bar.dart';
+import 'package:twin_peaks_tv/feature/home/widget/widget.dart';
 
 @RoutePage()
 final class HomeScreen extends StatefulWidget {
@@ -82,7 +83,7 @@ final class HomeScreenState extends State<HomeScreen> {
 
                 return KeyEventResult.handled;
               },
-              builder: (_) => child,
+              builder: (_, _) => child,
             ),
           ),
 
@@ -93,12 +94,24 @@ final class HomeScreenState extends State<HomeScreen> {
               builder: (context, state) => AnimatedOpacity(
                 opacity: state.tabBarOpacity,
                 duration: const Duration(milliseconds: 300),
-                child: MaterialTabBar(
-                  tabController: tabController,
-                  tabFocusScopeNode: tabFocusScopeNode,
-                  contentFocusNode: contentFocusScopeNode,
-                  currentIndex: _currentIndex,
-                ),
+                child: switch (AppPlatform.targetPlatform) {
+                  AppPlatforms.android => MaterialTabBar(
+                    tabController: tabController,
+                    tabFocusScopeNode: tabFocusScopeNode,
+                    contentFocusNode: contentFocusScopeNode,
+                    currentIndex: _currentIndex,
+                  ),
+
+                  AppPlatforms.tizen => OneUiTabBar(
+                    tabController: tabController,
+                    tabFocusScopeNode: tabFocusScopeNode,
+                    contentFocusNode: contentFocusScopeNode,
+                    currentIndex: _currentIndex,
+                  ),
+
+                  AppPlatforms.tvos => throw UnimplementedError(),
+                  AppPlatforms.webos => throw UnimplementedError(),
+                },
               ),
             ),
           ),

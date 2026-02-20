@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
+import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 import 'package:twin_peaks_tv/feature/main/widgets/widgets.dart';
 
@@ -10,8 +11,15 @@ import 'package:twin_peaks_tv/feature/main/widgets/widgets.dart';
 final class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
-  static const drawerExpandDuration = Duration(milliseconds: 300);
-  static const itemExpandDuration = Duration(milliseconds: 350);
+  static const materialConstraints = BoxConstraints(
+    minWidth: 80,
+    maxWidth: 240,
+  );
+
+  static const oneUiMenuConstraints = BoxConstraints(
+    minWidth: 64,
+    maxWidth: 200,
+  );
 
   @override
   State<StatefulWidget> createState() => _MainScreenState();
@@ -42,11 +50,23 @@ final class _MainScreenState extends State<MainScreen> {
           return const SizedBox();
         }
 
-        return _MaterialUi(
-          info: info,
-          controller: _controller,
-          contentScopeNode: _contentScopeNode,
-        );
+        return switch (AppPlatform.targetPlatform) {
+          AppPlatforms.android => _MaterialUi(
+            info: info,
+            controller: _controller,
+            contentScopeNode: _contentScopeNode,
+          ),
+
+          AppPlatforms.tizen => _TizenUi(
+            info: info,
+            controller: _controller,
+            contentScopeNode: _contentScopeNode,
+          ),
+
+          AppPlatforms.tvos => throw UnimplementedError(),
+
+          AppPlatforms.webos => throw UnimplementedError(),
+        };
       },
     );
   }
@@ -68,19 +88,12 @@ final class _MaterialUi extends StatelessWidget {
     return TvNavigationDrawer(
       controller: controller,
       backgroundColor: context.appTheme.colors.background.primary,
-      drawerExpandDuration: MainScreen.drawerExpandDuration,
       mode: TvNavigationDrawerMode.modal,
-      constraints: const BoxConstraints(minWidth: 60, maxWidth: 280),
+      constraints: MainScreen.materialConstraints,
       separatorBuilder: (_) => const SizedBox(height: 12),
-      footer: buildAppVersion(
-        info: info,
-        isMenuExpanded: () => controller.hasFocus,
-      ),
-      menuItems: buildMaterialNavigationItems(
-        context: context,
-        isDrawerExpanded: () => controller.hasFocus,
-      ),
-      drawerBuilder: (context, child) {
+      footer: buildMaterialAppVersion(info: info),
+      menuItems: buildMaterialNavigationItems(context: context),
+      drawerBuilder: (context, animation, child) {
         return MaterialMainMenu(child: child);
       },
       onRight: (_, _, isOutOfScope) {
@@ -90,13 +103,55 @@ final class _MaterialUi extends StatelessWidget {
 
         return KeyEventResult.handled;
       },
-      builder: (_, _) => DpadFocusScope(
+      builder: (_, _, _) => DpadFocusScope(
         focusScopeNode: contentScopeNode,
         onLeft: (_, _, isOutOfScope) {
           controller.requestFocusOnMenu();
           return KeyEventResult.handled;
         },
-        builder: (_) => const AutoRouter(requestFocus: false),
+        builder: (_, _) => const AutoRouter(requestFocus: false),
+      ),
+    );
+  }
+}
+
+final class _TizenUi extends StatelessWidget {
+  const _TizenUi({
+    required this.info,
+    required this.controller,
+    required this.contentScopeNode,
+  });
+
+  final PackageInfo info;
+  final TvNavigationMenuController controller;
+  final FocusScopeNode contentScopeNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return OneUiTvNavigationDrawer(
+      controller: controller,
+      backgroundColor: context.appTheme.colors.background.primary,
+      constraints: MainScreen.oneUiMenuConstraints,
+      separatorBuilder: (_) => const SizedBox(height: 12),
+      footer: buildOneUiAppVersion(info: info),
+      menuItems: buildOneUiNavigationItems(context: context),
+      drawerBuilder: (context, animation, child) {
+        return OneUiMainMenu(animation: animation, child: child);
+      },
+      onRight: (_, _, isOutOfScope) {
+        if (isOutOfScope) {
+          contentScopeNode.requestFocus();
+        }
+
+        return KeyEventResult.handled;
+      },
+      builder: (_, _, _) => DpadFocusScope(
+        focusScopeNode: contentScopeNode,
+        onLeft: (_, _, isOutOfScope) {
+          controller.requestFocusOnMenu();
+          return KeyEventResult.handled;
+        },
+        builder: (_, _) => const AutoRouter(requestFocus: false),
       ),
     );
   }

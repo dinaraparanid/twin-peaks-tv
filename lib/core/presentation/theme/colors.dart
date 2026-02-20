@@ -3,6 +3,7 @@ import 'package:flutter/painting.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 
 const _limeGreen = Color(0xFF39C43C);
+const _limeGreen01 = Color(0x0339C43C);
 const _limeGreen50 = Color(0x8039C43C);
 const _limeGreen60 = Color(0x9939C43C);
 const _limeGreen80 = Color(0xCC39C43C);
@@ -19,15 +20,15 @@ const _elegantBlack90 = Color(0xE6131313);
 const _elegantBlack80 = Color(0xCC131313);
 const _elegantBlack60 = Color(0x99131313);
 const _elegantBlack30 = Color(0x4D131313);
-const _elegantBlack10 = Color(0x1A131313);
 const _elegantBlack01 = Color(0x03131313);
 const _royalWhite50 = Color(0x80FEFFFE);
+const _blackout = Color(0xFF1E1E1E);
 const _transparent = Color(0x00000000);
 
 @immutable
 final class AppColors {
   const AppColors({
-    this.primary = _limeGreen,
+    this.primary = const PrimaryColors(),
     this.background = const BackgroundColors(),
     this.splash = const SplashColors(),
     this.text = const TextColors(),
@@ -38,7 +39,7 @@ final class AppColors {
     this.gradients = const Gradients(),
   });
 
-  final Color primary;
+  final PrimaryColors primary;
   final BackgroundColors background;
   final SplashColors splash;
   final TextColors text;
@@ -50,6 +51,23 @@ final class AppColors {
 }
 
 @immutable
+final class PrimaryColors {
+  const PrimaryColors({
+    this.primary = _limeGreen,
+    this.primary01 = _limeGreen01,
+    this.primary50 = _limeGreen50,
+    this.primary60 = _limeGreen60,
+    this.primary80 = _limeGreen80,
+  });
+
+  final Color primary;
+  final Color primary01;
+  final Color primary50;
+  final Color primary60;
+  final Color primary80;
+}
+
+@immutable
 final class BackgroundColors {
   const BackgroundColors({
     this.primary = _elegantBlack,
@@ -57,6 +75,7 @@ final class BackgroundColors {
     this.primary60 = _elegantBlack60,
     this.primary30 = _elegantBlack30,
     this.primary01 = _elegantBlack01,
+    this.secondary = _blackout,
   });
 
   final Color primary;
@@ -64,6 +83,7 @@ final class BackgroundColors {
   final Color primary60;
   final Color primary30;
   final Color primary01;
+  final Color secondary;
 }
 
 @immutable
@@ -163,7 +183,7 @@ final class Gradients {
     this.materialWallpaperScrim = const RadialGradient(
       radius: 1,
       center: Alignment.topRight,
-      colors: [_elegantBlack10, _elegantBlack],
+      colors: [_elegantBlack01, _elegantBlack],
       stops: [0.0, 0.8],
       transform: EllipticalGradientTransform(
         relativeCenter: Offset(1, 1),
@@ -173,19 +193,31 @@ final class Gradients {
     this.oneUiWallpaperScrim = const LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [_elegantBlack10, _elegantBlack90, _elegantBlack],
-      stops: [0.0, 0.9, 1],
+      colors: [_elegantBlack01, _elegantBlack90, _elegantBlack],
+      stops: [0.0, 0.5, 1],
+    ),
+    this.oneUiMainMenuBorder = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        _limeGreen01,
+        _limeGreen01,
+        _limeGreen80,
+        _limeGreen01,
+        _limeGreen01,
+      ],
+      stops: [0.0, 0.4, 0.6, 0.8, 1],
     ),
     this.cupertinoBottomWallpaperScrim = const LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      colors: [_elegantBlack10, _elegantBlack90, _elegantBlack],
-      stops: [0.0, 0.9, 1],
+      colors: [_elegantBlack01, _elegantBlack90, _elegantBlack],
+      stops: [0.0, 0.5, 1],
     ),
     this.cupertinoStartWallpaperScrim = const LinearGradient(
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
-      colors: [_elegantBlack10, _elegantBlack],
+      colors: [_elegantBlack01, _elegantBlack],
       stops: [0.0, 1],
     ),
   });
@@ -194,6 +226,7 @@ final class Gradients {
   final Gradient transparent;
   final Gradient materialWallpaperScrim;
   final Gradient oneUiWallpaperScrim;
+  final Gradient oneUiMainMenuBorder;
   final Gradient cupertinoBottomWallpaperScrim;
   final Gradient cupertinoStartWallpaperScrim;
 }

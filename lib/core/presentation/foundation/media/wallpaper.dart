@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_tizen/flutter_tizen.dart' as tizen;
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
+import 'package:twin_peaks_tv/core/utils/platform.dart';
 
 final class Wallpaper extends StatelessWidget {
   const Wallpaper({super.key, required this.thumbnailUrl});
@@ -11,19 +9,12 @@ final class Wallpaper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
-      return _MaterialWallpaper(thumbnailUrl: thumbnailUrl);
-    }
-
-    if (Platform.isIOS) {
-      return _CupertinoWallpaper(thumbnailUrl: thumbnailUrl);
-    }
-
-    if (tizen.isTizen) {
-      return _OneUiWallpaper(thumbnailUrl: thumbnailUrl);
-    }
-
-    return const SizedBox();
+    return switch (AppPlatform.targetPlatform) {
+      AppPlatforms.android => _MaterialWallpaper(thumbnailUrl: thumbnailUrl),
+      AppPlatforms.tizen => _OneUiWallpaper(thumbnailUrl: thumbnailUrl),
+      AppPlatforms.tvos => _CupertinoWallpaper(thumbnailUrl: thumbnailUrl),
+      AppPlatforms.webos => throw UnimplementedError(),
+    };
   }
 }
 
@@ -47,6 +38,9 @@ final class _MaterialWallpaper extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: thumbnailUrl,
               fit: BoxFit.cover,
+              width: width,
+              height: height,
+              alignment: Alignment.topCenter,
               httpHeaders: {
                 'User-Agent':
                     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
@@ -86,6 +80,13 @@ final class _OneUiWallpaper extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: thumbnailUrl,
               fit: BoxFit.cover,
+              width: width,
+              height: height,
+              alignment: Alignment.topCenter,
+              httpHeaders: {
+                'User-Agent':
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
+              },
               placeholder: (_, _) => const SizedBox(),
             ),
           ),
@@ -125,6 +126,13 @@ final class _CupertinoWallpaper extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: thumbnailUrl,
               fit: BoxFit.cover,
+              width: width,
+              height: height,
+              alignment: Alignment.topCenter,
+              httpHeaders: {
+                'User-Agent':
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
+              },
               placeholder: (_, _) => const SizedBox(),
             ),
           ),

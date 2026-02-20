@@ -5,18 +5,17 @@ import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/router/app_router.gr.dart';
 import 'package:twin_peaks_tv/core/utils/ext/color_ext.dart';
-import 'package:twin_peaks_tv/feature/main/main_screen.dart';
 import 'package:twin_peaks_tv/feature/main/main_tab.dart';
+
+const _decorationSwitchDuration = Duration(milliseconds: 200);
 
 List<TvNavigationMenuItem> buildMaterialNavigationItems({
   required BuildContext context,
-  required bool Function() isDrawerExpanded,
 }) {
   return [
     _MenuItem(
       key: const ValueKey(MainTab.home),
       title: context.ln.main_menu_home,
-      isDrawerExpanded: isDrawerExpanded,
       onSelect: () => context.replaceRoute(const HomeRoute()),
       iconBuilder: (color) => ConstrainedBox(
         constraints: const BoxConstraints(
@@ -35,7 +34,6 @@ List<TvNavigationMenuItem> buildMaterialNavigationItems({
     _MenuItem(
       key: const ValueKey(MainTab.encyclopedia),
       title: context.ln.main_menu_encyclopedia,
-      isDrawerExpanded: isDrawerExpanded,
       onSelect: () => context.replaceRoute(const EncyclopediaRoute()),
       iconBuilder: (color) => ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 28.0, maxHeight: 28.0),
@@ -50,7 +48,6 @@ List<TvNavigationMenuItem> buildMaterialNavigationItems({
     _MenuItem(
       key: const ValueKey(MainTab.settings),
       title: context.ln.main_menu_settings,
-      isDrawerExpanded: isDrawerExpanded,
       iconBuilder: (color) => Icon(Icons.settings, size: 28.0, color: color),
       onSelect: () => context.replaceRoute(const SettingsRoute()),
     ),
@@ -63,38 +60,37 @@ final class _MenuItem {
     required this.key,
     required this.title,
     this.iconBuilder,
-    required this.isDrawerExpanded,
     required this.onSelect,
   });
 
   final Key key;
   final String title;
   final Widget Function(Color)? iconBuilder;
-  final bool Function() isDrawerExpanded;
   final VoidCallback onSelect;
 
   TvNavigationMenuItem build(BuildContext context) {
     final theme = context.appTheme;
 
+    final decoration = WidgetStateProperty.resolveWith((states) {
+      final isSelected = states.contains(WidgetState.selected);
+      final isFocused = states.contains(WidgetState.focused);
+
+      final color = switch ((isSelected, isFocused)) {
+        (true, true) => theme.colors.navigationMenu.itemSelectedFocused,
+        (true, _) => theme.colors.navigationMenu.itemSelectedUnfocused,
+        (_, true) => theme.colors.navigationMenu.itemFocused,
+        _ => Colors.transparent,
+      };
+
+      return BoxDecoration(
+        color: color,
+        borderRadius: const BorderRadius.all(Radius.circular(32)),
+      );
+    });
+
     return TvNavigationMenuItem(
       key: key,
-      decoration: WidgetStateProperty.resolveWith((states) {
-        final isSelected = states.contains(WidgetState.selected);
-        final isFocused = states.contains(WidgetState.focused);
-
-        final color = switch ((isSelected, isFocused)) {
-          (true, true) => theme.colors.navigationMenu.itemSelectedFocused,
-          (true, _) => theme.colors.navigationMenu.itemSelectedUnfocused,
-          (_, true) => theme.colors.navigationMenu.itemFocused,
-          _ => Colors.transparent,
-        };
-
-        return BoxDecoration(
-          color: color,
-          borderRadius: const BorderRadius.all(Radius.circular(32)),
-        );
-      }),
-      icon: WidgetStateProperty.resolveWith((states) {
+      iconBuilder: (_) => WidgetStateProperty.resolveWith((states) {
         final color = states.contains(WidgetState.selected)
             ? theme.colors.navigationMenu.itemContentSelected
             : theme.colors.navigationMenu.itemContent;
@@ -102,24 +98,40 @@ final class _MenuItem {
         return iconBuilder!(color);
       }),
       onSelect: onSelect,
-      builder: (context, constraints, states) {
+      builder: (context, constraints, states, icon) {
+        final expandAnimation = TvNavigationDrawer.animationOf(context);
+
         final color = states.contains(WidgetState.selected)
             ? theme.colors.navigationMenu.itemContentSelected
             : theme.colors.navigationMenu.itemContent;
 
-        return ConstrainedBox(
+        return AnimatedContainer(
+          duration: _decorationSwitchDuration,
+          decoration: decoration.resolve(states),
           constraints: constraints,
-          child: AnimatedOpacity(
-            opacity: isDrawerExpanded() ? 1 : 0,
-            duration: MainScreen.itemExpandDuration,
-            child: Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: theme.typography.navigationMenu.item.copyWith(
-                color: color,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              if (icon != null)
+                Flexible(flex: 0, child: icon),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Opacity(
+                    opacity: expandAnimation.value,
+                    child: Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.typography.navigationMenu.item.copyWith(
+                        color: color,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         );
       },
