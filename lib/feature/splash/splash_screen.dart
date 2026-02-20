@@ -55,7 +55,12 @@ final class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(Assets.images.bgSplashScreen.path, fit: BoxFit.cover),
+        Image.asset(
+          Assets.images.bgSplashScreen.path,
+          fit: BoxFit.cover,
+          width: MediaQuery.sizeOf(context).width,
+          height: MediaQuery.sizeOf(context).height,
+        ),
 
         Align(child: _SplashScreenText(textOpacity: _textOpacity)),
       ],

@@ -24,7 +24,7 @@ final class WallpaperCarousel extends StatelessWidget {
             AppPlatforms.android => MaterialCarousel(season: season),
             AppPlatforms.tizen => OneUiCarousel(season: season),
             AppPlatforms.tvos => throw UnimplementedError(),
-            AppPlatforms.webos => throw UnimplementedError(),
+            AppPlatforms.webos => MaterialCarousel(season: season),
           },
 
           Initial<Season>() ||

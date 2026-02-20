@@ -13,7 +13,7 @@ final class Wallpaper extends StatelessWidget {
       AppPlatforms.android => _MaterialWallpaper(thumbnailUrl: thumbnailUrl),
       AppPlatforms.tizen => _OneUiWallpaper(thumbnailUrl: thumbnailUrl),
       AppPlatforms.tvos => _CupertinoWallpaper(thumbnailUrl: thumbnailUrl),
-      AppPlatforms.webos => throw UnimplementedError(),
+      AppPlatforms.webos => _MaterialWallpaper(thumbnailUrl: thumbnailUrl),
     };
   }
 }

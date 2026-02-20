@@ -112,7 +112,13 @@ final class HomeScreenState extends State<HomeScreen> {
                   ),
 
                   AppPlatforms.tvos => throw UnimplementedError(),
-                  AppPlatforms.webos => throw UnimplementedError(),
+
+                  AppPlatforms.webos => MaterialTabBar(
+                    tabController: tabController,
+                    tabFocusScopeNode: tabFocusScopeNode,
+                    contentFocusNode: contentFocusScopeNode,
+                    currentIndex: _currentIndex,
+                  ),
                 },
               ),
             ),

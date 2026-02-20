@@ -65,7 +65,11 @@ final class _MainScreenState extends State<MainScreen> {
 
           AppPlatforms.tvos => throw UnimplementedError(),
 
-          AppPlatforms.webos => throw UnimplementedError(),
+          AppPlatforms.webos => _MaterialUi(
+            info: info,
+            controller: _controller,
+            contentScopeNode: _contentScopeNode,
+          ),
         };
       },
     );
