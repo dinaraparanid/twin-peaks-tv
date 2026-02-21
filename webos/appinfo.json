@@ -1,0 +1,10 @@
+{
+  "id": "com.paranid5.twin-peaks-tv",
+  "version": "1.0.0",
+  "vendor": "Paranid5",
+  "type": "web",
+  "main": "index.html",
+  "title": "Twin Peaks TV",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png"
+}

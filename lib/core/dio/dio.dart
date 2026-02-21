@@ -10,9 +10,9 @@ final class AppDio {
   late final value = Dio(
     BaseOptions(
       baseUrl: 'https://t9sk0mds-8080.euw.devtunnels.ms',
-      connectTimeout: const Duration(seconds: 7),
-      receiveTimeout: const Duration(seconds: 7),
-      sendTimeout: const Duration(seconds: 7),
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
       followRedirects: true,
       headers: {
         'User-Agent':
