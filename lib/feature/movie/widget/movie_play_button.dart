@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/ext/color_ext.dart';
+import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/bloc.dart';
 
 const _durationTransition = Duration(milliseconds: 300);
@@ -96,10 +95,11 @@ final class _PlayButtonAnimation extends AnimatedWidget {
     );
 
     final radius = BorderRadius.all(
-      Radius.circular(switch ((Platform.isAndroid, Platform.isIOS)) {
-        (true, _) => 24,
-        (false, true) => 8,
-        (false, false) => 16,
+      Radius.circular(switch (AppPlatform.targetPlatform) {
+        AppPlatforms.android => 24,
+        AppPlatforms.tizen => 16,
+        AppPlatforms.tvos => 8,
+        AppPlatforms.webos => 16,
       }),
     );
 
