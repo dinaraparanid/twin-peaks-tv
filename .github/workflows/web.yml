@@ -12,9 +12,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-      - uses: bluefireteam/flutter-gh-pages@v9
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.38.9
+
+      - name: Get Dependencies
+        run: flutter pub get
+
+      - name: Perform code generation
+        run: flutter pub run build_runner build
+
+      - name: Publish to GitHub Pages
+        uses: bluefireteam/flutter-gh-pages@v9
         with:
           webRenderer: canvaskit
           baseHref: /twin-peaks-tv/
