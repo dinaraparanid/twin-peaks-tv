@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:twin_peaks_tv/core/l10n/app_localizations.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/router/app_router.dart';
+import 'package:twin_peaks_tv/core/utils/image_cache.dart';
 
 final class App extends StatelessWidget {
   const App({super.key, required this.router});
@@ -15,9 +16,14 @@ final class App extends StatelessWidget {
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
-    return AppThemeProvider(
-      theme: theme,
-      child: _MaterialUi(router: router, theme: theme),
+    return FutureBuilder(
+      future: cacheAssetImages(context),
+      builder: (context, snapshot) => AppThemeProvider(
+        theme: theme,
+        child: snapshot.connectionState == ConnectionState.done
+            ? _MaterialUi(router: router, theme: theme)
+            : const SizedBox(),
+      ),
     );
   }
 }
