@@ -8,7 +8,7 @@ final class AppTypography {
       AppPlatforms.android => 'Roboto',
       AppPlatforms.tvos => 'SF Pro',
       AppPlatforms.tizen => 'Inter',
-      _ => 'Inter',
+      AppPlatforms.webos => 'MuseoSans',
     };
 
     splash = SplashTypography._(fontFamily: fontFamily);
@@ -93,7 +93,7 @@ final class MovieInfoTypography {
     title = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
       fontSize: 28,
     );
 

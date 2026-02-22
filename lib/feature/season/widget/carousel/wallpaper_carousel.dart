@@ -7,6 +7,7 @@ import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/season/widget/carousel/material_carousel.dart';
 import 'package:twin_peaks_tv/feature/season/widget/carousel/one_ui_carousel.dart';
+import 'package:twin_peaks_tv/feature/season/widget/carousel/webos_carousel.dart';
 
 final class WallpaperCarousel extends StatelessWidget {
   const WallpaperCarousel({super.key});
@@ -24,7 +25,7 @@ final class WallpaperCarousel extends StatelessWidget {
             AppPlatforms.android => MaterialCarousel(season: season),
             AppPlatforms.tizen => OneUiCarousel(season: season),
             AppPlatforms.tvos => throw UnimplementedError(),
-            AppPlatforms.webos => MaterialCarousel(season: season),
+            AppPlatforms.webos => WebOSCarousel(season: season),
           },
 
           Initial<Season>() ||

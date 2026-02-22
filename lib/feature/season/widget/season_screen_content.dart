@@ -18,11 +18,17 @@ final class SeasonScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return MediaScreenContent(
       scrollController: context.seasonBloc.scrollController,
-      wallpaper: const SeasonWallpaper(),
+      wallpaperBuilder: (_) => const SeasonWallpaper(),
       properties: SeasonProperties(season: season),
       title: SeasonTitle(title: season.title),
       infoInteraction: SeasonDescription(description: season.description),
       carousel: const WallpaperCarousel(),
+      onScrollToPreviousPicture: () {
+        context.seasonBloc.add(const ScrollToPreviousPicture());
+      },
+      onScrollToNextPicture: () {
+        context.seasonBloc.add(const ScrollToNextPicture());
+      },
       cast: _Cast(actors: season.actors),
       sliverContent: EpisodeList(episodes: season.episodes),
     );

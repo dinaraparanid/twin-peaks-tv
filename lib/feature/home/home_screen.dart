@@ -72,18 +72,21 @@ final class HomeScreenState extends State<HomeScreen> {
       create: (_) => di<HomeBlocFactory>()(),
       child: Stack(
         children: [
-          AutoRouter(
-            requestFocus: false,
-            builder: (context, child) => DpadFocusScope(
-              focusScopeNode: contentFocusScopeNode,
-              onUp: (_, _, isOutOfScope) {
-                if (isOutOfScope) {
-                  tabFocusScopeNode.requestFocus();
-                }
+          Padding(
+            padding: EdgeInsets.only(top: AppPlatform.isWebOS ? 64 : 0),
+            child: AutoRouter(
+              requestFocus: false,
+              builder: (context, child) => DpadFocusScope(
+                focusScopeNode: contentFocusScopeNode,
+                onUp: (_, _, isOutOfScope) {
+                  if (isOutOfScope) {
+                    tabFocusScopeNode.requestFocus();
+                  }
 
-                return KeyEventResult.handled;
-              },
-              builder: (_, _) => child,
+                  return KeyEventResult.handled;
+                },
+                builder: (_, _) => child,
+              ),
             ),
           ),
 

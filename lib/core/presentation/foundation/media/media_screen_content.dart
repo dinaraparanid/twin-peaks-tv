@@ -3,7 +3,8 @@ import 'dart:ui';
 import 'package:flutter/widgets.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:tv_plus/tv_plus.dart';
-import 'package:twin_peaks_tv/core/utils/ext/key_ext.dart';
+import 'package:twin_peaks_tv/assets/assets.gen.dart';
+import 'package:twin_peaks_tv/core/utils/ext/color_ext.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/feature/main/main_screen.dart';
 
@@ -11,21 +12,25 @@ final class MediaScreenContent extends StatelessWidget {
   const MediaScreenContent({
     super.key,
     required this.scrollController,
-    required this.wallpaper,
+    required this.wallpaperBuilder,
     required this.properties,
     required this.title,
     required this.infoInteraction,
     this.carousel,
+    this.onScrollToPreviousPicture,
+    this.onScrollToNextPicture,
     required this.cast,
     required this.sliverContent,
   });
 
   final ScrollController scrollController;
-  final Widget wallpaper;
+  final Widget Function(BuildContext) wallpaperBuilder;
   final Widget properties;
   final Widget title;
   final Widget infoInteraction;
   final Widget? carousel;
+  final VoidCallback? onScrollToPreviousPicture;
+  final VoidCallback? onScrollToNextPicture;
   final Widget cast;
   final Widget sliverContent;
 
@@ -36,14 +41,20 @@ final class MediaScreenContent extends StatelessWidget {
       slivers: [
         SliverStack(
           children: [
-            switch (AppPlatform.isAndroid) {
-              true => SliverPositioned(top: 0, right: 0, child: wallpaper),
+            ?switch (AppPlatform.targetPlatform) {
+              AppPlatforms.android => SliverPositioned(
+                top: 0,
+                right: 0,
+                child: Builder(builder: wallpaperBuilder),
+              ),
+
+              AppPlatforms.webos => null,
 
               _ => SliverPositioned(
                 top: 0,
                 right: 0,
                 left: 0,
-                child: wallpaper,
+                child: Builder(builder: wallpaperBuilder),
               ),
             },
 
@@ -51,13 +62,28 @@ final class MediaScreenContent extends StatelessWidget {
               sliver: MultiSliver(
                 children: [
                   SliverToBoxAdapter(
-                    child: _Info(
-                      properties: properties,
-                      title: title,
-                      infoInteraction: infoInteraction,
-                      carousel: carousel,
-                      cast: cast,
-                    ),
+                    child: switch (AppPlatform.targetPlatform) {
+                      AppPlatforms.android ||
+                      AppPlatforms.tizen ||
+                      AppPlatforms.tvos => _FullScreenInfo(
+                        properties: properties,
+                        title: title,
+                        infoInteraction: infoInteraction,
+                        carousel: carousel,
+                        cast: cast,
+                      ),
+
+                      AppPlatforms.webos => _WebOSInfo(
+                        properties: properties,
+                        title: title,
+                        infoInteraction: infoInteraction,
+                        wallpaperBuilder: wallpaperBuilder,
+                        carousel: carousel,
+                        onScrollToPreviousPicture: onScrollToPreviousPicture,
+                        onScrollToNextPicture: onScrollToNextPicture,
+                        cast: cast,
+                      ),
+                    },
                   ),
 
                   const SliverToBoxAdapter(child: SizedBox(height: 24)),
@@ -104,8 +130,8 @@ final class _SliverContentPadding extends StatelessWidget {
   }
 }
 
-final class _Info extends StatefulWidget {
-  const _Info({
+final class _FullScreenInfo extends StatelessWidget {
+  const _FullScreenInfo({
     required this.properties,
     required this.title,
     required this.infoInteraction,
@@ -120,22 +146,6 @@ final class _Info extends StatefulWidget {
   final Widget cast;
 
   @override
-  State<StatefulWidget> createState() => _InfoState();
-}
-
-final class _InfoState extends State<_Info> {
-  final _infoContainerKey = GlobalKey();
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {}); // init info container size
-    });
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -144,29 +154,28 @@ final class _InfoState extends State<_Info> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Flexible(
-                key: _infoContainerKey,
                 flex: 1,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 120),
-                    widget.properties,
-                    widget.title,
+                    properties,
+                    title,
                     const SizedBox(height: 8),
-                    widget.infoInteraction,
+                    infoInteraction,
                   ],
                 ),
               ),
 
               Flexible(
                 flex: 1,
-                child: switch (widget.carousel) {
+                child: switch (carousel) {
                   null => const SizedBox(),
                   final carousel => Container(
-                    height: _infoContainerKey.size?.height,
                     alignment: Alignment.bottomRight,
                     padding: const EdgeInsets.only(left: 64),
                     child: carousel,
@@ -179,7 +188,115 @@ final class _InfoState extends State<_Info> {
 
         const SizedBox(height: 16),
 
-        widget.cast,
+        cast,
+      ],
+    );
+  }
+}
+
+final class _WebOSInfo extends StatelessWidget {
+  const _WebOSInfo({
+    required this.properties,
+    required this.title,
+    required this.infoInteraction,
+    required this.wallpaperBuilder,
+    this.carousel,
+    this.onScrollToPreviousPicture,
+    this.onScrollToNextPicture,
+    required this.cast,
+  });
+
+  static const _arrowsColor = Color(0xCCFFFFFF);
+
+  final Widget properties;
+  final Widget title;
+  final Widget infoInteraction;
+  final Widget Function(BuildContext) wallpaperBuilder;
+  final Widget? carousel;
+  final VoidCallback? onScrollToPreviousPicture;
+  final VoidCallback? onScrollToNextPicture;
+  final Widget cast;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Flexible(
+              flex: 1,
+              child: Stack(
+                children: [
+                  Builder(builder: wallpaperBuilder),
+
+                  if (carousel != null) ...[
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 16,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: carousel!,
+                      ),
+                    ),
+
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      left: 12,
+                      child: GestureDetector(
+                        onTap: onScrollToPreviousPicture,
+                        child: Assets.icons.chevronLeft.svg(
+                          width: 24,
+                          height: 24,
+                          colorFilter: _arrowsColor.toColorFilter(),
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      top: 0,
+                      bottom: 0,
+                      right: 12,
+                      child: GestureDetector(
+                        onTap: onScrollToNextPicture,
+                        child: Assets.icons.chevronRight.svg(
+                          width: 24,
+                          height: 24,
+                          colorFilter: _arrowsColor.toColorFilter(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+
+            Flexible(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 32),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    properties,
+                    title,
+                    const SizedBox(height: 8),
+                    infoInteraction,
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 16),
+
+        cast,
       ],
     );
   }

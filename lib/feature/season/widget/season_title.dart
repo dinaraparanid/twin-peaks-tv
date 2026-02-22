@@ -7,10 +7,14 @@ final class SeasonTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: context.appTheme.typography.movieInfo.title.copyWith(
-        color: context.appTheme.colors.text.primary,
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        title,
+        maxLines: 1,
+        style: context.appTheme.typography.movieInfo.title.copyWith(
+          color: context.appTheme.colors.text.primary,
+        ),
       ),
     );
   }

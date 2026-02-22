@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
+import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
 
@@ -74,9 +75,21 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
         context.seasonBloc.add(const RequestFocusOnCast());
         return KeyEventResult.handled;
       },
+      onLeft: (_, _) {
+        if (AppPlatform.isWebOS) {
+          context.seasonBloc.add(const RequestFocusOnCarousel());
+          return KeyEventResult.handled;
+        }
+
+        return KeyEventResult.ignored;
+      },
       onRight: (_, _) {
-        context.seasonBloc.add(const RequestFocusOnCarousel());
-        return KeyEventResult.handled;
+        if (!AppPlatform.isWebOS) {
+          context.seasonBloc.add(const RequestFocusOnCarousel());
+          return KeyEventResult.handled;
+        }
+
+        return KeyEventResult.ignored;
       },
       onSelect: (node, _) {
         context.seasonBloc.add(const SwitchDescriptionExpanded());
@@ -154,11 +167,13 @@ final class _CollapsedDescription extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final span = TextSpan(text: description, style: descriptionStyle);
+        final align = AppPlatform.isWebOS ? TextAlign.end : TextAlign.start;
 
         final painter = TextPainter(
           text: span,
           maxLines: 2,
           textDirection: TextDirection.ltr,
+          textAlign: align,
         );
 
         painter.layout(maxWidth: constraints.maxWidth);
@@ -170,6 +185,7 @@ final class _CollapsedDescription extends StatelessWidget {
         return RichText(
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
+          textAlign: align,
           text: TextSpan(
             text: '${description.substring(0, position.offset - 12)}... ',
             style: descriptionStyle,
@@ -196,13 +212,17 @@ final class _ExpandedDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final align = AppPlatform.isWebOS ? TextAlign.end : TextAlign.start;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         RichText(
+          textAlign: align,
           text: TextSpan(text: description, style: descriptionStyle),
         ),
         RichText(
+          textAlign: align,
           text: TextSpan(text: context.ln.general_less, style: moreLessStyle),
         ),
       ],

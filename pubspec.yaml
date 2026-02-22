@@ -77,6 +77,28 @@ flutter:
     - assets/icons/
     - assets/icons/star/
     - assets/images/
+  fonts:
+    - family: MuseoSans
+      fonts:
+        - asset: assets/fonts/museo/MuseoSans-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/museo/MuseoSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/museo/MuseoSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/museo/MuseoSans-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - asset: assets/fonts/museo/MuseoSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/museo/MuseoSans-BoldItalic.ttf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/museo/MuseoSans-Black.ttf
+          weight: 900
+        - asset: assets/fonts/museo/MuseoSans-BlackItalic.ttf
+          style: italic
+          weight: 900
 
 flutter_gen:
   output: lib/assets/

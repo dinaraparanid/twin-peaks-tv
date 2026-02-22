@@ -9,7 +9,7 @@ import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 
 const _decorationSwitchDuration = Duration(milliseconds: 200);
 
-List<TvNavigationMenuItem> buildMaterialNavigationItems({
+List<TvNavigationMenuItem> buildWebOSNavigationItems({
   required BuildContext context,
 }) {
   return [
@@ -71,45 +71,64 @@ final class _MenuItem {
   TvNavigationMenuItem build(BuildContext context) {
     final theme = context.appTheme;
 
-    final decoration = WidgetStateProperty.resolveWith((states) {
-      final isSelected = states.contains(WidgetState.selected);
-      final isFocused = states.contains(WidgetState.focused);
-
-      final color = switch ((isSelected, isFocused)) {
-        (true, true) => theme.colors.navigationMenu.itemSelectedFocused,
-        (true, _) => theme.colors.navigationMenu.itemSelectedUnfocused,
-        (_, true) => theme.colors.navigationMenu.itemFocused,
-        _ => Colors.transparent,
-      };
-
-      return BoxDecoration(
-        color: color,
-        borderRadius: const BorderRadius.all(Radius.circular(32)),
-      );
-    });
-
     return TvNavigationMenuItem(
       key: key,
-      iconBuilder: (_) => WidgetStateProperty.resolveWith((states) {
-        final color = states.contains(WidgetState.selected)
+      iconBuilder: (context) => WidgetStateProperty.resolveWith((states) {
+        final animation = TvNavigationDrawer.animationOf(context);
+
+        final unfocusedColor = states.contains(WidgetState.selected)
+            ? theme.colors.navigationMenu.itemSelectedFocused
+            : theme.colors.navigationMenu.itemContent;
+
+        final focusedColor = states.contains(WidgetState.selected)
             ? theme.colors.navigationMenu.itemContentSelected
             : theme.colors.navigationMenu.itemContent;
 
-        return iconBuilder!(color);
+        return iconBuilder!(
+          Color.lerp(unfocusedColor, focusedColor, animation.value)!,
+        );
       }),
       onSelect: onSelect,
       builder: (context, constraints, states, icon) {
         final expandAnimation = TvNavigationDrawer.animationOf(context);
 
-        final color = states.contains(WidgetState.selected)
+        final unfocusedColor = states.contains(WidgetState.selected)
+            ? theme.colors.navigationMenu.itemSelectedFocused
+            : theme.colors.navigationMenu.itemContent;
+
+        final focusedColor = states.contains(WidgetState.selected)
             ? theme.colors.navigationMenu.itemContentSelected
             : theme.colors.navigationMenu.itemContent;
+
+        final decoration = WidgetStateProperty.resolveWith((states) {
+          final isSelected = states.contains(WidgetState.selected);
+          final isFocused = states.contains(WidgetState.focused);
+
+          final color = switch ((isSelected, isFocused)) {
+            (true, true) => theme.colors.navigationMenu.itemSelectedFocused,
+
+            (true, _) => Color.lerp(
+              Colors.transparent,
+              theme.colors.navigationMenu.itemSelectedUnfocused,
+              expandAnimation.value,
+            ),
+
+            (_, true) => theme.colors.navigationMenu.itemFocused,
+
+            _ => Colors.transparent,
+          };
+
+          return BoxDecoration(
+            color: color,
+            borderRadius: const BorderRadius.all(Radius.circular(4)),
+          );
+        });
 
         return AnimatedContainer(
           duration: _decorationSwitchDuration,
           decoration: decoration.resolve(states),
           constraints: constraints,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           child: Row(
             children: [
               if (icon != null) Flexible(flex: 0, child: icon),
@@ -124,7 +143,11 @@ final class _MenuItem {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: theme.typography.navigationMenu.item.copyWith(
-                        color: color,
+                        color: Color.lerp(
+                          unfocusedColor,
+                          focusedColor,
+                          expandAnimation.value,
+                        ),
                       ),
                     ),
                   ),

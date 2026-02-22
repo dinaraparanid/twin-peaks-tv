@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
+import 'package:twin_peaks_tv/core/utils/ext/focus_scope_node_ext.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';
 
@@ -17,7 +18,7 @@ final class OneUiTabBar extends StatelessWidget {
 
   final TvTabBarController tabController;
   final FocusScopeNode tabFocusScopeNode;
-  final FocusNode contentFocusNode;
+  final FocusScopeNode contentFocusNode;
   final int currentIndex;
 
   @override
@@ -35,7 +36,7 @@ final class OneUiTabBar extends StatelessWidget {
           separatorBuilder: (_, _) => const _Separator(),
           indicatorBuilder: _buildIndicator,
           onDown: (_, _, _) {
-            contentFocusNode.requestFocus();
+            contentFocusNode.requestFocusOnChild();
             return KeyEventResult.handled;
           },
           onLeft: (_, _, isOutOfScope) {

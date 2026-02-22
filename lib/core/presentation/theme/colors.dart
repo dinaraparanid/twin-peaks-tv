@@ -220,6 +220,16 @@ final class Gradients {
       colors: [_elegantBlack01, _elegantBlack],
       stops: [0.0, 1],
     ),
+    this.webOSVerticalScrim = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [_elegantBlack30, _elegantBlack01, _elegantBlack],
+    ),
+    this.webOSHorizontalScrim = const LinearGradient(
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      colors: [_elegantBlack, _elegantBlack01, _elegantBlack],
+    ),
   });
 
   final Gradient selection;
@@ -229,4 +239,6 @@ final class Gradients {
   final Gradient oneUiMainMenuBorder;
   final Gradient cupertinoBottomWallpaperScrim;
   final Gradient cupertinoStartWallpaperScrim;
+  final Gradient webOSVerticalScrim;
+  final Gradient webOSHorizontalScrim;
 }

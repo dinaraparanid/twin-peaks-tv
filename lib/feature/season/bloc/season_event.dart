@@ -20,6 +20,14 @@ final class CollapseDescription extends SeasonEvent {
   const CollapseDescription();
 }
 
+final class ScrollToPreviousPicture extends SeasonEvent {
+  const ScrollToPreviousPicture();
+}
+
+final class ScrollToNextPicture extends SeasonEvent {
+  const ScrollToNextPicture();
+}
+
 final class RequestFocusOnDescription extends SeasonEvent {
   const RequestFocusOnDescription();
 }

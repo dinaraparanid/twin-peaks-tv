@@ -11,6 +11,8 @@ final class AppPlatform {
 
   static bool get isTizen => targetPlatform == AppPlatforms.tizen;
 
+  static bool get isWebOS => targetPlatform == AppPlatforms.webos;
+
   static AppPlatforms get targetPlatform {
     // ignore: unnecessary_null_comparison
     if (_manualPlatform != null) return _manualPlatform;

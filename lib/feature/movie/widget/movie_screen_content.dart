@@ -17,7 +17,7 @@ final class MovieScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return MediaScreenContent(
       scrollController: context.movieBloc.scrollController,
-      wallpaper: const MovieWallpaper(),
+      wallpaperBuilder: (_) => const MovieWallpaper(),
       properties: MovieProperties(movie: movie),
       title: MovieTitle(title: movie.title),
       infoInteraction: MovieInfoInteraction(movie: movie),

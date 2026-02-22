@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
@@ -13,7 +14,7 @@ final class Wallpaper extends StatelessWidget {
       AppPlatforms.android => _MaterialWallpaper(thumbnailUrl: thumbnailUrl),
       AppPlatforms.tizen => _OneUiWallpaper(thumbnailUrl: thumbnailUrl),
       AppPlatforms.tvos => _CupertinoWallpaper(thumbnailUrl: thumbnailUrl),
-      AppPlatforms.webos => _MaterialWallpaper(thumbnailUrl: thumbnailUrl),
+      AppPlatforms.webos => _WebOSWallpaper(thumbnailUrl: thumbnailUrl),
     };
   }
 }
@@ -41,10 +42,6 @@ final class _MaterialWallpaper extends StatelessWidget {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              httpHeaders: {
-                'User-Agent':
-                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
-              },
               placeholder: (_, _) => const SizedBox(),
             ),
           ),
@@ -83,10 +80,6 @@ final class _OneUiWallpaper extends StatelessWidget {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              httpHeaders: {
-                'User-Agent':
-                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
-              },
               placeholder: (_, _) => const SizedBox(),
             ),
           ),
@@ -129,10 +122,6 @@ final class _CupertinoWallpaper extends StatelessWidget {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              httpHeaders: {
-                'User-Agent':
-                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
-              },
               placeholder: (_, _) => const SizedBox(),
             ),
           ),
@@ -154,6 +143,52 @@ final class _CupertinoWallpaper extends StatelessWidget {
                 gradient: gradients.cupertinoStartWallpaperScrim,
               ),
               child: SizedBox(width: width / 2, height: height),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+final class _WebOSWallpaper extends StatelessWidget {
+  const _WebOSWallpaper({required this.thumbnailUrl});
+  final String thumbnailUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    final gradients = context.appTheme.colors.gradients;
+
+    return AspectRatio(
+      aspectRatio: 1.8,
+      child: Stack(
+        children: [
+          Padding(
+            // in order to prevent weird border scrim
+            // animation during drawer collapse
+            padding: const EdgeInsets.all(2),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: CachedNetworkImage(
+                imageUrl: thumbnailUrl,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                alignment: Alignment.topCenter,
+              ),
+            ),
+          ),
+
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(gradient: gradients.webOSVerticalScrim),
+            ),
+          ),
+
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: gradients.webOSHorizontalScrim,
+              ),
             ),
           ),
         ],

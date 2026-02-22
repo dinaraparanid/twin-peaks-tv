@@ -99,7 +99,7 @@ final class _PlayButtonAnimation extends AnimatedWidget {
         AppPlatforms.android => 24,
         AppPlatforms.tizen => 16,
         AppPlatforms.tvos => 8,
-        AppPlatforms.webos => 16,
+        AppPlatforms.webos => 4,
       }),
     );
 

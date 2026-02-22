@@ -31,6 +31,18 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState>
       emit(state.copyWith(isDescriptionExpanded: false));
     });
 
+    on<ScrollToPreviousPicture>((event, emit) {
+      if (carouselController.canScrollLeft) {
+        carouselController.scrollLeft();
+      }
+    });
+
+    on<ScrollToNextPicture>((event, emit) {
+      if (carouselController.canScrollRight) {
+        carouselController.scrollRight();
+      }
+    });
+
     on<RequestFocusOnDescription>((event, emit) {
       descriptionNode.requestFocus();
     });

@@ -21,6 +21,8 @@ final class MainScreen extends StatefulWidget {
     maxWidth: 200,
   );
 
+  static const webOSConstraints = BoxConstraints(minWidth: 80, maxWidth: 220);
+
   @override
   State<StatefulWidget> createState() => _MainScreenState();
 }
@@ -65,7 +67,7 @@ final class _MainScreenState extends State<MainScreen> {
 
           AppPlatforms.tvos => throw UnimplementedError(),
 
-          AppPlatforms.webos => _MaterialUi(
+          AppPlatforms.webos => _WebOSUi(
             info: info,
             controller: _controller,
             contentScopeNode: _contentScopeNode,
@@ -141,6 +143,49 @@ final class _TizenUi extends StatelessWidget {
       menuItems: buildOneUiNavigationItems(context: context),
       drawerBuilder: (context, animation, child) {
         return OneUiMainMenu(animation: animation, child: child);
+      },
+      onRight: (_, _, isOutOfScope) {
+        if (isOutOfScope) {
+          contentScopeNode.requestFocus();
+        }
+
+        return KeyEventResult.handled;
+      },
+      builder: (_, _, _) => DpadFocusScope(
+        focusScopeNode: contentScopeNode,
+        onLeft: (_, _, isOutOfScope) {
+          controller.requestFocusOnMenu();
+          return KeyEventResult.handled;
+        },
+        builder: (_, _) => const AutoRouter(requestFocus: false),
+      ),
+    );
+  }
+}
+
+final class _WebOSUi extends StatelessWidget {
+  const _WebOSUi({
+    required this.info,
+    required this.controller,
+    required this.contentScopeNode,
+  });
+
+  final PackageInfo info;
+  final TvNavigationMenuController controller;
+  final FocusScopeNode contentScopeNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return TvNavigationDrawer(
+      controller: controller,
+      backgroundColor: context.appTheme.colors.background.primary,
+      mode: TvNavigationDrawerMode.standard,
+      constraints: MainScreen.webOSConstraints,
+      separatorBuilder: (_) => const SizedBox(height: 12),
+      footer: buildWebOSAppVersion(info: info),
+      menuItems: buildWebOSNavigationItems(context: context),
+      drawerBuilder: (context, animation, child) {
+        return WebOSMainMenu(child: child);
       },
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
