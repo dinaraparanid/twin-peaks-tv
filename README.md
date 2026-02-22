@@ -9,9 +9,16 @@ Figma: https://www.figma.com/design/xjNQVReSDRd10FaggfSneU/Twin-Peaks-TV?node-id
   <img src="preview/android_tv_season.png" width="300" />
 </p>
 
-## Tizen TV
+## Samsung Tizen TV
 
 <p float="left">
   <img src="preview/tizen_movie.png" width="300" />
   <img src="preview/tizen_season.png" width="300" />
+</p>
+
+## LG WebOS
+
+<p float="left">
+  <img src="preview/webos_movie.png" width="300" />
+  <img src="preview/webos_season.png" width="300" />
 </p>
