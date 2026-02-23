@@ -3,16 +3,15 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 
-final _thumbnailBorderRadius = 16.0.r;
 const _durationThumbnailScale = Duration(milliseconds: 300);
 
 final class SceneItem extends StatefulWidget {
   const SceneItem({super.key, this.focusNode, required this.thumbnailUrl});
 
-  static final thumbnailWidth = 176.0.s;
-  static final thumbnailHeight = 128.0.s;
-  static final thumbnailFocusedWidth = thumbnailWidth * 1.2;
-  static final thumbnailFocusedHeight = thumbnailHeight * 1.2;
+  static double get thumbnailWidth => 176.0.s;
+  static double get thumbnailHeight => 128.0.s;
+  static double get thumbnailFocusedWidth => thumbnailWidth * 1.2;
+  static double get thumbnailFocusedHeight => thumbnailHeight * 1.2;
 
   final FocusNode? focusNode;
   final String thumbnailUrl;
@@ -61,7 +60,7 @@ final class _SceneItemState extends State<SceneItem>
           }
         },
         builder: (context, node) => ClipRRect(
-          borderRadius: BorderRadius.circular(_thumbnailBorderRadius),
+          borderRadius: BorderRadius.circular(16.0.r),
           child: _Thumbnail(
             thumbnailUrl: widget.thumbnailUrl,
             thumbnailScale: _thumbnailScale,

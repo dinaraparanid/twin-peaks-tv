@@ -126,8 +126,7 @@ final class _TabIndicator extends StatelessWidget {
     required this.color,
   });
 
-  static final _unfocusedWidth = 8.s;
-  static final _radius = BorderRadius.all(Radius.circular(2.r));
+  static double get _unfocusedWidth => 8.s;
 
   final bool tabBarHasFocus;
   final Size tabSize;
@@ -146,7 +145,7 @@ final class _TabIndicator extends StatelessWidget {
         color: tabBarHasFocus
             ? color.resolve({WidgetState.focused})
             : color.resolve({WidgetState.selected}),
-        borderRadius: _radius,
+        borderRadius: BorderRadius.all(Radius.circular(2.r)),
       ),
     );
   }

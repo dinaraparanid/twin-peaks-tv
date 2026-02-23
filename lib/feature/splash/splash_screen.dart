@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:stroke_text/stroke_text.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';

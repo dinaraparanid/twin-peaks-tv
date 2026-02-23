@@ -13,20 +13,14 @@ import 'package:twin_peaks_tv/feature/main/widgets/widgets.dart';
 final class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
-  static final materialConstraints = BoxConstraints(
-    minWidth: 80.s,
-    maxWidth: 240.s,
-  );
+  static BoxConstraints get materialConstraints =>
+      BoxConstraints(minWidth: 80.s, maxWidth: 240.s);
 
-  static final oneUiMenuConstraints = BoxConstraints(
-    minWidth: 64.s,
-    maxWidth: 200.s,
-  );
+  static BoxConstraints get oneUiMenuConstraints =>
+      BoxConstraints(minWidth: 64.s, maxWidth: 200.s);
 
-  static final webOSConstraints = BoxConstraints(
-    minWidth: 80.s,
-    maxWidth: 220.s,
-  );
+  static BoxConstraints get webOSConstraints =>
+      BoxConstraints(minWidth: 80.s, maxWidth: 220.s);
 
   @override
   State<StatefulWidget> createState() => _MainScreenState();

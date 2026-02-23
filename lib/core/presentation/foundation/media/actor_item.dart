@@ -5,7 +5,7 @@ import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 
-final _avatarSize = 84.0.s;
+double get _avatarSize => 84.0.s;
 
 final class ActorItem extends StatelessWidget {
   const ActorItem({super.key, this.focusNode, required this.actor});

@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
-import 'package:twin_peaks_tv/core/presentation/foundation/media/cast.dart';
-import 'package:twin_peaks_tv/core/presentation/foundation/media/media_screen_content.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/media/media.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/movie/widget/movie_info_interaction.dart';
 import 'package:twin_peaks_tv/feature/movie/widget/movie_properties.dart';
