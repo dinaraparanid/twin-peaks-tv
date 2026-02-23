@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
+import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 import 'package:twin_peaks_tv/feature/main/widgets/widgets.dart';
@@ -104,7 +105,7 @@ final class _MaterialUi extends StatelessWidget {
       },
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
-          contentScopeNode.requestFocus();
+          contentScopeNode.requestFocusOnChild();
         }
 
         return KeyEventResult.handled;
@@ -146,7 +147,7 @@ final class _TizenUi extends StatelessWidget {
       },
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
-          contentScopeNode.requestFocus();
+          contentScopeNode.requestFocusOnChild();
         }
 
         return KeyEventResult.handled;
@@ -189,7 +190,7 @@ final class _WebOSUi extends StatelessWidget {
       },
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
-          contentScopeNode.requestFocus();
+          contentScopeNode.requestFocusOnChild();
         }
 
         return KeyEventResult.handled;

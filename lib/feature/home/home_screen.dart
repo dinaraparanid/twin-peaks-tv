@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/constants/constants.dart';
 import 'package:twin_peaks_tv/core/di/app_module.dart';
+import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/home/bloc/bloc.dart';
@@ -35,7 +36,7 @@ final class HomeScreenState extends State<HomeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(FocusConstants.navigatorDelay, () {
-        tabFocusScopeNode.requestFocus();
+        tabFocusScopeNode.requestFocusOnChild();
       });
     });
 
@@ -80,7 +81,7 @@ final class HomeScreenState extends State<HomeScreen> {
                 focusScopeNode: contentFocusScopeNode,
                 onUp: (_, _, isOutOfScope) {
                   if (isOutOfScope) {
-                    tabFocusScopeNode.requestFocus();
+                    tabFocusScopeNode.requestFocusOnChild();
                   }
 
                   return KeyEventResult.handled;

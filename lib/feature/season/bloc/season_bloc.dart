@@ -5,7 +5,7 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/domain/movie/use_case/use_case.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/ui_state.dart';
-import 'package:twin_peaks_tv/core/utils/ext/focus_scope_node_ext.dart';
+import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/season_effect.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/season_event.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/season_state.dart';
@@ -16,8 +16,12 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState>
     with BlocPresentationMixin<SeasonState, SeasonEffect> {
   SeasonBloc({
     required Seasons season,
+    required FocusScopeNode homeScopeNode,
+    required FocusScopeNode tabsScopeNode,
     required LoadSeasonUseCase loadSeasonUseCase,
-  }) : _loadSeasonUseCase = loadSeasonUseCase,
+  }) : _homeScopeNode = homeScopeNode,
+       _tabsScopeNode = tabsScopeNode,
+       _loadSeasonUseCase = loadSeasonUseCase,
        super(SeasonState(season: season)) {
     on<UpdateSeasonState>((event, emit) {
       emit(state.copyWith(seasonState: event.state));
@@ -70,17 +74,37 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState>
       },
     );
 
+    _homeScopeNode.addListener(_homeScopeListener);
     scrollController.addListener(_scrollListener);
   }
 
+  final FocusScopeNode _homeScopeNode;
+  final FocusScopeNode _tabsScopeNode;
   final LoadSeasonUseCase _loadSeasonUseCase;
+  var _initialFocusRedirectDone = false;
 
+  final screenScopeNode = FocusScopeNode();
   final descriptionNode = FocusNode();
   final castScopeNode = FocusScopeNode();
   final episodesScopeNode = FocusScopeNode();
   final carouselNode = FocusNode();
   final carouselController = TvCarouselController(itemCount: 1);
   final scrollController = ScrollController();
+
+  void _homeScopeListener() {
+    if (!_homeScopeNode.hasFocus) {
+      return;
+    }
+
+    if (screenScopeNode.focusedChild != null) {
+      screenScopeNode.requestFocus();
+    } else if (!_initialFocusRedirectDone) {
+      _tabsScopeNode.requestFocusOnChild();
+      _initialFocusRedirectDone = true;
+    } else {
+      descriptionNode.requestFocus();
+    }
+  }
 
   void _scrollListener() {
     final opacity = 1 - scrollController.offset / _offsetInvisible;
@@ -89,11 +113,14 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState>
 
   @override
   Future<void> close() {
+    _homeScopeNode.removeListener(_homeScopeListener);
     scrollController.removeListener(_scrollListener);
+
     descriptionNode.dispose();
     castScopeNode.dispose();
     episodesScopeNode.dispose();
     carouselNode.dispose();
+    screenScopeNode.dispose();
     carouselController.dispose();
     scrollController.dispose();
     return super.close();

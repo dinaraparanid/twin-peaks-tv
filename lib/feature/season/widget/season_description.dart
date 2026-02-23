@@ -6,7 +6,6 @@ import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
-import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
 
 const _expandDuration = Duration(milliseconds: 300);
@@ -23,17 +22,9 @@ final class SeasonDescription extends StatefulWidget {
 final class _SeasonDescriptionState extends State<SeasonDescription> {
   late final _focusNode = context.seasonBloc.descriptionNode;
 
-  late final _focusScopeNode = context
-      .findAncestorStateOfType<HomeScreenState>()!
-      .contentFocusScopeNode;
-
   @override
   void initState() {
     _focusNode.addListener(_focusListener);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _focusScopeNode.addListener(_scopeListener);
-    });
 
     super.initState();
   }
@@ -44,21 +35,9 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
     }
   }
 
-  void _scopeListener() {
-    final child = _focusScopeNode.focusedChild;
-
-    final noFocusedChild =
-        child == null || child.toStringShort().contains('Navigator');
-
-    if (_focusScopeNode.hasFocus && noFocusedChild) {
-      _focusNode.requestFocus();
-    }
-  }
-
   @override
   void dispose() {
     _focusNode.removeListener(_focusListener);
-    _focusScopeNode.removeListener(_scopeListener);
     super.dispose();
   }
 

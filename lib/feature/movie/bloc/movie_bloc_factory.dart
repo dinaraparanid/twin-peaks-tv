@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:twin_peaks_tv/core/domain/movie/use_case/use_case.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/movie_bloc.dart';
@@ -7,5 +8,12 @@ final class MovieBlocFactory {
   const MovieBlocFactory(this._loadMovieUseCase);
   final LoadMovieUseCase _loadMovieUseCase;
 
-  MovieBloc call() => MovieBloc(loadMovieUseCase: _loadMovieUseCase);
+  MovieBloc call({
+    required FocusScopeNode homeScopeNode,
+    required FocusScopeNode tabsScopeNode,
+  }) => MovieBloc(
+    homeScopeNode: homeScopeNode,
+    tabsScopeNode: tabsScopeNode,
+    loadMovieUseCase: _loadMovieUseCase,
+  );
 }

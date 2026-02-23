@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twin_peaks_tv/core/domain/movie/use_case/use_case.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/ui_state.dart';
-import 'package:twin_peaks_tv/core/utils/ext/focus_scope_node_ext.dart';
+import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/movie_effect.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/movie_event.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/movie_state.dart';
@@ -12,9 +12,14 @@ const _offsetInvisible = 80.0;
 
 final class MovieBloc extends Bloc<MovieEvent, MovieState>
     with BlocPresentationMixin<MovieState, MovieEffect> {
-  MovieBloc({required LoadMovieUseCase loadMovieUseCase})
-    : _loadMovieUseCase = loadMovieUseCase,
-      super(const MovieState()) {
+  MovieBloc({
+    required FocusScopeNode homeScopeNode,
+    required FocusScopeNode tabsScopeNode,
+    required LoadMovieUseCase loadMovieUseCase,
+  }) : _homeScopeNode = homeScopeNode,
+       _tabsScopeNode = tabsScopeNode,
+       _loadMovieUseCase = loadMovieUseCase,
+       super(const MovieState()) {
     on<UpdateMovieState>((event, emit) {
       emit(state.copyWith(movieState: event.state));
     });
@@ -52,16 +57,36 @@ final class MovieBloc extends Bloc<MovieEvent, MovieState>
       },
     );
 
+    _homeScopeNode.addListener(_homeScopeListener);
     scrollController.addListener(_scrollListener);
   }
 
+  final FocusScopeNode _homeScopeNode;
+  final FocusScopeNode _tabsScopeNode;
   final LoadMovieUseCase _loadMovieUseCase;
+  var _initialFocusRedirectDone = false;
 
+  final screenScopeNode = FocusScopeNode();
   final descriptionNode = FocusNode();
   final playButtonNode = FocusNode();
   final castScopeNode = FocusScopeNode();
   final scenesScopeNode = FocusScopeNode();
   final scrollController = ScrollController();
+
+  void _homeScopeListener() {
+    if (!_homeScopeNode.hasFocus) {
+      return;
+    }
+
+    if (screenScopeNode.focusedChild != null) {
+      screenScopeNode.requestFocus();
+    } else if (!_initialFocusRedirectDone) {
+      _tabsScopeNode.requestFocusOnChild();
+      _initialFocusRedirectDone = true;
+    } else {
+      descriptionNode.requestFocus();
+    }
+  }
 
   void _scrollListener() {
     final opacity = 1 - scrollController.offset / _offsetInvisible;
@@ -70,11 +95,14 @@ final class MovieBloc extends Bloc<MovieEvent, MovieState>
 
   @override
   Future<void> close() {
+    _homeScopeNode.removeListener(_homeScopeListener);
     scrollController.removeListener(_scrollListener);
+
     descriptionNode.dispose();
     playButtonNode.dispose();
     castScopeNode.dispose();
     scenesScopeNode.dispose();
+    screenScopeNode.dispose();
     scrollController.dispose();
     return super.close();
   }
