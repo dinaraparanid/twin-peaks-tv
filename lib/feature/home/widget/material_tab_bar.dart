@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
@@ -24,14 +25,14 @@ final class MaterialTabBar extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const SizedBox(width: 48),
+        SizedBox(width: 48.s),
         TvTabBar.secondary(
           controller: tabController,
           focusScopeNode: tabFocusScopeNode,
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           animationDuration: HomeScreen.tabAnimationDuration,
-          separatorBuilder: (_, _) => const SizedBox(width: 16),
+          separatorBuilder: (_, _) => SizedBox(width: 16.s),
           indicatorBuilder: _buildIndicator,
           onDown: (_, _, _) {
             contentFocusNode.requestFocusOnChild();
@@ -65,13 +66,16 @@ final class MaterialTabBar extends StatelessWidget {
   ) {
     final tabColors = context.appTheme.colors.tabBar;
 
-    return _TabIndicator(
-      tabBarHasFocus: tabBarHasFocus,
-      tabSize: tabSize,
-      color: WidgetStateProperty.fromMap({
-        WidgetState.focused: tabColors.selectedFocused,
-        WidgetState.selected: tabColors.selectedUnfocused,
-      }),
+    return Padding(
+      padding: EdgeInsets.only(bottom: 12.s),
+      child: _TabIndicator(
+        tabBarHasFocus: tabBarHasFocus,
+        tabSize: tabSize,
+        color: WidgetStateProperty.fromMap({
+          WidgetState.focused: tabColors.selectedFocused,
+          WidgetState.selected: tabColors.selectedUnfocused,
+        }),
+      ),
     );
   }
 }
@@ -122,8 +126,8 @@ final class _TabIndicator extends StatelessWidget {
     required this.color,
   });
 
-  static const _unfocusedWidth = 8.0;
-  static const _radius = BorderRadius.all(Radius.circular(2));
+  static final _unfocusedWidth = 8.s;
+  static final _radius = BorderRadius.all(Radius.circular(2.r));
 
   final bool tabBarHasFocus;
   final Size tabSize;
@@ -135,7 +139,7 @@ final class _TabIndicator extends StatelessWidget {
 
     return AnimatedContainer(
       duration: HomeScreen.tabAnimationDuration,
-      height: 2,
+      height: 2.s,
       width: tabBarHasFocus ? tabSize.width : _unfocusedWidth,
       margin: EdgeInsets.only(left: tabBarHasFocus ? 0 : margin),
       decoration: BoxDecoration(

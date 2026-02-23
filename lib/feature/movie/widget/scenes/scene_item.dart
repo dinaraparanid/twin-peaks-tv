@@ -1,17 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 
-const _thumbnailBorderRadius = 16.0;
+final _thumbnailBorderRadius = 16.0.r;
 const _durationThumbnailScale = Duration(milliseconds: 300);
 
 final class SceneItem extends StatefulWidget {
   const SceneItem({super.key, this.focusNode, required this.thumbnailUrl});
 
-  static const thumbnailWidth = 176.0;
-  static const thumbnailHeight = 128.0;
-  static const thumbnailFocusedWidth = thumbnailWidth * 1.2;
-  static const thumbnailFocusedHeight = thumbnailHeight * 1.2;
+  static final thumbnailWidth = 176.0.s;
+  static final thumbnailHeight = 128.0.s;
+  static final thumbnailFocusedWidth = thumbnailWidth * 1.2;
+  static final thumbnailFocusedHeight = thumbnailHeight * 1.2;
 
   final FocusNode? focusNode;
   final String thumbnailUrl;

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
@@ -12,17 +13,20 @@ import 'package:twin_peaks_tv/feature/main/widgets/widgets.dart';
 final class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
-  static const materialConstraints = BoxConstraints(
-    minWidth: 80,
-    maxWidth: 240,
+  static final materialConstraints = BoxConstraints(
+    minWidth: 80.s,
+    maxWidth: 240.s,
   );
 
-  static const oneUiMenuConstraints = BoxConstraints(
-    minWidth: 64,
-    maxWidth: 200,
+  static final oneUiMenuConstraints = BoxConstraints(
+    minWidth: 64.s,
+    maxWidth: 200.s,
   );
 
-  static const webOSConstraints = BoxConstraints(minWidth: 80, maxWidth: 220);
+  static final webOSConstraints = BoxConstraints(
+    minWidth: 80.s,
+    maxWidth: 220.s,
+  );
 
   @override
   State<StatefulWidget> createState() => _MainScreenState();
@@ -97,7 +101,7 @@ final class _MaterialUi extends StatelessWidget {
       backgroundColor: context.appTheme.colors.background.primary,
       mode: TvNavigationDrawerMode.modal,
       constraints: MainScreen.materialConstraints,
-      separatorBuilder: (_) => const SizedBox(height: 12),
+      separatorBuilder: (_) => SizedBox(height: 12.s),
       footer: buildMaterialAppVersion(info: info),
       menuItems: buildMaterialNavigationItems(context: context),
       drawerBuilder: (context, animation, child) {
@@ -139,7 +143,7 @@ final class _TizenUi extends StatelessWidget {
       controller: controller,
       backgroundColor: context.appTheme.colors.background.primary,
       constraints: MainScreen.oneUiMenuConstraints,
-      separatorBuilder: (_) => const SizedBox(height: 12),
+      separatorBuilder: (_) => SizedBox(height: 12.s),
       footer: buildOneUiAppVersion(info: info),
       menuItems: buildOneUiNavigationItems(context: context),
       drawerBuilder: (context, animation, child) {
@@ -182,7 +186,7 @@ final class _WebOSUi extends StatelessWidget {
       backgroundColor: context.appTheme.colors.background.primary,
       mode: TvNavigationDrawerMode.standard,
       constraints: MainScreen.webOSConstraints,
-      separatorBuilder: (_) => const SizedBox(height: 12),
+      separatorBuilder: (_) => SizedBox(height: 12.s),
       footer: buildWebOSAppVersion(info: info),
       menuItems: buildWebOSNavigationItems(context: context),
       drawerBuilder: (context, animation, child) {

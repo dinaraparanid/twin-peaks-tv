@@ -1,17 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 
-const _thumbnailWidth = 176.0;
-const _thumbnailHeight = 128.0;
-const _thumbnailFocusedWidth = _thumbnailWidth * 1.2;
-const _thumbnailFocusedHeight = _thumbnailHeight * 1.2;
-const _thumbnailBorderRadius = 16.0;
+final _thumbnailWidth = 176.0.s;
+final _thumbnailHeight = 128.0.s;
+final _thumbnailFocusedWidth = _thumbnailWidth * 1.2;
+final _thumbnailFocusedHeight = _thumbnailHeight * 1.2;
+final _thumbnailBorderRadius = 16.0.r;
 const _durationThumbnailScale = Duration(milliseconds: 300);
-const _starSize = 12.0;
+final _starSize = 16.0.iz;
 
 final class EpisodeItem extends StatefulWidget {
   const EpisodeItem({super.key, this.focusNode, required this.episode});
@@ -49,7 +50,7 @@ final class _EpisodeItemState extends State<EpisodeItem>
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 16,
+      spacing: 16.s,
       children: [
         Container(
           width: _thumbnailFocusedWidth,
@@ -115,7 +116,7 @@ final class _Content extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 4,
+      spacing: 4.s,
       children: [
         Text(
           episode.title,
@@ -128,7 +129,7 @@ final class _Content extends StatelessWidget {
 
         Row(
           mainAxisSize: MainAxisSize.min,
-          spacing: 4,
+          spacing: 4.s,
           children: [
             Assets.icons.star.full.svg(width: _starSize, height: _starSize),
 

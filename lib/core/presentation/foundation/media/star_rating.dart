@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 
 const _maxStars = 10;
-const _starSize = 12.0;
+final _starSize = 16.0.iz;
 
 final class StarRating extends StatelessWidget {
   const StarRating({super.key, required this.rating});

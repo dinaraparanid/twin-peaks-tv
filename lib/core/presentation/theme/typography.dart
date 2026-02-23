@@ -59,14 +59,14 @@ final class NavigationMenuTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 20.fz,
     );
 
     footer = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14.fz,
+      fontSize: 16.fz,
     );
   }
 
@@ -81,7 +81,7 @@ final class TabBarTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
+      fontSize: 18.fz,
     );
   }
 
@@ -95,35 +95,35 @@ final class MovieInfoTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 28.fz,
+      fontSize: 32.fz,
     );
 
     properties = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 12.fz,
+      fontSize: 14.fz,
     );
 
     description = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
+      fontSize: 18.fz,
     );
 
     playButton = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14.fz,
+      fontSize: 16.fz,
     );
 
     label = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 20.fz,
+      fontSize: 22.fz,
     );
   }
 
@@ -141,14 +141,14 @@ final class ActorTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14.fz,
+      fontSize: 16.fz,
     );
 
     character = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 10.fz,
+      fontSize: 12.fz,
     );
   }
 
@@ -163,21 +163,21 @@ final class EpisodeTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 20.fz,
+      fontSize: 22.fz,
     );
 
     rating = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14.fz,
+      fontSize: 16.fz,
     );
 
     description = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14.fz,
+      fontSize: 16.fz,
     );
   }
 

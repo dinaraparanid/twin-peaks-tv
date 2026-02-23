@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/feature/movie/widget/movie_description.dart';
@@ -15,7 +16,7 @@ final class MovieInfoInteraction extends StatelessWidget {
       crossAxisAlignment: AppPlatform.isWebOS
           ? CrossAxisAlignment.end
           : CrossAxisAlignment.start,
-      spacing: 8,
+      spacing: 8.s,
       children: [
         MovieDescription(description: movie.description),
         MoviePlayButton(videoUrl: movie.videoUrl),

@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
@@ -89,7 +90,7 @@ final class _CastState extends State<Cast> {
 
   @override
   Widget build(BuildContext context) {
-    const contentPadding = EdgeInsets.symmetric(horizontal: 32);
+    final contentPadding = EdgeInsets.symmetric(horizontal: 32.s);
 
     return DpadFocusScope(
       focusScopeNode: _focusScopeNode,
@@ -105,7 +106,7 @@ final class _CastState extends State<Cast> {
       builder: (context, _) => Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 8,
+        spacing: 8.s,
         children: [
           Padding(
             padding: contentPadding,
@@ -118,12 +119,12 @@ final class _CastState extends State<Cast> {
           ),
 
           SizedBox(
-            height: 120,
+            height: 124.s,
             child: TvListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: widget.actors.length,
               padding: contentPadding,
-              separatorBuilder: (_, _) => const SizedBox(width: 12),
+              separatorBuilder: (_, _) => SizedBox(width: 12.s),
               itemBuilder: (_, index) => ActorItem(
                 focusNode: _focusNodes[index],
                 actor: widget.actors[index],

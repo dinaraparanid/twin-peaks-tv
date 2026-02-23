@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
@@ -18,14 +19,14 @@ List<TvNavigationMenuItem> buildWebOSNavigationItems({
       title: context.ln.main_menu_home,
       onSelect: () => context.replaceRoute(const HomeRoute()),
       iconBuilder: (color) => ConstrainedBox(
-        constraints: const BoxConstraints(
-          minWidth: 28,
-          maxWidth: 28,
-          maxHeight: 20,
+        constraints: BoxConstraints(
+          minWidth: 32.s,
+          maxWidth: 32.s,
+          maxHeight: 24.s,
         ),
         child: Assets.icons.home.svg(
-          width: 28,
-          height: 20,
+          width: 32.iz,
+          height: 24.iz,
           fit: BoxFit.fitHeight,
           colorFilter: color.toColorFilter(),
         ),
@@ -36,10 +37,10 @@ List<TvNavigationMenuItem> buildWebOSNavigationItems({
       title: context.ln.main_menu_encyclopedia,
       onSelect: () => context.replaceRoute(const EncyclopediaRoute()),
       iconBuilder: (color) => ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 28, maxHeight: 28),
+        constraints: BoxConstraints(maxWidth: 32.s, maxHeight: 32.s),
         child: Assets.icons.encyclopedia.svg(
-          width: 28,
-          height: 28,
+          width: 32.iz,
+          height: 32.iz,
           fit: BoxFit.fitWidth,
           colorFilter: color.toColorFilter(),
         ),
@@ -48,7 +49,7 @@ List<TvNavigationMenuItem> buildWebOSNavigationItems({
     _MenuItem(
       key: const ValueKey(MainTab.settings),
       title: context.ln.main_menu_settings,
-      iconBuilder: (color) => Icon(Icons.settings, size: 28, color: color),
+      iconBuilder: (color) => Icon(Icons.settings, size: 32.iz, color: color),
       onSelect: () => context.replaceRoute(const SettingsRoute()),
     ),
   ].map((i) => i.build(context)).toList(growable: false);
@@ -120,7 +121,7 @@ final class _MenuItem {
 
           return BoxDecoration(
             color: color,
-            borderRadius: const BorderRadius.all(Radius.circular(4)),
+            borderRadius: BorderRadius.all(Radius.circular(4.r)),
           );
         });
 
@@ -128,14 +129,14 @@ final class _MenuItem {
           duration: _decorationSwitchDuration,
           decoration: decoration.resolve(states),
           constraints: constraints,
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          padding: EdgeInsets.symmetric(vertical: 8.s, horizontal: 12.s),
           child: Row(
             children: [
               if (icon != null) Flexible(flex: 0, child: icon),
 
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: EdgeInsets.only(left: 12.s),
                   child: Opacity(
                     opacity: expandAnimation.value,
                     child: Text(
