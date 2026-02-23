@@ -86,7 +86,7 @@ final class _SplashScreenText extends AnimatedWidget {
           StrokeText(
             text: context.ln.splash_header,
             strokeColor: theme.colors.primary.primary,
-            strokeWidth: 3.fz,
+            strokeWidth: 3,
             textAlign: TextAlign.center,
             textStyle: theme.typography.splash.splashHeader.copyWith(
               color: theme.colors.splash.text,
@@ -96,7 +96,7 @@ final class _SplashScreenText extends AnimatedWidget {
           StrokeText(
             text: context.ln.splash_subtext,
             strokeColor: theme.colors.primary.primary,
-            strokeWidth: 2.fz,
+            strokeWidth: 2,
             textAlign: TextAlign.center,
             textStyle: theme.typography.splash.splashSubText.copyWith(
               color: theme.colors.splash.text,

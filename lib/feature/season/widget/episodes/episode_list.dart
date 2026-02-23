@@ -20,10 +20,14 @@ final class EpisodeList extends StatelessWidget {
 
         return KeyEventResult.handled;
       },
-      sliver: SliverList.separated(
-        itemCount: episodes.length,
-        separatorBuilder: (context, index) => SizedBox(height: 8.s),
-        itemBuilder: (context, index) => EpisodeItem(episode: episodes[index]),
+      sliver: SliverPadding(
+        padding: EdgeInsets.symmetric(horizontal: 32.s),
+        sliver: SliverList.separated(
+          itemCount: episodes.length,
+          separatorBuilder: (context, index) => SizedBox(height: 8.s),
+          itemBuilder: (context, index) =>
+              EpisodeItem(episode: episodes[index]),
+        ),
       ),
     );
   }

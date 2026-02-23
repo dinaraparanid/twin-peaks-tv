@@ -16,10 +16,13 @@ final class SceneList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 8.s,
       children: [
-        Text(
-          context.ln.movie_scenes_from_movie,
-          style: context.appTheme.typography.movieInfo.label.copyWith(
-            color: context.appTheme.colors.text.primary,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32.s),
+          child: Text(
+            context.ln.movie_scenes_from_movie,
+            style: context.appTheme.typography.movieInfo.label.copyWith(
+              color: context.appTheme.colors.text.primary,
+            ),
           ),
         ),
 
@@ -28,6 +31,7 @@ final class SceneList extends StatelessWidget {
           child: TvListView.separated(
             itemCount: scenes.length,
             scrollDirection: Axis.horizontal,
+            padding: EdgeInsets.symmetric(horizontal: 32.s),
             focusScopeNode: context.movieBloc.scenesScopeNode,
             onUp: (_, _, isOutOfScope) {
               if (isOutOfScope) {

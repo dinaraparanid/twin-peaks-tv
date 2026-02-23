@@ -87,12 +87,9 @@ final class MediaScreenContent extends StatelessWidget {
                     },
                   ),
 
-                  SliverToBoxAdapter(child: SizedBox(height: 24.s)),
+                  SliverToBoxAdapter(child: SizedBox(height: 12.s)),
 
-                  SliverPadding(
-                    padding: EdgeInsets.symmetric(horizontal: 32.s),
-                    sliver: sliverContent,
-                  ),
+                  sliverContent,
 
                   SliverToBoxAdapter(child: SizedBox(height: 32.s)),
                 ],
@@ -163,7 +160,7 @@ final class _FullScreenInfo extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 120.s),
+                    SizedBox(height: 164.s),
                     properties,
                     title,
                     SizedBox(height: 8.s),

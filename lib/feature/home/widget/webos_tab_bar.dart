@@ -6,10 +6,8 @@ import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';
 
-const _colorDivider = Color(0x80D9D9D9);
-
-final class OneUiTabBar extends StatelessWidget {
-  const OneUiTabBar({
+final class WebOSTabBar extends StatelessWidget {
+  const WebOSTabBar({
     super.key,
     required this.tabController,
     required this.tabFocusScopeNode,
@@ -34,7 +32,7 @@ final class OneUiTabBar extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           animationDuration: HomeScreen.tabAnimationDuration,
-          separatorBuilder: (_, _) => const _Separator(),
+          separatorBuilder: (_, _) => SizedBox(width: 16.s),
           indicatorBuilder: _buildIndicator,
           onDown: (_, _, _) {
             contentFocusNode.requestFocusOnChild();
@@ -42,7 +40,7 @@ final class OneUiTabBar extends StatelessWidget {
           },
           onLeft: (_, _, isOutOfScope) {
             if (isOutOfScope) {
-              OneUiTvNavigationDrawer.of(context).requestFocusOnMenu();
+              TvNavigationDrawer.of(context).requestFocusOnMenu();
             }
 
             return KeyEventResult.handled;
@@ -68,16 +66,13 @@ final class OneUiTabBar extends StatelessWidget {
   ) {
     final tabColors = context.appTheme.colors.tabBar;
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: 8.s),
-      child: _TabIndicator(
-        tabBarHasFocus: tabBarHasFocus,
-        tabSize: tabSize,
-        color: WidgetStateProperty.fromMap({
-          WidgetState.focused: tabColors.selectedFocused,
-          WidgetState.selected: tabColors.selectedUnfocused,
-        }),
-      ),
+    return _TabIndicator(
+      tabBarHasFocus: tabBarHasFocus,
+      tabSize: tabSize,
+      color: WidgetStateProperty.fromMap({
+        WidgetState.focused: tabColors.selectedFocused,
+        WidgetState.selected: tabColors.selectedUnfocused,
+      }),
     );
   }
 }
@@ -149,24 +144,6 @@ final class _TabIndicator extends StatelessWidget {
             ? color.resolve({WidgetState.focused})
             : color.resolve({WidgetState.selected}),
         borderRadius: _radius,
-      ),
-    );
-  }
-}
-
-final class _Separator extends StatelessWidget {
-  const _Separator();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.s),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: _colorDivider,
-          borderRadius: BorderRadius.all(Radius.circular(12.r)),
-        ),
-        child: SizedBox(width: 1.5.s, height: 16.s),
       ),
     );
   }

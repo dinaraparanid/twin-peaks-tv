@@ -119,7 +119,7 @@ final class _CastState extends State<Cast> {
           ),
 
           SizedBox(
-            height: 124.s,
+            height: 136.s,
             child: TvListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: widget.actors.length,
