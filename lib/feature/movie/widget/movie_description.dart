@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
@@ -46,7 +47,7 @@ final class _MovieDescriptionState extends State<MovieDescription> {
       duration: _expandDuration,
       autoScroll: true,
       paddingBuilder: (animationValue) {
-        return EdgeInsets.all(lerpDouble(0, 8, animationValue)!);
+        return EdgeInsets.all(lerpDouble(0, 8.s, animationValue)!);
       },
       onDown: (_, _) {
         context.movieBloc.add(const RequestFocusOnPlayButton());

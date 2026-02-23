@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 
 final class WebOSMainMenu extends StatelessWidget {
@@ -17,13 +18,13 @@ final class WebOSMainMenu extends StatelessWidget {
             context.appTheme.colors.background.primary01,
           ],
         ),
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(12),
-          bottomRight: Radius.circular(12),
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(12.r),
+          bottomRight: Radius.circular(12.r),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(top: 24, bottom: 8, left: 8, right: 8),
+        padding: EdgeInsets.only(top: 24.s, bottom: 8.s, left: 8.s, right: 8.s),
         child: child,
       ),
     );

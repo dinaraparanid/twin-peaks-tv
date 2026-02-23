@@ -54,6 +54,7 @@ dependencies:
   duration: ^4.0.3
   sliver_tools: ^0.2.12
   logger: ^2.6.2
+  flutter_scalify: ^3.1.0
 
 dev_dependencies:
   flutter_test:

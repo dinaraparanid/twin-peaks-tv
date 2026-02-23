@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 
@@ -166,9 +167,9 @@ final class _WebOSWallpaper extends StatelessWidget {
           Padding(
             // in order to prevent weird border scrim
             // animation during drawer collapse
-            padding: const EdgeInsets.all(2),
+            padding: EdgeInsets.all(2.s),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.all(Radius.circular(16.r)),
               child: CachedNetworkImage(
                 imageUrl: thumbnailUrl,
                 fit: BoxFit.cover,

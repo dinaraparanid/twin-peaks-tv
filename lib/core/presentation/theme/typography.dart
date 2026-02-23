@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/responsive_scale/responsive_extensions.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 
 @immutable
@@ -34,16 +35,16 @@ final class SplashTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 48,
-      letterSpacing: 4,
+      fontSize: 48.fz,
+      letterSpacing: 4.fz,
     );
 
     splashSubText = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 24,
-      letterSpacing: 2,
+      fontSize: 24.fz,
+      letterSpacing: 2.fz,
     );
   }
 
@@ -58,14 +59,14 @@ final class NavigationMenuTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18,
+      fontSize: 20.fz,
     );
 
     footer = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14,
+      fontSize: 16.fz,
     );
   }
 
@@ -80,7 +81,7 @@ final class TabBarTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16,
+      fontSize: 18.fz,
     );
   }
 
@@ -94,35 +95,35 @@ final class MovieInfoTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 28,
+      fontSize: 32.fz,
     );
 
     properties = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 12,
+      fontSize: 14.fz,
     );
 
     description = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16,
+      fontSize: 18.fz,
     );
 
     playButton = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14,
+      fontSize: 16.fz,
     );
 
     label = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 20,
+      fontSize: 22.fz,
     );
   }
 
@@ -140,14 +141,14 @@ final class ActorTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14,
+      fontSize: 16.fz,
     );
 
     character = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 10,
+      fontSize: 12.fz,
     );
   }
 
@@ -162,21 +163,21 @@ final class EpisodeTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 20,
+      fontSize: 22.fz,
     );
 
     rating = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14,
+      fontSize: 16.fz,
     );
 
     description = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14,
+      fontSize: 16.fz,
     );
   }
 

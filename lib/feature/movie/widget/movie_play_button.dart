@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
@@ -96,23 +97,23 @@ final class _PlayButtonAnimation extends AnimatedWidget {
 
     final radius = BorderRadius.all(
       Radius.circular(switch (AppPlatform.targetPlatform) {
-        AppPlatforms.android => 24,
-        AppPlatforms.tizen => 16,
-        AppPlatforms.tvos => 8,
-        AppPlatforms.webos => 4,
+        AppPlatforms.android => 24.r,
+        AppPlatforms.tizen => 16.r,
+        AppPlatforms.tvos => 8.r,
+        AppPlatforms.webos => 4.r,
       }),
     );
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+      padding: EdgeInsets.symmetric(vertical: 4.s, horizontal: 16.s),
       decoration: BoxDecoration(borderRadius: radius, color: containerColor),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        spacing: 4,
+        spacing: 4.s,
         children: [
           Assets.icons.play.svg(
-            width: 12,
-            height: 12,
+            width: 12.iz,
+            height: 12.iz,
             colorFilter: contentColor!.toColorFilter(),
           ),
 

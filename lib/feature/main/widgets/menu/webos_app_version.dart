@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
@@ -16,7 +17,7 @@ TvNavigationMenuItem buildWebOSAppVersion({required PackageInfo info}) {
         constraints: constraints,
         alignment: Alignment.bottomCenter,
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, bottom: 12),
+          padding: EdgeInsets.only(left: 20.s, bottom: 12.s),
           child: Opacity(
             opacity: expandAnimation.value,
             child: Text(

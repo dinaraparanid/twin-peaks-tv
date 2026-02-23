@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/constants/constants.dart';
 import 'package:twin_peaks_tv/core/di/app_module.dart';
@@ -74,7 +75,7 @@ final class HomeScreenState extends State<HomeScreen> {
       child: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: AppPlatform.isWebOS ? 64 : 0),
+            padding: EdgeInsets.only(top: AppPlatform.isWebOS ? 64.s : 0),
             child: AutoRouter(
               requestFocus: false,
               builder: (context, child) => DpadFocusScope(

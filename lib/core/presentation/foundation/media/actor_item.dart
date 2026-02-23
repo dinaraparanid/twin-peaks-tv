@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 
-const _avatarSize = 72.0;
+final _avatarSize = 84.0.s;
 
 final class ActorItem extends StatelessWidget {
   const ActorItem({super.key, this.focusNode, required this.actor});
@@ -16,7 +17,7 @@ final class ActorItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      spacing: 4,
+      spacing: 4.s,
       children: [
         AnimatedSelectionBorders(
           focusNode: focusNode,
@@ -33,10 +34,10 @@ final class ActorItem extends StatelessWidget {
         ),
 
         ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 100),
+          constraints: BoxConstraints(maxWidth: 108.s),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            spacing: 2,
+            spacing: 2.s,
             children: [
               FittedBox(
                 fit: BoxFit.scaleDown,

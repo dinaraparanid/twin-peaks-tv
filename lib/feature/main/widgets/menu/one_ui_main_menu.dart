@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 
 final class OneUiMainMenu extends StatelessWidget {
@@ -48,7 +49,7 @@ final class OneUiMainMenu extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(top: 48, bottom: 20),
+              padding: EdgeInsets.only(top: 48.s, bottom: 20.s),
               child: child,
             ),
           ),
@@ -60,7 +61,7 @@ final class OneUiMainMenu extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: context.appTheme.colors.gradients.oneUiMainMenuBorder,
             ),
-            child: const SizedBox(width: 2),
+            child: SizedBox(width: 2.s),
           ),
         ),
       ],

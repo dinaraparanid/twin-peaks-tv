@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
@@ -14,16 +15,16 @@ final class OneUiCarousel extends StatelessWidget {
     final carouselColors = context.appTheme.colors.carousel;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 12.s, vertical: 8.s),
       decoration: BoxDecoration(
         color: carouselColors.background,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(24.r),
       ),
       child: TvCarouselPager(
         itemCount: season.thumbnailUrls.length,
         controller: context.seasonBloc.carouselController,
         focusNode: context.seasonBloc.carouselNode,
-        spacing: 8,
+        spacing: 8.s,
         onDown: (_, _) {
           context.seasonBloc.add(const RequestFocusOnCast());
           return KeyEventResult.handled;
@@ -37,8 +38,8 @@ final class OneUiCarousel extends StatelessWidget {
         },
         onRight: (_, _, _) => KeyEventResult.handled,
         itemBuilder: (context, index, isSelected, isFocused) => Container(
-          width: isSelected ? 8 : 6,
-          height: isSelected ? 8 : 6,
+          width: isSelected ? 12.s : 8.s,
+          height: isSelected ? 12.s : 8.s,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: switch ((isSelected, isFocused)) {

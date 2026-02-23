@@ -50,10 +50,14 @@ final class MovieBloc extends Bloc<MovieEvent, MovieState>
 
     _loadMovieUseCase(
       onSuccess: (data) {
-        add(UpdateMovieState(state: UiState.data(value: data)));
+        if (!isClosed) {
+          add(UpdateMovieState(state: UiState.data(value: data)));
+        }
       },
       onFailure: (e) {
-        add(UpdateMovieState(state: UiState.error(e)));
+        if (!isClosed) {
+          add(UpdateMovieState(state: UiState.error(e)));
+        }
       },
     );
 

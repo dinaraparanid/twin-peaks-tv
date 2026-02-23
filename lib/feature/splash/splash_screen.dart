@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:stroke_text/stroke_text.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
@@ -85,7 +86,7 @@ final class _SplashScreenText extends AnimatedWidget {
           StrokeText(
             text: context.ln.splash_header,
             strokeColor: theme.colors.primary.primary,
-            strokeWidth: 3,
+            strokeWidth: 3.fz,
             textAlign: TextAlign.center,
             textStyle: theme.typography.splash.splashHeader.copyWith(
               color: theme.colors.splash.text,
@@ -95,7 +96,7 @@ final class _SplashScreenText extends AnimatedWidget {
           StrokeText(
             text: context.ln.splash_subtext,
             strokeColor: theme.colors.primary.primary,
-            strokeWidth: 2,
+            strokeWidth: 2.fz,
             textAlign: TextAlign.center,
             textStyle: theme.typography.splash.splashSubText.copyWith(
               color: theme.colors.splash.text,

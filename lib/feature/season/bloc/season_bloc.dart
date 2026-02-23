@@ -66,11 +66,15 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState>
     _loadSeasonUseCase(
       season: season,
       onSuccess: (data) {
-        add(UpdateSeasonState(state: UiState.data(value: data)));
-        carouselController.reset(count: data.thumbnailUrls.length);
+        if (!isClosed) {
+          add(UpdateSeasonState(state: UiState.data(value: data)));
+          carouselController.reset(count: data.thumbnailUrls.length);
+        }
       },
       onFailure: (e) {
-        add(UpdateSeasonState(state: UiState.error(e)));
+        if (!isClosed) {
+          add(UpdateSeasonState(state: UiState.error(e)));
+        }
       },
     );
 

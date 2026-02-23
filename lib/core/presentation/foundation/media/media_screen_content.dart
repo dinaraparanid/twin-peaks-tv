@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
@@ -86,14 +87,14 @@ final class MediaScreenContent extends StatelessWidget {
                     },
                   ),
 
-                  const SliverToBoxAdapter(child: SizedBox(height: 24)),
+                  SliverToBoxAdapter(child: SizedBox(height: 24.s)),
 
                   SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    padding: EdgeInsets.symmetric(horizontal: 32.s),
                     sliver: sliverContent,
                   ),
 
-                  const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                  SliverToBoxAdapter(child: SizedBox(height: 32.s)),
                 ],
               ),
             ),
@@ -152,7 +153,7 @@ final class _FullScreenInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: EdgeInsets.symmetric(horizontal: 32.s),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -162,10 +163,10 @@ final class _FullScreenInfo extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 120),
+                    SizedBox(height: 120.s),
                     properties,
                     title,
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.s),
                     infoInteraction,
                   ],
                 ),
@@ -177,7 +178,7 @@ final class _FullScreenInfo extends StatelessWidget {
                   null => const SizedBox(),
                   final carousel => Container(
                     alignment: Alignment.bottomRight,
-                    padding: const EdgeInsets.only(left: 64),
+                    padding: EdgeInsets.only(left: 64.s),
                     child: carousel,
                   ),
                 },
@@ -186,8 +187,7 @@ final class _FullScreenInfo extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: 16),
-
+        SizedBox(height: 16.s),
         cast,
       ],
     );
@@ -236,7 +236,7 @@ final class _WebOSInfo extends StatelessWidget {
                     Positioned(
                       left: 0,
                       right: 0,
-                      bottom: 16,
+                      bottom: 16.s,
                       child: Align(
                         alignment: Alignment.bottomCenter,
                         child: carousel!,
@@ -246,12 +246,12 @@ final class _WebOSInfo extends StatelessWidget {
                     Positioned(
                       top: 0,
                       bottom: 0,
-                      left: 12,
+                      left: 12.s,
                       child: GestureDetector(
                         onTap: onScrollToPreviousPicture,
                         child: Assets.icons.chevronLeft.svg(
-                          width: 24,
-                          height: 24,
+                          width: 24.iz,
+                          height: 24.iz,
                           colorFilter: _arrowsColor.toColorFilter(),
                         ),
                       ),
@@ -264,8 +264,8 @@ final class _WebOSInfo extends StatelessWidget {
                       child: GestureDetector(
                         onTap: onScrollToNextPicture,
                         child: Assets.icons.chevronRight.svg(
-                          width: 24,
-                          height: 24,
+                          width: 24.iz,
+                          height: 24.iz,
                           colorFilter: _arrowsColor.toColorFilter(),
                         ),
                       ),
@@ -278,14 +278,14 @@ final class _WebOSInfo extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.only(right: 32),
+                padding: EdgeInsets.only(right: 32.s),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     properties,
                     title,
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.s),
                     infoInteraction,
                   ],
                 ),
@@ -294,8 +294,7 @@ final class _WebOSInfo extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: 16),
-
+        SizedBox(height: 16.s),
         cast,
       ],
     );

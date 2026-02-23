@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
@@ -6,14 +7,14 @@ import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 const _defaultDuration = Duration(milliseconds: 300);
 
 final class AnimatedSelectionBorders extends StatefulWidget {
-  const AnimatedSelectionBorders({
+  AnimatedSelectionBorders({
     super.key,
     this.focusNode,
     this.duration = _defaultDuration,
     this.autoScroll = false,
     this.paddingBuilder,
-    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
-    this.borderWidth = 2,
+    final BorderRadiusGeometry? borderRadius,
+    final double? borderWidth,
     this.shape = BoxShape.rectangle,
     this.onUp,
     this.onDown,
@@ -25,7 +26,8 @@ final class AnimatedSelectionBorders extends StatefulWidget {
     this.onFocusChanged,
     this.onFocusDisabledWhenWasFocused,
     required this.builder,
-  });
+  }) : borderRadius = borderRadius ?? BorderRadius.all(Radius.circular(16.r)),
+       borderWidth = borderWidth ?? 2.s;
 
   final FocusNode? focusNode;
   final Duration duration;
