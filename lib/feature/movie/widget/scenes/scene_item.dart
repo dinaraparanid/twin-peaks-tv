@@ -8,8 +8,8 @@ const _durationThumbnailScale = Duration(milliseconds: 300);
 final class SceneItem extends StatefulWidget {
   const SceneItem({super.key, this.focusNode, required this.thumbnailUrl});
 
-  static double get thumbnailWidth => 176.0.s;
-  static double get thumbnailHeight => 128.0.s;
+  static double get thumbnailWidth => 226.0.s;
+  static double get thumbnailHeight => 164.0.s;
   static double get thumbnailFocusedWidth => thumbnailWidth * 1.2;
   static double get thumbnailFocusedHeight => thumbnailHeight * 1.2;
 

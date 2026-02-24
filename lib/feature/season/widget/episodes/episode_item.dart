@@ -6,13 +6,13 @@ import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 
-double get _thumbnailWidth => 176.0.s;
-double get _thumbnailHeight => 128.0.s;
+double get _thumbnailWidth => 226.0.s;
+double get _thumbnailHeight => 164.0.s;
 double get _thumbnailFocusedWidth => _thumbnailWidth * 1.2;
 double get _thumbnailFocusedHeight => _thumbnailHeight * 1.2;
 double get _thumbnailBorderRadius => 16.0.r;
 const _durationThumbnailScale = Duration(milliseconds: 300);
-double get _starSize => 16.0.iz;
+double get _starSize => 18.0.iz;
 
 final class EpisodeItem extends StatefulWidget {
   const EpisodeItem({super.key, this.focusNode, required this.episode});
@@ -116,7 +116,7 @@ final class _Content extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 4.s,
+      spacing: 8.s,
       children: [
         Text(
           episode.title,

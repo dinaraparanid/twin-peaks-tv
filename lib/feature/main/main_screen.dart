@@ -14,13 +14,13 @@ final class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   static BoxConstraints get materialConstraints =>
-      BoxConstraints(minWidth: 80.s, maxWidth: 240.s);
+      BoxConstraints(minWidth: 88.s, maxWidth: 300.s);
 
   static BoxConstraints get oneUiMenuConstraints =>
-      BoxConstraints(minWidth: 64.s, maxWidth: 200.s);
+      BoxConstraints(minWidth: 64.s, maxWidth: 280.s);
 
   static BoxConstraints get webOSConstraints =>
-      BoxConstraints(minWidth: 80.s, maxWidth: 220.s);
+      BoxConstraints(minWidth: 80.s, maxWidth: 280.s);
 
   @override
   State<StatefulWidget> createState() => _MainScreenState();

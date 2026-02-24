@@ -39,19 +39,18 @@ final class ActorItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             spacing: 2.s,
             children: [
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  actor.name,
-                  style: context.appTheme.typography.actor.name.copyWith(
-                    color: context.appTheme.colors.text.primary,
-                  ),
+              Text(
+                actor.name,
+                textAlign: TextAlign.center,
+                style: context.appTheme.typography.actor.name.copyWith(
+                  color: context.appTheme.colors.text.primary,
                 ),
               ),
               FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
                   actor.character,
+                  textAlign: TextAlign.center,
                   style: context.appTheme.typography.actor.character.copyWith(
                     color: context.appTheme.colors.text.secondary,
                   ),

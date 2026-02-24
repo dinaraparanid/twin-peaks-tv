@@ -20,13 +20,13 @@ List<TvNavigationMenuItem> buildWebOSNavigationItems({
       onSelect: () => context.replaceRoute(const HomeRoute()),
       iconBuilder: (color) => ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth: 32.s,
-          maxWidth: 32.s,
-          maxHeight: 24.s,
+          minWidth: 36.s,
+          maxWidth: 36.s,
+          maxHeight: 28.s,
         ),
         child: Assets.icons.home.svg(
-          width: 32.iz,
-          height: 24.iz,
+          width: 36.iz,
+          height: 28.iz,
           fit: BoxFit.fitHeight,
           colorFilter: color.toColorFilter(),
         ),
@@ -37,10 +37,10 @@ List<TvNavigationMenuItem> buildWebOSNavigationItems({
       title: context.ln.main_menu_encyclopedia,
       onSelect: () => context.replaceRoute(const EncyclopediaRoute()),
       iconBuilder: (color) => ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 32.s, maxHeight: 32.s),
+        constraints: BoxConstraints(maxWidth: 36.s, maxHeight: 36.s),
         child: Assets.icons.encyclopedia.svg(
-          width: 32.iz,
-          height: 32.iz,
+          width: 36.iz,
+          height: 36.iz,
           fit: BoxFit.fitWidth,
           colorFilter: color.toColorFilter(),
         ),
@@ -49,7 +49,7 @@ List<TvNavigationMenuItem> buildWebOSNavigationItems({
     _MenuItem(
       key: const ValueKey(MainTab.settings),
       title: context.ln.main_menu_settings,
-      iconBuilder: (color) => Icon(Icons.settings, size: 32.iz, color: color),
+      iconBuilder: (color) => Icon(Icons.settings, size: 36.iz, color: color),
       onSelect: () => context.replaceRoute(const SettingsRoute()),
     ),
   ].map((i) => i.build(context)).toList(growable: false);

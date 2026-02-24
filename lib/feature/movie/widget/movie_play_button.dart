@@ -8,6 +8,7 @@ import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/bloc.dart';
 
 const _durationTransition = Duration(milliseconds: 300);
+const _backgroundColor = Color(0xFF000000);
 
 final class MoviePlayButton extends StatefulWidget {
   const MoviePlayButton({super.key, required this.videoUrl});
@@ -104,21 +105,24 @@ final class _PlayButtonAnimation extends AnimatedWidget {
       }),
     );
 
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 4.s, horizontal: 16.s),
-      decoration: BoxDecoration(borderRadius: radius, color: containerColor),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 4.s,
-        children: [
-          Assets.icons.play.svg(
-            width: 12.iz,
-            height: 12.iz,
-            colorFilter: contentColor!.toColorFilter(),
-          ),
+    return DecoratedBox(
+      decoration: BoxDecoration(borderRadius: radius, color: _backgroundColor),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 4.s, horizontal: 20.s),
+        decoration: BoxDecoration(borderRadius: radius, color: containerColor),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 4.s,
+          children: [
+            Assets.icons.play.svg(
+              width: 16.iz,
+              height: 16.iz,
+              colorFilter: contentColor!.toColorFilter(),
+            ),
 
-          Text(context.ln.movie_watch, style: contentStyle),
-        ],
+            Text(context.ln.movie_watch, style: contentStyle),
+          ],
+        ),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
@@ -119,7 +120,7 @@ final class _CastState extends State<Cast> {
           ),
 
           SizedBox(
-            height: 136.s,
+            height: 148.s,
             child: TvListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: widget.actors.length,

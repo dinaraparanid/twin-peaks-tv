@@ -59,14 +59,14 @@ final class NavigationMenuTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 20.fz,
+      fontSize: 24.fz,
     );
 
     footer = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
+      fontSize: 18.fz,
     );
   }
 
@@ -81,7 +81,7 @@ final class TabBarTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 20.fz,
     );
   }
 
@@ -95,35 +95,35 @@ final class MovieInfoTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 32.fz,
+      fontSize: 36.fz,
     );
 
     properties = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 14.fz,
+      fontSize: 16.fz,
     );
 
     description = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 20.fz,
     );
 
     playButton = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
+      fontSize: 18.fz,
     );
 
     label = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 22.fz,
+      fontSize: 24.fz,
     );
   }
 
@@ -142,6 +142,7 @@ final class ActorTypography {
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
       fontSize: 16.fz,
+      height: 1,
     );
 
     character = TextStyle(
@@ -163,21 +164,21 @@ final class EpisodeTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 22.fz,
+      fontSize: 24.fz,
     );
 
     rating = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
+      fontSize: 18.fz,
     );
 
     description = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
+      fontSize: 18.fz,
     );
   }
 
