@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
@@ -83,9 +82,8 @@ final class _Thumbnail extends AnimatedWidget {
   Widget build(BuildContext context) {
     final thumbnailScale = listenable as Animation<double>;
 
-    return CachedNetworkImage(
+    return AppNetworkImage(
       imageUrl: thumbnailUrl,
-      fit: BoxFit.cover,
       width: SceneItem.thumbnailWidth * thumbnailScale.value,
       height: SceneItem.thumbnailHeight * thumbnailScale.value,
     );

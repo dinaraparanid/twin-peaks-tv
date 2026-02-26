@@ -6,7 +6,6 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/constants/constants.dart';
 import 'package:twin_peaks_tv/core/di/app_module.dart';
 import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
-import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/home/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';

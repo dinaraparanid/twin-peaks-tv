@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
@@ -24,7 +23,7 @@ final class ActorItem extends StatelessWidget {
           autoScroll: true,
           shape: BoxShape.circle,
           builder: (context, node) => ClipOval(
-            child: CachedNetworkImage(
+            child: AppNetworkImage(
               imageUrl: actor.thumbnailUrl,
               fit: BoxFit.cover,
               width: _avatarSize,

@@ -4,6 +4,7 @@ import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
+import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/home/home_screen.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';
 
@@ -41,13 +42,7 @@ final class CupertinoTabBar extends StatelessWidget {
           indicatorBuilder: _buildIndicator,
           decorationBuilder: (context, child) {
             return LiquidGlassLayer(
-              settings: LiquidGlassSettings.figma(
-                refraction: 80,
-                depth: 20,
-                dispersion: 50,
-                frost: 50,
-                glassColor: context.appTheme.colors.cupertino.background,
-              ),
+              settings: AppLiquidGlass.defaultSettings(context),
               child: FakeGlass(
                 shape: LiquidRoundedRectangle(borderRadius: 24.r),
                 child: child,
@@ -122,11 +117,15 @@ final class _TabItem extends StatelessWidget {
       scale: isSelected && tabBarHasFocus ? 1.2 : 1,
       duration: HomeScreen.tabAnimationDuration,
       child: TvTab(
+        height: 48.s,
         autofocus: isSelected,
-        child: Text(
-          tab.buildTitle(context),
-          style: context.appTheme.typography.tabBar.primary.copyWith(
-            color: _buildTabColor(context),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 12.s),
+          child: Text(
+            tab.buildTitle(context),
+            style: context.appTheme.typography.tabBar.primary.copyWith(
+              color: _buildTabColor(context),
+            ),
           ),
         ),
       ),

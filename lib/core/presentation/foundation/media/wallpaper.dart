@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/app_network_image.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 
@@ -37,13 +37,11 @@ final class _MaterialWallpaper extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topRight,
-            child: CachedNetworkImage(
+            child: AppNetworkImage(
               imageUrl: thumbnailUrl,
-              fit: BoxFit.cover,
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              placeholder: (_, _) => const SizedBox(),
             ),
           ),
 
@@ -75,13 +73,11 @@ final class _OneUiWallpaper extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topCenter,
-            child: CachedNetworkImage(
+            child: AppNetworkImage(
               imageUrl: thumbnailUrl,
-              fit: BoxFit.cover,
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              placeholder: (_, _) => const SizedBox(),
             ),
           ),
 
@@ -117,13 +113,11 @@ final class _CupertinoWallpaper extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.topCenter,
-            child: CachedNetworkImage(
+            child: AppNetworkImage(
               imageUrl: thumbnailUrl,
-              fit: BoxFit.cover,
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              placeholder: (_, _) => const SizedBox(),
             ),
           ),
 
@@ -170,9 +164,8 @@ final class _WebOSWallpaper extends StatelessWidget {
             padding: EdgeInsets.all(2.s),
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(16.r)),
-              child: CachedNetworkImage(
+              child: AppNetworkImage(
                 imageUrl: thumbnailUrl,
-                fit: BoxFit.cover,
                 width: double.infinity,
                 alignment: Alignment.topCenter,
               ),

@@ -9,6 +9,13 @@ Figma: https://www.figma.com/design/xjNQVReSDRd10FaggfSneU/Twin-Peaks-TV?node-id
   <img src="preview/android_tv_season.png" width="300" />
 </p>
 
+## Apple TV (tvOS)
+
+<p float="left">
+  <img src="preview/tvos_movie.png" width="300" />
+  <img src="preview/tvos_season.png" width="300" />
+</p>
+
 ## Samsung Tizen TV
 
 <p float="left">

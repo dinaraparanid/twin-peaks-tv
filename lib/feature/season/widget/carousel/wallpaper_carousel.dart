@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/season.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
-import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/season/widget/carousel/cupertino_carousel.dart';

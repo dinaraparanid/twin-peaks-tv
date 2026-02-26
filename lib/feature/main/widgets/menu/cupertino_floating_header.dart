@@ -5,6 +5,7 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/ext/color_ext.dart';
+import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/main/main_screen.dart';
 import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 
@@ -21,7 +22,6 @@ final class CupertinoFloatingHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = 40.r;
-    final bg = context.appTheme.colors.cupertino.background;
 
     return Container(
       width: MainScreen.cupertinoConstraints.maxWidth,
@@ -33,17 +33,10 @@ final class CupertinoFloatingHeader extends StatelessWidget {
             CupertinoIcons.chevron_compact_left,
             size: 28.iz,
             color: context.appTheme.colors.cupertino.collapsedHeaderContent,
-            blendMode: BlendMode.srcIn,
           ),
 
           LiquidGlassLayer(
-            settings: LiquidGlassSettings.figma(
-              refraction: 80,
-              depth: 20,
-              dispersion: 50,
-              frost: 50,
-              glassColor: bg,
-            ),
+            settings: AppLiquidGlass.defaultSettings(context),
             child: FakeGlass(
               shape: LiquidRoundedRectangle(borderRadius: radius),
               child: Row(

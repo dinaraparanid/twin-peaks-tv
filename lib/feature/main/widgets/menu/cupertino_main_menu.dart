@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
-import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
+import 'package:twin_peaks_tv/core/utils/utils.dart';
 
 final class CupertinoMainMenu extends StatelessWidget {
   const CupertinoMainMenu({super.key, required this.child});
@@ -10,16 +10,8 @@ final class CupertinoMainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = context.appTheme.colors.cupertino.background;
-
     return LiquidGlassLayer(
-      settings: LiquidGlassSettings.figma(
-        refraction: 80,
-        depth: 20,
-        dispersion: 50,
-        frost: 50,
-        glassColor: bg,
-      ),
+      settings: AppLiquidGlass.defaultSettings(context),
       child: FakeGlass(
         shape: LiquidRoundedRectangle(borderRadius: 24.r),
         child: Padding(
