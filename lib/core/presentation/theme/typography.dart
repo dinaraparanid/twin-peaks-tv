@@ -68,10 +68,18 @@ final class NavigationMenuTypography {
       fontWeight: FontWeight.w500,
       fontSize: 18.fz,
     );
+
+    floatingHeader = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w700,
+      fontSize: 18.fz,
+    );
   }
 
   late final TextStyle item;
   late final TextStyle footer;
+  late final TextStyle floatingHeader;
 }
 
 @immutable

@@ -131,7 +131,7 @@ final class _CupertinoWallpaper extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                gradient: gradients.cupertinoBottomWallpaperScrim,
+                gradient: gradients.cupertinoVerticalWallpaperScrim,
               ),
               child: SizedBox(width: width, height: height / 2),
             ),
@@ -141,7 +141,7 @@ final class _CupertinoWallpaper extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: DecoratedBox(
               decoration: BoxDecoration(
-                gradient: gradients.cupertinoStartWallpaperScrim,
+                gradient: gradients.cupertinoHorizontalWallpaperScrim,
               ),
               child: SizedBox(width: width / 2, height: height),
             ),

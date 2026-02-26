@@ -9,6 +9,7 @@ const _limeGreen60 = Color(0x9939C43C);
 const _limeGreen80 = Color(0xCC39C43C);
 const _intenseCocoa = Color(0xFF593C39);
 const _white = Color(0xFFFFFFFF);
+const _white7 = Color(0x12FFFFFF);
 const _white20 = Color(0x33FFFFFF);
 const _white50 = Color(0x80FFFFFF);
 const _white80 = Color(0xCCFFFFFF);
@@ -24,6 +25,8 @@ const _elegantBlack01 = Color(0x03131313);
 const _royalWhite50 = Color(0x80FEFFFE);
 const _blackout = Color(0xFF1E1E1E);
 const _transparent = Color(0x00000000);
+const _royalWhite = Color(0xFFFFFDFD);
+const _black50 = Color(0x80000000);
 
 @immutable
 final class AppColors {
@@ -36,6 +39,7 @@ final class AppColors {
     this.tabBar = const TabBarColors(),
     this.carousel = const CarouselColors(),
     this.button = const ButtonColors(),
+    this.cupertino = const AppCupertinoColors(),
     this.gradients = const Gradients(),
   });
 
@@ -47,6 +51,7 @@ final class AppColors {
   final TabBarColors tabBar;
   final CarouselColors carousel;
   final ButtonColors button;
+  final AppCupertinoColors cupertino;
   final Gradients gradients;
 }
 
@@ -114,6 +119,8 @@ final class NavigationMenuColors {
     this.itemFocused = _gray50,
     this.itemSelectedUnfocused = _limeGreen50,
     this.itemSelectedFocused = _limeGreen80,
+    this.iconBackground = _white7,
+    this.iconBackgroundSelected = _royalWhite,
   });
 
   final Color itemContent;
@@ -121,17 +128,21 @@ final class NavigationMenuColors {
   final Color itemFocused;
   final Color itemSelectedUnfocused;
   final Color itemSelectedFocused;
+  final Color iconBackground;
+  final Color iconBackgroundSelected;
 }
 
 @immutable
 final class TabBarColors {
   const TabBarColors({
     this.selectedFocused = _limeGreen80,
+    this.selectedContrast = _white,
     this.selectedUnfocused = _limeGreen50,
     this.unselected = _royalWhite50,
   });
 
   final Color selectedFocused;
+  final Color selectedContrast;
   final Color selectedUnfocused;
   final Color unselected;
 }
@@ -174,6 +185,17 @@ final class FilledButtonColors {
 }
 
 @immutable
+final class AppCupertinoColors {
+  const AppCupertinoColors({
+    this.background = _black50,
+    this.collapsedHeaderContent = _white80,
+  });
+
+  final Color background;
+  final Color collapsedHeaderContent;
+}
+
+@immutable
 final class Gradients {
   const Gradients({
     this.selection = const LinearGradient(colors: [_limeGreen, _limeGreen60]),
@@ -208,17 +230,15 @@ final class Gradients {
       ],
       stops: [0.0, 0.4, 0.6, 0.8, 1],
     ),
-    this.cupertinoBottomWallpaperScrim = const LinearGradient(
+    this.cupertinoVerticalWallpaperScrim = const LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [_elegantBlack01, _elegantBlack90, _elegantBlack],
-      stops: [0.0, 0.5, 1],
     ),
-    this.cupertinoStartWallpaperScrim = const LinearGradient(
+    this.cupertinoHorizontalWallpaperScrim = const LinearGradient(
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
-      colors: [_elegantBlack01, _elegantBlack],
-      stops: [0.0, 1],
+      colors: [_elegantBlack, _elegantBlack01],
     ),
     this.webOSVerticalScrim = const LinearGradient(
       begin: Alignment.topCenter,
@@ -237,8 +257,8 @@ final class Gradients {
   final Gradient materialWallpaperScrim;
   final Gradient oneUiWallpaperScrim;
   final Gradient oneUiMainMenuBorder;
-  final Gradient cupertinoBottomWallpaperScrim;
-  final Gradient cupertinoStartWallpaperScrim;
+  final Gradient cupertinoVerticalWallpaperScrim;
+  final Gradient cupertinoHorizontalWallpaperScrim;
   final Gradient webOSVerticalScrim;
   final Gradient webOSHorizontalScrim;
 }

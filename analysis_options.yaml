@@ -35,7 +35,6 @@ linter:
     join_return_with_assignment: true
     leading_newlines_in_multiline_strings: true
     library_private_types_in_public_api: true
-    lines_longer_than_80_chars: true
     no_default_cases: true
     no_duplicate_case_values: true
     no_literal_bool_comparisons: true

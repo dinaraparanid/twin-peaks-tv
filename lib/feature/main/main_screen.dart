@@ -16,6 +16,9 @@ final class MainScreen extends StatefulWidget {
   static BoxConstraints get materialConstraints =>
       BoxConstraints(minWidth: 88.s, maxWidth: 300.s);
 
+  static BoxConstraints get cupertinoConstraints =>
+      BoxConstraints(minWidth: 0, maxWidth: 240.s);
+
   static BoxConstraints get oneUiMenuConstraints =>
       BoxConstraints(minWidth: 64.s, maxWidth: 280.s);
 
@@ -64,7 +67,11 @@ final class _MainScreenState extends State<MainScreen> {
             contentScopeNode: _contentScopeNode,
           ),
 
-          AppPlatforms.tvos => throw UnimplementedError(),
+          AppPlatforms.tvos => _CupertinoUi(
+            info: info,
+            controller: _controller,
+            contentScopeNode: _contentScopeNode,
+          ),
 
           AppPlatforms.webos => _WebOSUi(
             info: info,
@@ -109,6 +116,58 @@ final class _MaterialUi extends StatelessWidget {
         return KeyEventResult.handled;
       },
       builder: (_, _, _) => DpadFocusScope(
+        focusScopeNode: contentScopeNode,
+        onLeft: (_, _, isOutOfScope) {
+          controller.requestFocusOnMenu();
+          return KeyEventResult.handled;
+        },
+        builder: (_, _) => const AutoRouter(requestFocus: false),
+      ),
+    );
+  }
+}
+
+final class _CupertinoUi extends StatelessWidget {
+  const _CupertinoUi({
+    required this.info,
+    required this.controller,
+    required this.contentScopeNode,
+  });
+
+  static const _expandDuration = Duration(milliseconds: 300);
+
+  final PackageInfo info;
+  final TvNavigationMenuController controller;
+  final FocusScopeNode contentScopeNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoTvSidebar(
+      controller: controller,
+      drawerAnimationsDuration: _expandDuration,
+      backgroundColor: context.appTheme.colors.background.primary,
+      constraints: MainScreen.cupertinoConstraints,
+      separatorBuilder: (_) => SizedBox(height: 8.s),
+      footer: buildCupertinoAppVersion(info: info),
+      menuItems: buildCupertinoNavigationItems(context: context),
+      drawerMargin: EdgeInsets.all(16.s),
+      collapsedHeaderBuilder: (context, _, selectedItem) {
+        return CupertinoFloatingHeader(
+          controller: controller,
+          selectedItem: selectedItem,
+        );
+      },
+      sidebarBuilder: (context, child) {
+        return CupertinoMainMenu(child: child);
+      },
+      onRight: (_, _, isOutOfScope) {
+        if (isOutOfScope) {
+          contentScopeNode.requestFocusOnChild();
+        }
+
+        return KeyEventResult.handled;
+      },
+      builder: (_, _) => DpadFocusScope(
         focusScopeNode: contentScopeNode,
         onLeft: (_, _, isOutOfScope) {
           controller.requestFocusOnMenu();

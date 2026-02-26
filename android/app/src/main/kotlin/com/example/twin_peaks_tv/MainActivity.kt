@@ -1,4 +1,4 @@
-package com.example.twin_peaks_tv
+package com.paranid5.twin_peaks_tv
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -108,23 +108,30 @@ final class _SliverContentPadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!AppPlatform.isTizen) {
-      return sliver;
+    if (AppPlatform.isTvOS) {
+      return SliverPadding(
+        padding: EdgeInsets.only(left: 64.s),
+        sliver: sliver,
+      );
     }
 
-    return AnimatedBuilder(
-      animation: OneUiTvNavigationDrawer.animationOf(context),
-      builder: (context, _) => SliverPadding(
-        padding: EdgeInsets.only(
-          left: lerpDouble(
-            MainScreen.oneUiMenuConstraints.minWidth,
-            0,
-            OneUiTvNavigationDrawer.animationOf(context).value,
-          )!,
+    if (AppPlatform.isTizen) {
+      return AnimatedBuilder(
+        animation: OneUiTvNavigationDrawer.animationOf(context),
+        builder: (context, _) => SliverPadding(
+          padding: EdgeInsets.only(
+            left: lerpDouble(
+              MainScreen.oneUiMenuConstraints.minWidth,
+              0,
+              OneUiTvNavigationDrawer.animationOf(context).value,
+            )!,
+          ),
+          sliver: sliver,
         ),
-        sliver: sliver,
-      ),
-    );
+      );
+    }
+
+    return sliver;
   }
 }
 

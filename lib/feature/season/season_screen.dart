@@ -46,10 +46,11 @@ final class SeasonScreen extends StatelessWidget {
 
                 Initial<Season>() ||
                 Loading<Season>() ||
-                Refreshing<Season>() => const Text('TODO: progress indicator'),
+                Refreshing<Season>() =>
+                  const SizedBox(), // TODO(paranid5): shimmer
 
                 Success<Season>() ||
-                Error<Season>() => const Text('TODO: error'),
+                Error<Season>() => const SizedBox(), // TODO(paranid5): error
               },
             ),
           ),

@@ -60,13 +60,13 @@ final class _MenuItem {
   const _MenuItem({
     required this.key,
     required this.title,
-    this.iconBuilder,
+    required this.iconBuilder,
     required this.onSelect,
   });
 
   final Key key;
   final String title;
-  final Widget Function(Color)? iconBuilder;
+  final Widget Function(Color) iconBuilder;
   final VoidCallback onSelect;
 
   TvNavigationMenuItem build(BuildContext context) {
@@ -85,7 +85,7 @@ final class _MenuItem {
             ? theme.colors.navigationMenu.itemContentSelected
             : theme.colors.navigationMenu.itemContent;
 
-        return iconBuilder!(
+        return iconBuilder(
           Color.lerp(unfocusedColor, focusedColor, animation.value)!,
         );
       }),

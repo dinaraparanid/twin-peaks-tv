@@ -10,7 +10,6 @@ import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/home/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/home/home_tab.dart';
-import 'package:twin_peaks_tv/feature/home/widget/webos_tab_bar.dart';
 import 'package:twin_peaks_tv/feature/home/widget/widget.dart';
 
 @RoutePage()
@@ -117,7 +116,12 @@ final class HomeScreenState extends State<HomeScreen> {
                     currentIndex: _currentIndex,
                   ),
 
-                  AppPlatforms.tvos => throw UnimplementedError(),
+                  AppPlatforms.tvos => CupertinoTabBar(
+                    tabController: tabController,
+                    tabFocusScopeNode: tabFocusScopeNode,
+                    contentFocusNode: contentFocusScopeNode,
+                    currentIndex: _currentIndex,
+                  ),
 
                   AppPlatforms.webos => WebOSTabBar(
                     tabController: tabController,

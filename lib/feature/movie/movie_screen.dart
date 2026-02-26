@@ -43,11 +43,11 @@ final class MovieScreen extends StatelessWidget {
                 value: Data<Movie>(value: final movie),
               ) => MovieScreenContent(movie: movie),
 
-              Initial<Movie>() ||
-              Loading<Movie>() ||
-              Refreshing<Movie>() => const Text('TODO: progress indicator'),
+              Initial<Movie>() || Loading<Movie>() || Refreshing<Movie>() =>
+                const SizedBox(), // TODO(paranid5): shimmer
 
-              Success<Movie>() || Error<Movie>() => const Text('TODO: error'),
+              Success<Movie>() ||
+              Error<Movie>() => const SizedBox(), // TODO(paranid5): error
             },
           ),
         ),

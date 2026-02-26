@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tizen/flutter_tizen.dart' as tizen;
 
-const _manualPlatform = null;
+const _manualPlatform = AppPlatforms.tvos;
 
 final class AppPlatform {
   const AppPlatform._();
@@ -12,6 +12,8 @@ final class AppPlatform {
   static bool get isTizen => targetPlatform == AppPlatforms.tizen;
 
   static bool get isWebOS => targetPlatform == AppPlatforms.webos;
+
+  static bool get isTvOS => targetPlatform == AppPlatforms.tvos;
 
   static AppPlatforms get targetPlatform {
     // ignore: unnecessary_null_comparison

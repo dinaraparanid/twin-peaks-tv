@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
@@ -5,6 +6,7 @@ import 'package:twin_peaks_tv/core/l10n/app_localizations.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/router/app_router.dart';
 import 'package:twin_peaks_tv/core/utils/image_cache.dart';
+import 'package:twin_peaks_tv/core/utils/platform.dart';
 
 final class App extends StatelessWidget {
   const App({super.key, required this.router});
@@ -23,9 +25,22 @@ final class App extends StatelessWidget {
 
           return AppThemeProvider(
             theme: theme,
-            child: snapshot.connectionState == ConnectionState.done
-                ? _MaterialUi(router: router, theme: theme)
-                : const SizedBox(),
+            child: switch ((
+              snapshot.connectionState,
+              AppPlatform.targetPlatform,
+            )) {
+              (ConnectionState.done, AppPlatforms.tvos) => _CupertinoUi(
+                router: router,
+                theme: theme,
+              ),
+
+              (ConnectionState.done, _) => _MaterialUi(
+                router: router,
+                theme: theme,
+              ),
+
+              _ => const SizedBox(),
+            },
           );
         },
       ),
@@ -42,6 +57,24 @@ final class _MaterialUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      title: 'Twin Peaks TV',
+      routerConfig: router.config(),
+      color: theme.colors.background.primary,
+      localizationsDelegates: const [AppLocalizations.delegate],
+      supportedLocales: AppLocalizations.supportedLocales,
+    );
+  }
+}
+
+final class _CupertinoUi extends StatelessWidget {
+  const _CupertinoUi({required this.router, required this.theme});
+
+  final AppRouter router;
+  final AppTheme theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoApp.router(
       title: 'Twin Peaks TV',
       routerConfig: router.config(),
       color: theme.colors.background.primary,
