@@ -66,7 +66,7 @@ final class _AnimatedSelectionBordersState
     _ownsNode = widget.focusNode == null;
 
     _controller = AnimationController(vsync: this, duration: widget.duration);
-    _borderAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+    _borderAnimation = Tween<double>(begin: 0, end: 1).animate(_controller);
 
     super.initState();
   }

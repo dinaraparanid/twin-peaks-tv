@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
-
-import 'app_module.config.dart';
+import 'package:twin_peaks_tv/core/di/app_module.config.dart';
 
 final di = GetIt.instance;
 

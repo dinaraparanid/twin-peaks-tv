@@ -29,7 +29,7 @@ final class _SplashScreenState extends State<SplashScreen>
       duration: _durationTextAppear,
     )..addStatusListener(_animationListener);
 
-    _textOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+    _textOpacity = Tween<double>(begin: 0, end: 1).animate(_controller);
     _controller.forward();
 
     super.initState();

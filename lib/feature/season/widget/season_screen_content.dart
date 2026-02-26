@@ -5,10 +5,10 @@ import 'package:twin_peaks_tv/core/presentation/foundation/media/media_screen_co
 import 'package:twin_peaks_tv/feature/season/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/season/widget/carousel/wallpaper_carousel.dart';
 import 'package:twin_peaks_tv/feature/season/widget/episodes/episode_list.dart';
-import 'package:twin_peaks_tv/feature/season/widget/season_wallpaper.dart';
 import 'package:twin_peaks_tv/feature/season/widget/season_description.dart';
 import 'package:twin_peaks_tv/feature/season/widget/season_properties.dart';
 import 'package:twin_peaks_tv/feature/season/widget/season_title.dart';
+import 'package:twin_peaks_tv/feature/season/widget/season_wallpaper.dart';
 
 final class SeasonScreenContent extends StatelessWidget {
   const SeasonScreenContent({super.key, required this.season});

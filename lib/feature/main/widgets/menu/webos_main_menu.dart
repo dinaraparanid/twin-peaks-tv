@@ -11,7 +11,7 @@ final class WebOSMainMenu extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          stops: [0, 0.5, 1],
+          stops: const [0, 0.5, 1],
           colors: [
             context.appTheme.colors.background.primary,
             context.appTheme.colors.background.primary80,

@@ -17,7 +17,7 @@ final class OneUiMainMenu extends StatelessWidget {
     final collapsedGradient = LinearGradient(
       begin: Alignment.bottomCenter,
       end: Alignment.topCenter,
-      stops: [0, 0.75, 1],
+      stops: const [0, 0.75, 1],
       colors: [
         context.appTheme.colors.background.primary,
         context.appTheme.colors.background.primary,
@@ -28,7 +28,7 @@ final class OneUiMainMenu extends StatelessWidget {
     final expandGradient = LinearGradient(
       begin: Alignment.bottomCenter,
       end: Alignment.topCenter,
-      stops: [0, 0.75, 1],
+      stops: const [0, 0.75, 1],
       colors: [
         context.appTheme.colors.background.primary,
         context.appTheme.colors.background.primary,

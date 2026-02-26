@@ -36,7 +36,7 @@ final class _EpisodeItemState extends State<EpisodeItem>
       duration: _durationThumbnailScale,
     );
 
-    _thumbnailScale = Tween<double>(begin: 1.0, end: 1.2).animate(_controller);
+    _thumbnailScale = Tween<double>(begin: 1, end: 1.2).animate(_controller);
 
     super.initState();
   }

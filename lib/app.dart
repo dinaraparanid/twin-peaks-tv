@@ -19,7 +19,7 @@ final class App extends StatelessWidget {
       builder: (context, snapshot) => ScalifyProvider(
         config: const ScalifyConfig(designWidth: 1280, designHeight: 720),
         builder: (context, _) {
-          final theme = AppTheme(typography: AppTypography(context: context));
+          final theme = AppTheme(typography: AppTypography());
 
           return AppThemeProvider(
             theme: theme,
@@ -45,7 +45,7 @@ final class _MaterialUi extends StatelessWidget {
       title: 'Twin Peaks TV',
       routerConfig: router.config(),
       color: theme.colors.background.primary,
-      localizationsDelegates: [AppLocalizations.delegate],
+      localizationsDelegates: const [AppLocalizations.delegate],
       supportedLocales: AppLocalizations.supportedLocales,
     );
   }

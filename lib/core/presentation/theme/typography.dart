@@ -4,7 +4,7 @@ import 'package:twin_peaks_tv/core/utils/platform.dart';
 
 @immutable
 final class AppTypography {
-  AppTypography({required BuildContext context}) {
+  AppTypography() {
     final fontFamily = switch (AppPlatform.targetPlatform) {
       AppPlatforms.android => 'Roboto',
       AppPlatforms.tvos => 'SF Pro',

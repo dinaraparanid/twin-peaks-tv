@@ -6,6 +6,6 @@ enum Seasons {
   second(path: 'season2'),
   third(path: 'season3');
 
-  final String path;
   const Seasons({required this.path});
+  final String path;
 }
