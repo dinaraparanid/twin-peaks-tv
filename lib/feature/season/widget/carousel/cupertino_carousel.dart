@@ -12,6 +12,42 @@ final class CupertinoCarousel extends StatelessWidget {
   const CupertinoCarousel({super.key, required this.season});
   final Season season;
 
+  double _itemSize({
+    required int index,
+    required int selectedIndex,
+    required (int, int) visibleIndices,
+  }) {
+    if (index < visibleIndices.$1 || index > visibleIndices.$2) {
+      return 0;
+    }
+
+    if (index > 0 &&
+        index == visibleIndices.$1 &&
+        selectedIndex > visibleIndices.$1 + 1) {
+      return 6.s;
+    }
+
+    if (index > 1 &&
+        index == visibleIndices.$1 + 1 &&
+        selectedIndex > visibleIndices.$1 + 1) {
+      return 8.s;
+    }
+
+    if (index < season.thumbnailUrls.length - 1 &&
+        index == visibleIndices.$2 &&
+        selectedIndex < visibleIndices.$2 - 1) {
+      return 6.s;
+    }
+
+    if (index < season.thumbnailUrls.length - 2 &&
+        index == visibleIndices.$2 - 1 &&
+        selectedIndex < visibleIndices.$2 - 1) {
+      return 8.s;
+    }
+
+    return 12.s;
+  }
+
   @override
   Widget build(BuildContext context) {
     final carouselColors = context.appTheme.colors.carousel;
@@ -22,11 +58,24 @@ final class CupertinoCarousel extends StatelessWidget {
         shape: LiquidRoundedRectangle(borderRadius: 24.r),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.s, vertical: 8.s),
-          child: TvCarouselPager(
+          child: TvScrollCarouselPager(
+            height: 20.s,
+            capacity: 5,
             itemCount: season.thumbnailUrls.length,
             controller: context.seasonBloc.carouselController,
-            focusNode: context.seasonBloc.carouselNode,
-            spacing: 8.s,
+            focusScopeNode: context.seasonBloc.carouselNode,
+            separatorBuilder: (context, index, selectedIndex, visibleIndices) {
+              final size = _itemSize(
+                index: index,
+                selectedIndex: selectedIndex,
+                visibleIndices: visibleIndices,
+              );
+
+              return SizedBox(width: size > 0 ? 8.s : 0);
+            },
+            viewportAlignment: (context, selectedIndex, visibleIndices) {
+              return selectedIndex == visibleIndices.$1 ? 0.5 : null;
+            },
             onDown: (_, _) {
               context.seasonBloc.add(const RequestFocusOnCast());
               return KeyEventResult.handled;
@@ -39,18 +88,30 @@ final class CupertinoCarousel extends StatelessWidget {
               return KeyEventResult.handled;
             },
             onRight: (_, _, _) => KeyEventResult.handled,
-            itemBuilder: (context, index, isSelected, isFocused) => Container(
-              width: 12.s,
-              height: 12.s,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: switch ((isSelected, isFocused)) {
-                  (false, _) => carouselColors.content,
-                  (true, true) => carouselColors.focusedContent,
-                  (true, false) => carouselColors.selectedContent,
+            itemBuilder:
+                (context, index, selectedIndex, visibleIndices, isFocused) {
+                  final size = _itemSize(
+                    index: index,
+                    selectedIndex: selectedIndex,
+                    visibleIndices: visibleIndices,
+                  );
+
+                  final isSelected = index == selectedIndex;
+
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    width: size,
+                    height: size,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: switch ((isSelected, isFocused)) {
+                        (false, _) => carouselColors.content,
+                        (true, true) => carouselColors.focusedContent,
+                        (true, false) => carouselColors.selectedContent,
+                      },
+                    ),
+                  );
                 },
-              ),
-            ),
           ),
         ),
       ),

@@ -52,7 +52,7 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState>
     });
 
     on<RequestFocusOnCarousel>((event, emit) {
-      carouselNode.requestFocus();
+      carouselNode.requestFocusOnChild();
     });
 
     on<RequestFocusOnCast>((event, emit) {
@@ -91,7 +91,7 @@ final class SeasonBloc extends Bloc<SeasonEvent, SeasonState>
   final descriptionNode = FocusNode();
   final castScopeNode = FocusScopeNode();
   final episodesScopeNode = FocusScopeNode();
-  final carouselNode = FocusNode();
+  final carouselNode = FocusScopeNode();
   final carouselController = TvCarouselController(itemCount: 1);
   final scrollController = ScrollController();
 

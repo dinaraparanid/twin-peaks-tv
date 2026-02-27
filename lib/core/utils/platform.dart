@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_tizen/flutter_tizen.dart' as tizen;
 
-const _manualPlatform = AppPlatforms.tvos;
+const _manualPlatform = null;
 
 final class AppPlatform {
   const AppPlatform._();
