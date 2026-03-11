@@ -236,7 +236,7 @@ final class _SandstoneUi extends StatelessWidget {
       backgroundColor: context.appTheme.colors.background.primary,
       tabs: buildSandstoneNavigationItems(context: context),
       tabsBuilder: (context, _, child) => SandstoneMainMenu(child: child),
-      separatorBuilder: (_, _) => SizedBox(height: 12.s),
+      separatorBuilder: (_, _, _) => SizedBox(height: 12.s),
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
           contentScopeNode.requestFocusOnChild();

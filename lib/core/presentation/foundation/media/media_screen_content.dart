@@ -40,6 +40,9 @@ final class MediaScreenContent extends StatelessWidget {
     return CustomScrollView(
       controller: scrollController,
       slivers: [
+        if (AppPlatform.isWebOS)
+          SliverToBoxAdapter(child: SizedBox(height: 64.s)),
+
         SliverStack(
           children: [
             ?switch (AppPlatform.targetPlatform) {
