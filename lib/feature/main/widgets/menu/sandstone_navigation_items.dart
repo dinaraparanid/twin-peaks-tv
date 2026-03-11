@@ -8,9 +8,7 @@ import 'package:twin_peaks_tv/core/router/app_router.gr.dart';
 import 'package:twin_peaks_tv/core/utils/ext/color_ext.dart';
 import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 
-const _decorationSwitchDuration = Duration(milliseconds: 200);
-
-List<TvNavigationMenuItem> buildWebOSNavigationItems({
+List<SandstoneVerticalTab> buildSandstoneNavigationItems({
   required BuildContext context,
 }) {
   return [
@@ -69,30 +67,20 @@ final class _MenuItem {
   final Widget Function(Color) iconBuilder;
   final VoidCallback onSelect;
 
-  TvNavigationMenuItem build(BuildContext context) {
+  SandstoneVerticalTab build(BuildContext context) {
     final theme = context.appTheme;
 
-    return TvNavigationMenuItem(
+    return SandstoneVerticalTab(
       key: key,
-      iconBuilder: (context) => WidgetStateProperty.resolveWith((states) {
-        final animation = TvNavigationDrawer.animationOf(context);
-
-        final unfocusedColor = states.contains(WidgetState.selected)
-            ? theme.colors.navigationMenu.itemSelectedFocused
-            : theme.colors.navigationMenu.itemContent;
-
-        final focusedColor = states.contains(WidgetState.selected)
-            ? theme.colors.navigationMenu.itemContentSelected
-            : theme.colors.navigationMenu.itemContent;
-
-        return iconBuilder(
-          Color.lerp(unfocusedColor, focusedColor, animation.value)!,
-        );
-      }),
+      iconBuilder: (context, _) {
+        return WidgetStateProperty.resolveWith((states) => iconBuilder(
+          states.contains(WidgetState.selected)
+              ? theme.colors.navigationMenu.itemContentSelected
+              : theme.colors.navigationMenu.itemContent,
+        ));
+      },
       onSelect: onSelect,
-      builder: (context, constraints, states, icon) {
-        final expandAnimation = TvNavigationDrawer.animationOf(context);
-
+      builder: (context, states, isExpanded, icon) {
         final unfocusedColor = states.contains(WidgetState.selected)
             ? theme.colors.navigationMenu.itemSelectedFocused
             : theme.colors.navigationMenu.itemContent;
@@ -106,16 +94,8 @@ final class _MenuItem {
           final isFocused = states.contains(WidgetState.focused);
 
           final color = switch ((isSelected, isFocused)) {
-            (true, true) => theme.colors.navigationMenu.itemSelectedFocused,
-
-            (true, _) => Color.lerp(
-              Colors.transparent,
-              theme.colors.navigationMenu.itemSelectedUnfocused,
-              expandAnimation.value,
-            ),
-
+            (true, _) => theme.colors.navigationMenu.itemSelectedFocused,
             (_, true) => theme.colors.navigationMenu.itemFocused,
-
             _ => Colors.transparent,
           };
 
@@ -125,35 +105,25 @@ final class _MenuItem {
           );
         });
 
-        return AnimatedContainer(
-          duration: _decorationSwitchDuration,
+        return Container(
           decoration: decoration.resolve(states),
-          constraints: constraints,
-          padding: EdgeInsets.symmetric(vertical: 8.s, horizontal: 12.s),
+          padding: EdgeInsets.symmetric(vertical: 12.s, horizontal: 12.s),
           child: Row(
             children: [
-              if (icon != null) Flexible(flex: 0, child: icon),
+              ?icon,
 
-              Expanded(
-                child: Padding(
+              if (isExpanded)
+                Padding(
                   padding: EdgeInsets.only(left: 12.s),
-                  child: Opacity(
-                    opacity: expandAnimation.value,
-                    child: Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.typography.navigationMenu.item.copyWith(
-                        color: Color.lerp(
-                          unfocusedColor,
-                          focusedColor,
-                          expandAnimation.value,
-                        ),
-                      ),
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.typography.navigationMenu.item.copyWith(
+                      color: isExpanded ? focusedColor : unfocusedColor,
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         );

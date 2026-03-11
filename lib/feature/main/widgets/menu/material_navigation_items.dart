@@ -10,7 +10,7 @@ import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 
 const _decorationSwitchDuration = Duration(milliseconds: 200);
 
-List<TvNavigationMenuItem> buildMaterialNavigationItems({
+List<TvNavigationDrawerItem> buildMaterialNavigationItems({
   required BuildContext context,
 }) {
   return [
@@ -69,7 +69,7 @@ final class _MenuItem {
   final Widget Function(Color) iconBuilder;
   final VoidCallback onSelect;
 
-  TvNavigationMenuItem build(BuildContext context) {
+  TvNavigationDrawerItem build(BuildContext context) {
     final theme = context.appTheme;
 
     final decoration = WidgetStateProperty.resolveWith((states) {
@@ -89,7 +89,7 @@ final class _MenuItem {
       );
     });
 
-    return TvNavigationMenuItem(
+    return TvNavigationDrawerItem(
       key: key,
       iconBuilder: (_) => WidgetStateProperty.resolveWith((states) {
         final color = states.contains(WidgetState.selected)

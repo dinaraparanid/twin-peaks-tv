@@ -122,7 +122,7 @@ final class HomeScreenState extends State<HomeScreen> {
                     currentIndex: _currentIndex,
                   ),
 
-                  AppPlatforms.webos => WebOSTabBar(
+                  AppPlatforms.webos => SandstoneTabBar(
                     tabController: tabController,
                     tabFocusScopeNode: tabFocusScopeNode,
                     contentFocusNode: contentFocusScopeNode,

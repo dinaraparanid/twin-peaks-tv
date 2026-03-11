@@ -51,6 +51,7 @@ final class MaterialTabBar extends StatelessWidget {
                 tab: tab,
                 isSelected: currentIndex == tab.index,
                 tabBarHasFocus: tabFocusScopeNode.hasFocus,
+                onSelected: () => tabController.select(tab.index),
               ),
           ],
         ),
@@ -85,16 +86,19 @@ final class _TabItem extends StatelessWidget {
     required this.tab,
     required this.isSelected,
     required this.tabBarHasFocus,
+    required this.onSelected,
   });
 
   final HomeTab tab;
   final bool isSelected;
   final bool tabBarHasFocus;
+  final VoidCallback onSelected;
 
   @override
   Widget build(BuildContext context) {
     return TvTab(
       autofocus: isSelected,
+      onSelected: onSelected,
       child: Text(
         tab.buildTitle(context),
         style: context.appTheme.typography.tabBar.primary.copyWith(

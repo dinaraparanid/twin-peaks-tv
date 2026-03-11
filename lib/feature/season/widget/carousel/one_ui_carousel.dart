@@ -24,7 +24,7 @@ final class OneUiCarousel extends StatelessWidget {
         itemCount: season.thumbnailUrls.length,
         controller: context.seasonBloc.carouselController,
         focusNode: context.seasonBloc.carouselNode,
-        spacing: 8.s,
+        separatorBuilder: (_, _, _) => SizedBox(width: 8.s),
         onDown: (_, _) {
           context.seasonBloc.add(const RequestFocusOnCast());
           return KeyEventResult.handled;

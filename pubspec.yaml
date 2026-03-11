@@ -12,10 +12,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  tv_plus:
-    git:
-      url: https://github.com/dinaraparanid/tv_plus.git
-      ref: dev
+  tv_plus: ^0.5.1
 
   cupertino_icons: ^1.0.8
   flutter_bloc: ^9.1.1
@@ -113,6 +110,35 @@ dependency_overrides:
     git:
       url: https://github.com/dinaraparanid/auto_route_library.git
       path: auto_route
+  tv_plus:
+    git:
+      url: https://github.com/dinaraparanid/tv_plus.git
+      ref: dev
+  tv_plus_cupertino:
+    git:
+      url: https://github.com/dinaraparanid/tv_plus.git
+      ref: dev
+      path: packages/cupertino
+  tv_plus_foundation:
+    git:
+      url: https://github.com/dinaraparanid/tv_plus.git
+      ref: dev
+      path: packages/foundation
+  tv_plus_material:
+    git:
+      url: https://github.com/dinaraparanid/tv_plus.git
+      ref: dev
+      path: packages/material
+  tv_plus_one_ui:
+    git:
+      url: https://github.com/dinaraparanid/tv_plus.git
+      ref: dev
+      path: packages/one_ui
+  tv_plus_sandstone:
+    git:
+      url: https://github.com/dinaraparanid/tv_plus.git
+      ref: dev
+      path: packages/sandstone
 
   # !!! TVOS ONLY !!!
 #  video_player_avfoundation:

@@ -6,8 +6,8 @@ import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/season_bloc.dart';
 import 'package:twin_peaks_tv/feature/season/bloc/season_event.dart';
 
-final class WebOSCarousel extends StatelessWidget {
-  const WebOSCarousel({super.key, required this.season});
+final class SandstoneCarousel extends StatelessWidget {
+  const SandstoneCarousel({super.key, required this.season});
   final Season season;
 
   @override
@@ -24,7 +24,7 @@ final class WebOSCarousel extends StatelessWidget {
         itemCount: season.thumbnailUrls.length,
         controller: context.seasonBloc.carouselController,
         focusNode: context.seasonBloc.carouselNode,
-        spacing: 8.s,
+        separatorBuilder: (_, _, _) => SizedBox(width: 8.s),
         onDown: (_, _) {
           context.seasonBloc.add(const RequestFocusOnCast());
           return KeyEventResult.handled;

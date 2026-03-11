@@ -17,7 +17,7 @@ final class CupertinoFloatingHeader extends StatelessWidget {
   });
 
   final TvNavigationMenuController controller;
-  final TvNavigationMenuItem selectedItem;
+  final CupertinoTvSidebarItem selectedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ final class CupertinoFloatingHeader extends StatelessWidget {
 
 final class _Icon extends StatelessWidget {
   const _Icon({required this.selectedItem});
-  final TvNavigationMenuItem selectedItem;
+  final CupertinoTvSidebarItem selectedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,7 @@ final class _Icon extends StatelessWidget {
 
 final class _Text extends StatelessWidget {
   const _Text({required this.selectedItem});
-  final TvNavigationMenuItem selectedItem;
+  final CupertinoTvSidebarItem selectedItem;
 
   @override
   Widget build(BuildContext context) {

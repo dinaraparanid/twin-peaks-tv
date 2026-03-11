@@ -66,6 +66,7 @@ final class CupertinoTabBar extends StatelessWidget {
                 tab: tab,
                 isSelected: currentIndex == tab.index,
                 tabBarHasFocus: tabFocusScopeNode.hasFocus,
+                onSelected: () => tabController.select(tab.index),
               ),
           ],
         ),
@@ -105,11 +106,13 @@ final class _TabItem extends StatelessWidget {
     required this.tab,
     required this.isSelected,
     required this.tabBarHasFocus,
+    required this.onSelected,
   });
 
   final HomeTab tab;
   final bool isSelected;
   final bool tabBarHasFocus;
+  final VoidCallback onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +122,7 @@ final class _TabItem extends StatelessWidget {
       child: TvTab(
         height: 48.s,
         autofocus: isSelected,
+        onSelected: onSelected,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 12.s),
           child: Text(

@@ -5,8 +5,8 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/app_theme_provider.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/strings.dart';
 
-TvNavigationMenuItem buildCupertinoAppVersion({required PackageInfo info}) {
-  return TvNavigationMenuItem(
+CupertinoTvSidebarItem buildCupertinoAppVersion({required PackageInfo info}) {
+  return CupertinoTvSidebarItem(
     isSelectable: false,
     canRequestFocus: false,
     iconBuilder: null,

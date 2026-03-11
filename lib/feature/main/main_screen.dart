@@ -22,9 +22,6 @@ final class MainScreen extends StatefulWidget {
   static BoxConstraints get oneUiMenuConstraints =>
       BoxConstraints(minWidth: 64.s, maxWidth: 280.s);
 
-  static BoxConstraints get webOSConstraints =>
-      BoxConstraints(minWidth: 80.s, maxWidth: 280.s);
-
   @override
   State<StatefulWidget> createState() => _MainScreenState();
 }
@@ -73,7 +70,7 @@ final class _MainScreenState extends State<MainScreen> {
             contentScopeNode: _contentScopeNode,
           ),
 
-          AppPlatforms.webos => _WebOSUi(
+          AppPlatforms.webos => _SandstoneUi(
             info: info,
             controller: _controller,
             contentScopeNode: _contentScopeNode,
@@ -221,8 +218,8 @@ final class _TizenUi extends StatelessWidget {
   }
 }
 
-final class _WebOSUi extends StatelessWidget {
-  const _WebOSUi({
+final class _SandstoneUi extends StatelessWidget {
+  const _SandstoneUi({
     required this.info,
     required this.controller,
     required this.contentScopeNode,
@@ -234,17 +231,12 @@ final class _WebOSUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TvNavigationDrawer(
+    return SandstoneVerticalTabLayout(
       controller: controller,
       backgroundColor: context.appTheme.colors.background.primary,
-      mode: TvNavigationDrawerMode.standard,
-      constraints: MainScreen.webOSConstraints,
-      separatorBuilder: (_) => SizedBox(height: 12.s),
-      footer: buildWebOSAppVersion(info: info),
-      menuItems: buildWebOSNavigationItems(context: context),
-      drawerBuilder: (context, animation, child) {
-        return WebOSMainMenu(child: child);
-      },
+      tabs: buildSandstoneNavigationItems(context: context),
+      tabsBuilder: (context, _, child) => SandstoneMainMenu(child: child),
+      separatorBuilder: (_, _) => SizedBox(height: 12.s),
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
           contentScopeNode.requestFocusOnChild();

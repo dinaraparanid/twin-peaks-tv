@@ -10,7 +10,7 @@ import 'package:twin_peaks_tv/feature/main/main_tab.dart';
 
 const _decorationSwitchDuration = Duration(milliseconds: 200);
 
-List<TvNavigationMenuItem> buildCupertinoNavigationItems({
+List<CupertinoTvSidebarItem> buildCupertinoNavigationItems({
   required BuildContext context,
 }) {
   return [
@@ -117,7 +117,7 @@ final class _MenuItem {
   final Widget Function(BuildContext, Set<WidgetState>) iconBuilder;
   final VoidCallback onSelect;
 
-  TvNavigationMenuItem build(BuildContext context) {
+  CupertinoTvSidebarItem build(BuildContext context) {
     final theme = context.appTheme;
 
     final decoration = WidgetStateProperty.resolveWith((states) {
@@ -137,7 +137,7 @@ final class _MenuItem {
       );
     });
 
-    return TvNavigationMenuItem(
+    return CupertinoTvSidebarItem(
       key: key,
       iconBuilder: (context) => WidgetStateProperty.resolveWith((states) {
         return iconBuilder(context, states);
