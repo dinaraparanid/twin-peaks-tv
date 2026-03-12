@@ -14,10 +14,16 @@ const _durationThumbnailScale = Duration(milliseconds: 300);
 double get _starSize => 18.0.iz;
 
 final class EpisodeItem extends StatefulWidget {
-  const EpisodeItem({super.key, this.focusNode, required this.episode});
+  const EpisodeItem({
+    super.key,
+    this.focusNode,
+    required this.episode,
+    required this.onSelect,
+  });
 
   final FocusNode? focusNode;
   final Episode episode;
+  final VoidCallback onSelect;
 
   @override
   State<StatefulWidget> createState() => _EpisodeItemState();
@@ -59,7 +65,7 @@ final class _EpisodeItemState extends State<EpisodeItem>
             focusNode: widget.focusNode,
             autoScroll: true,
             onSelect: (_, _) {
-              // TODO(paranid5): экран с плеером
+              widget.onSelect();
               return KeyEventResult.handled;
             },
             onFocusChanged: (_, hasFocus) {
