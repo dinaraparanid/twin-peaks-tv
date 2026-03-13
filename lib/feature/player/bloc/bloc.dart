@@ -1,3 +1,4 @@
+export 'controls_visibility.dart';
 export 'player_bloc.dart';
 export 'player_bloc_factory.dart';
 export 'player_entry.dart';
