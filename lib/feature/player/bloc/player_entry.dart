@@ -20,4 +20,11 @@ extension PlayerEntryExt on PlayerEntry {
 
     PlayerEntryMovie(movie: final movie) => movie.videoUrl,
   };
+
+  String get videoTitle => switch (this) {
+    PlayerEntrySeason(episodeIndex: final index, episodes: final episodes) =>
+      episodes[index].title,
+
+    PlayerEntryMovie(movie: final movie) => movie.title,
+  };
 }

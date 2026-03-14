@@ -1,8 +1,8 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/utils/ext/key_ext.dart';
-import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
+import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/player/widget/controls.dart';
 import 'package:twin_peaks_tv/feature/player/widget/episodes.dart';
@@ -25,8 +25,24 @@ final class _PositionedControlsMenuState extends State<PositionedControlsMenu> {
     return BlocBuilder<PlayerBloc, PlayerState>(
       buildWhen: distinctState((x) => x.controlsVisibility),
       builder: (context, state) {
+        final child = Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 64.s),
+              child: Controls(key: _controlsKey),
+            ),
+
+            SizedBox(height: 16.s),
+
+            Episodes(key: _episodesKey),
+          ],
+        );
+
         return AnimatedPositioned(
           duration: const Duration(milliseconds: 300),
+          left: 0,
+          right: 0,
           top: switch (state.controlsVisibility) {
             ControlsVisibility.hidden => screenHeight,
 
@@ -39,13 +55,10 @@ final class _PositionedControlsMenuState extends State<PositionedControlsMenu> {
                   (_episodesKey.size?.height ?? 0) -
                   64.s,
           },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Controls(key: _controlsKey),
-              Episodes(key: _episodesKey),
-            ],
-          ),
+          child: switch (AppPlatform.isTvOS) {
+            true => child,
+            false => Material(color: Colors.transparent, child: child),
+          },
         );
       },
     );

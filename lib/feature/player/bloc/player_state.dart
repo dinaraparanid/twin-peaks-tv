@@ -10,5 +10,7 @@ abstract class PlayerState with _$PlayerState {
     required PlayerEntry entry,
     @Default(false) bool isPlaying,
     @Default(ControlsVisibility.hidden) ControlsVisibility controlsVisibility,
+    @Default(Duration.zero) Duration position,
+    @Default(Duration.zero) Duration duration,
   }) = _PlayerState;
 }

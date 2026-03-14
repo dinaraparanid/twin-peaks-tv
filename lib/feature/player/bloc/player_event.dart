@@ -14,3 +14,9 @@ final class ChangeControlsVisibilityEvent extends PlayerEvent {
   const ChangeControlsVisibilityEvent({required this.visibility});
   final ControlsVisibility visibility;
 }
+
+final class UpdatePositionsEvent extends PlayerEvent {
+  const UpdatePositionsEvent({required this.position, required this.duration});
+  final Duration position;
+  final Duration duration;
+}

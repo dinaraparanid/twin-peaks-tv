@@ -10,7 +10,7 @@ import 'package:video_player/video_player.dart';
 final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc({required PlayerEntry entry}) : super(PlayerState(entry: entry)) {
     controller = VideoPlayerController.networkUrl(Uri.parse(entry.videoUrl))
-      ..addListener(_controllerListener);
+      ..addListener(_playerListener);
 
     controller.initialize().then((_) {
       if (!isClosed) add(const PlayPauseEvent());
@@ -37,6 +37,10 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
           episodesScopeNode.requestFocus();
       }
     });
+
+    on<UpdatePositionsEvent>((event, emit) {
+      emit(state.copyWith(position: event.position, duration: event.duration));
+    });
   }
 
   late final VideoPlayerController controller;
@@ -46,11 +50,15 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   late final controlsScopeNode = FocusScopeNode();
   late final episodesScopeNode = FocusScopeNode();
 
-  void _controllerListener() {}
+  void _playerListener() {
+    final position = controller.value.position;
+    final duration = controller.value.duration;
+    add(UpdatePositionsEvent(position: position, duration: duration));
+  }
 
   @override
   Future<void> close() {
-    controller.removeListener(_controllerListener);
+    controller.removeListener(_playerListener);
     controller.dispose();
     focusScopeNode.dispose();
     playerNode.dispose();

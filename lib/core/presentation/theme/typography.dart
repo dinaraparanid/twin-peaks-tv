@@ -18,6 +18,7 @@ final class AppTypography {
     movieInfo = MovieInfoTypography._(fontFamily: fontFamily);
     actor = ActorTypography._(fontFamily: fontFamily);
     episode = EpisodeTypography._(fontFamily: fontFamily);
+    player = PlayerTypography._(fontFamily: fontFamily);
   }
 
   late final SplashTypography splash;
@@ -26,6 +27,7 @@ final class AppTypography {
   late final MovieInfoTypography movieInfo;
   late final ActorTypography actor;
   late final EpisodeTypography episode;
+  late final PlayerTypography player;
 }
 
 @immutable
@@ -193,4 +195,26 @@ final class EpisodeTypography {
   late final TextStyle title;
   late final TextStyle rating;
   late final TextStyle description;
+}
+
+@immutable
+final class PlayerTypography {
+  PlayerTypography._({required String fontFamily}) {
+    videoTitle = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 24.fz,
+    );
+
+    timestamp = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 18.fz,
+    );
+  }
+
+  late final TextStyle videoTitle;
+  late final TextStyle timestamp;
 }
