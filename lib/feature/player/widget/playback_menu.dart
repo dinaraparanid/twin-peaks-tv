@@ -7,14 +7,14 @@ import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/player/widget/controls.dart';
 import 'package:twin_peaks_tv/feature/player/widget/episodes.dart';
 
-final class PositionedControlsMenu extends StatefulWidget {
-  const PositionedControlsMenu({super.key});
+final class PositionedPlaybackMenu extends StatefulWidget {
+  const PositionedPlaybackMenu({super.key});
 
   @override
-  State<StatefulWidget> createState() => _PositionedControlsMenuState();
+  State<StatefulWidget> createState() => _PositionedPlaybackMenuState();
 }
 
-final class _PositionedControlsMenuState extends State<PositionedControlsMenu> {
+final class _PositionedPlaybackMenuState extends State<PositionedPlaybackMenu> {
   late final _controlsKey = GlobalKey();
   late final _episodesKey = GlobalKey();
 

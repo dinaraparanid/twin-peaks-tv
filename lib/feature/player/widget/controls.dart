@@ -4,10 +4,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/ext/format.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
+import 'package:twin_peaks_tv/feature/player/widget/volume.dart';
 
 final class Controls extends StatelessWidget {
   const Controls({super.key});
@@ -42,7 +44,28 @@ final class Controls extends StatelessWidget {
 
         return KeyEventResult.handled;
       },
-      builder: (_, _) => DpadFocus(builder: (_, _) => const _MaterialContent()),
+      builder: (_, _) {
+        final radius = BorderRadius.all(Radius.circular(24.r));
+
+        return AnimatedSelectionBorders(
+          focusNode: context.playerBloc.controlsMenuNode,
+          borderRadius: radius,
+          onLeft: (_, _) {
+            context.playerBloc.add(const RequestFocusOnVolumeEvent());
+            return KeyEventResult.handled;
+          },
+          onRight: (_, _) {
+            context.playerBloc.add(const RequestFocusOnSpeedEvent());
+            return KeyEventResult.handled;
+          },
+          onDown: (_, _) {
+            context.playerBloc.add(const RequestFocusOnPositionEvent());
+            return KeyEventResult.handled;
+          },
+          builder: (context, _) =>
+              ClipRRect(borderRadius: radius, child: const _MaterialContent()),
+        );
+      },
     );
   }
 }
@@ -52,20 +75,14 @@ final class _MaterialContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = BorderRadius.all(Radius.circular(24.r));
-
-    return ClipRRect(
-      borderRadius: radius,
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 48, sigmaY: 48),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.s, vertical: 12.s),
-          decoration: BoxDecoration(
-            color: context.appTheme.colors.background.primary60,
-            borderRadius: radius,
-          ),
-          child: const _Content(),
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 48, sigmaY: 48),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16.s, vertical: 12.s),
+        decoration: BoxDecoration(
+          color: context.appTheme.colors.background.primary60,
         ),
+        child: const _Content(),
       ),
     );
   }
@@ -82,7 +99,7 @@ final class _Content extends StatelessWidget {
         Row(
           spacing: 8.s,
           children: const [
-            SizedBox(), // TODO(paranid5): volume
+            Volume(),
             Expanded(child: _VideoTitle()),
             SizedBox(), // TODO(paranid5): speed
           ],
@@ -130,7 +147,7 @@ final class _Position extends StatelessWidget {
     return BlocBuilder<PlayerBloc, PlayerState>(
       buildWhen: distinctState((s) => s.position),
       builder: (context, state) => Text(
-        state.position.toTimestampFormat(),
+        state.position.value.toTimestampFormat(),
         style: context.appTheme.typography.player.timestamp.copyWith(
           color: context.appTheme.colors.text.secondary,
         ),

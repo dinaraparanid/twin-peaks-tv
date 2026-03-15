@@ -1,9 +1,14 @@
 import 'package:flutter/widgets.dart';
 
 extension FocusScopeNodeExt on FocusScopeNode {
-  void requestFocusOnChild() {
+  void requestFocusOnChild({FocusNode? child}) {
     if (focusedChild != null) {
       requestFocus();
+      return;
+    }
+
+    if (child != null) {
+      child.requestFocus();
       return;
     }
 

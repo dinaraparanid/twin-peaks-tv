@@ -5,7 +5,7 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/di/app_module.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
-import 'package:twin_peaks_tv/feature/player/widget/controls_menu.dart';
+import 'package:twin_peaks_tv/feature/player/widget/playback_menu.dart';
 import 'package:twin_peaks_tv/feature/player/widget/player.dart';
 
 @RoutePage()
@@ -23,7 +23,7 @@ final class PlayerScreen extends StatelessWidget {
         builder: (context, state) => DpadFocusScope(
           focusScopeNode: context.playerBloc.focusScopeNode,
           builder: (context, _) =>
-              const Stack(children: [Player(), PositionedControlsMenu()]),
+              const Stack(children: [Player(), PositionedPlaybackMenu()]),
         ),
       ),
     );

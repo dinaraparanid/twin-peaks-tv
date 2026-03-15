@@ -10,7 +10,18 @@ abstract class PlayerState with _$PlayerState {
     required PlayerEntry entry,
     @Default(false) bool isPlaying,
     @Default(ControlsVisibility.hidden) ControlsVisibility controlsVisibility,
-    @Default(Duration.zero) Duration position,
+    @Default(SliderState(value: Duration.zero)) SliderState<Duration> position,
     @Default(Duration.zero) Duration duration,
+    @Default(SliderState(value: 1)) SliderState<double> volume,
+    @Default(SliderState(value: 1)) SliderState<double> speed,
   }) = _PlayerState;
+}
+
+@freezed
+abstract class SliderState<T> with _$SliderState<T> {
+  const factory SliderState({
+    required T value,
+    @Default(false) bool isDragging,
+    @Default(false) bool isFocused,
+  }) = _SliderState;
 }
