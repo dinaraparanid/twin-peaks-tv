@@ -44,7 +44,7 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSelectionBorders(
+    return AnimatedFocusSelectionBorders(
       focusNode: _focusNode,
       duration: _expandDuration,
       autoScroll: true,

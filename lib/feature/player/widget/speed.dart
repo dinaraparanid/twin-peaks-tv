@@ -7,38 +7,35 @@ import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
 
-final class Volume extends StatelessWidget {
-  const Volume({super.key});
+final class Speed extends StatelessWidget {
+  const Speed({super.key});
+
+  static const _divisions = 6;
+  static const _minSpeed = 0.5;
+  static const _maxSpeed = 2.0;
 
   @override
   Widget build(BuildContext context) => switch (AppPlatform.targetPlatform) {
-    AppPlatforms.android => const _MaterialVolume(),
-    AppPlatforms.tizen => const _MaterialVolume(),
-    AppPlatforms.tvos => const _CupertinoVolume(),
-    AppPlatforms.webos => const _MaterialVolume(),
+    AppPlatforms.android => const _MaterialSpeed(),
+    AppPlatforms.tizen => const _MaterialSpeed(),
+    AppPlatforms.tvos => const _CupertinoSpeed(),
+    AppPlatforms.webos => const _MaterialSpeed(),
   };
 }
 
-final class _MaterialVolume extends StatelessWidget {
-  const _MaterialVolume();
-
-  static IconData _buildVolumeIcon(double volume) {
-    if (volume == 0) return Icons.volume_off;
-    if (volume < 0.5) return Icons.volume_mute;
-    if (volume < 1) return Icons.volume_down;
-    return Icons.volume_up;
-  }
+final class _MaterialSpeed extends StatelessWidget {
+  const _MaterialSpeed();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PlayerBloc, PlayerState>(
-      buildWhen: distinctState((s) => s.volume),
+      buildWhen: distinctState((s) => s.speed),
       builder: (context, state) => Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 12.s,
         children: [
           Icon(
-            _buildVolumeIcon(state.volume.value),
+            Icons.speed,
             size: 24.s,
             color: context.appTheme.colors.text.secondary,
           ),
@@ -46,31 +43,33 @@ final class _MaterialVolume extends StatelessWidget {
           SizedBox(
             width: 100.s,
             child: TvSlider(
-              focusNode: context.playerBloc.volumeNode,
-              value: state.volume.value,
-              step: 0.1,
-              label: state.volume.value.toStringAsFixed(1),
+              focusNode: context.playerBloc.speedNode,
+              value: state.speed.value,
+              divisions: Speed._divisions,
+              min: Speed._minSpeed,
+              max: Speed._maxSpeed,
+              label: state.speed.value.toStringAsFixed(2),
               showValueIndicator: ShowValueIndicator.never,
               activeColor: context.appTheme.colors.primary.primary60,
-              thumbColor: switch (state.volume.isFocused) {
+              thumbColor: switch (state.speed.isFocused) {
                 true => Colors.white,
                 false => Colors.grey,
               },
               padding: EdgeInsets.zero,
               onChanged: (value) {
-                if (!state.volume.isDragging) {
-                  context.playerBloc.add(const StartVolumeDragEvent());
+                if (!state.speed.isDragging) {
+                  context.playerBloc.add(const StartSpeedDragEvent());
                 }
 
-                context.playerBloc.add(UpdateVolumeEvent(volume: value));
+                context.playerBloc.add(UpdateSpeedEvent(speed: value));
               },
               onChangeStart: (value) {
-                context.playerBloc.add(const StartVolumeDragEvent());
+                context.playerBloc.add(const StartSpeedDragEvent());
               },
               onChangeEnd: (value) {
-                context.playerBloc.add(SetVolumeEvent(volume: value));
+                context.playerBloc.add(SetSpeedEvent(speed: value));
               },
-              onRight: (_, _) {
+              onLeft: (_, _) {
                 context.playerBloc.add(const RequestFocusOnControlsMenuEvent());
                 return KeyEventResult.handled;
               },
@@ -82,26 +81,19 @@ final class _MaterialVolume extends StatelessWidget {
   }
 }
 
-final class _CupertinoVolume extends StatelessWidget {
-  const _CupertinoVolume();
-
-  static IconData _buildVolumeIcon(double volume) {
-    if (volume == 0) return CupertinoIcons.volume_off;
-    if (volume < 0.5) return CupertinoIcons.volume_mute;
-    if (volume < 1) return CupertinoIcons.volume_down;
-    return CupertinoIcons.volume_up;
-  }
+final class _CupertinoSpeed extends StatelessWidget {
+  const _CupertinoSpeed();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PlayerBloc, PlayerState>(
-      buildWhen: distinctState((s) => s.volume),
+      buildWhen: distinctState((s) => s.speed),
       builder: (context, state) => Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 12.s,
         children: [
           Icon(
-            _buildVolumeIcon(state.volume.value),
+            CupertinoIcons.speedometer,
             size: 24.s,
             color: context.appTheme.colors.text.secondary,
           ),
@@ -109,24 +101,26 @@ final class _CupertinoVolume extends StatelessWidget {
           SizedBox(
             width: 100.s,
             child: CupertinoTvSlider(
-              focusNode: context.playerBloc.volumeNode,
-              value: state.volume.value,
-              step: 0.1,
+              focusNode: context.playerBloc.speedNode,
+              value: state.speed.value,
+              divisions: Speed._divisions,
+              min: Speed._minSpeed,
+              max: Speed._maxSpeed,
               activeColor: context.appTheme.colors.primary.primary60,
-              thumbColor: switch (state.volume.isFocused) {
+              thumbColor: switch (state.speed.isFocused) {
                 true => CupertinoColors.white,
                 false => CupertinoColors.systemGrey,
               },
               onChanged: (value) {
-                context.playerBloc.add(UpdateVolumeEvent(volume: value));
+                context.playerBloc.add(UpdateSpeedEvent(speed: value));
               },
               onChangeStart: (value) {
-                context.playerBloc.add(const StartVolumeDragEvent());
+                context.playerBloc.add(const StartSpeedDragEvent());
               },
               onChangeEnd: (value) {
-                context.playerBloc.add(SetVolumeEvent(volume: value));
+                context.playerBloc.add(SetSpeedEvent(speed: value));
               },
-              onRight: (_, _) {
+              onLeft: (_, _) {
                 context.playerBloc.add(const RequestFocusOnControlsMenuEvent());
                 return KeyEventResult.handled;
               },

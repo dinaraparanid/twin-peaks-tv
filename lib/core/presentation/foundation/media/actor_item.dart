@@ -18,7 +18,7 @@ final class ActorItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       spacing: 4.s,
       children: [
-        AnimatedSelectionBorders(
+        AnimatedFocusSelectionBorders(
           focusNode: focusNode,
           autoScroll: true,
           shape: BoxShape.circle,

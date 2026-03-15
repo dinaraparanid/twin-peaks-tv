@@ -61,7 +61,7 @@ final class _EpisodeItemState extends State<EpisodeItem>
           width: _thumbnailFocusedWidth,
           height: _thumbnailFocusedHeight,
           alignment: Alignment.center,
-          child: AnimatedSelectionBorders(
+          child: AnimatedFocusSelectionBorders(
             focusNode: widget.focusNode,
             autoScroll: true,
             onSelect: (_, _) {

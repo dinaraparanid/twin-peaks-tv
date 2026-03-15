@@ -42,7 +42,7 @@ final class _MovieDescriptionState extends State<MovieDescription> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSelectionBorders(
+    return AnimatedFocusSelectionBorders(
       focusNode: _focusNode,
       duration: _expandDuration,
       autoScroll: true,

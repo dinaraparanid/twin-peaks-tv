@@ -1,3 +1,5 @@
+import 'package:async/async.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twin_peaks_tv/core/log/app_logger.dart';
@@ -28,7 +30,7 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       } catch (e) {
         AppLogger.instance.e(e);
       }
-    });
+    }, transformer: sequential());
 
     on<ChangeControlsVisibilityEvent>((event, emit) {
       emit(state.copyWith(controlsVisibility: event.visibility));
@@ -54,17 +56,32 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       }
     });
 
-    on<UpdatePositionEvent>((event, emit) {
+    on<UpdatePositionEvent>((event, emit) async {
       emit(
         state.copyWith(
           position: state.position.copyWith(value: event.position),
         ),
       );
-    });
+
+      await _positionTask?.cancel();
+
+      _positionTask = CancelableOperation.fromFuture(
+        Future.delayed(
+          _seekSliderDelay,
+          () => SetPositionEvent(position: event.position),
+        ),
+      );
+
+      final positionEvent = await _positionTask?.value;
+
+      if (!isClosed && positionEvent != null) {
+        add(positionEvent);
+      }
+    }, transformer: restartable());
 
     on<StartPositionDragEvent>((event, emit) {
       emit(state.copyWith(position: state.position.copyWith(isDragging: true)));
-    });
+    }, transformer: droppable());
 
     on<SetPositionEvent>((event, emit) async {
       try {
@@ -76,7 +93,7 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       emit(
         state.copyWith(position: state.position.copyWith(isDragging: false)),
       );
-    });
+    }, transformer: droppable());
 
     on<UpdatePositionFocusEvent>((event, emit) {
       emit(
@@ -94,17 +111,36 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       }
     });
 
-    on<UpdateVolumeEvent>((event, emit) {
+    on<UpdateVolumeEvent>((event, emit) async {
       emit(state.copyWith(volume: state.volume.copyWith(value: event.volume)));
-    });
+
+      await _volumeTask?.cancel();
+
+      _volumeTask = CancelableOperation.fromFuture(
+        Future.delayed(
+          _seekSliderDelay,
+          () => SetVolumeEvent(volume: event.volume),
+        ),
+      );
+
+      final volumeEvent = await _volumeTask?.value;
+
+      if (!isClosed && volumeEvent != null) {
+        add(volumeEvent);
+      }
+    }, transformer: restartable());
 
     on<StartVolumeDragEvent>((event, emit) {
       emit(state.copyWith(volume: state.volume.copyWith(isDragging: true)));
-    });
+    }, transformer: droppable());
 
     on<SetVolumeEvent>((event, emit) async {
-      await controller.setVolume(event.volume);
-    });
+      try {
+        await controller.setVolume(event.volume);
+      } catch (e) {
+        AppLogger.instance.e(e);
+      }
+    }, transformer: droppable());
 
     on<UpdateVolumeFocusEvent>((event, emit) {
       emit(
@@ -118,19 +154,38 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       if (!state.speed.isDragging) {
         emit(state.copyWith(speed: state.speed.copyWith(value: event.speed)));
       }
-    });
+    }, transformer: restartable());
 
-    on<UpdateSpeedEvent>((event, emit) {
+    on<UpdateSpeedEvent>((event, emit) async {
       emit(state.copyWith(speed: state.speed.copyWith(value: event.speed)));
-    });
+
+      await _speedTask?.cancel();
+
+      _speedTask = CancelableOperation.fromFuture(
+        Future.delayed(
+          _seekSliderDelay,
+          () => SetSpeedEvent(speed: event.speed),
+        ),
+      );
+
+      final speedEvent = await _volumeTask?.value;
+
+      if (!isClosed && speedEvent != null) {
+        add(speedEvent);
+      }
+    }, transformer: restartable());
 
     on<StartSpeedDragEvent>((event, emit) {
       emit(state.copyWith(speed: state.speed.copyWith(isDragging: true)));
-    });
+    }, transformer: droppable());
 
     on<SetSpeedEvent>((event, emit) async {
-      await controller.setPlaybackSpeed(event.speed);
-    });
+      try {
+        await controller.setPlaybackSpeed(event.speed);
+      } catch (e) {
+        AppLogger.instance.e(e);
+      }
+    }, transformer: droppable());
 
     on<UpdateSpeedFocusEvent>((event, emit) {
       emit(
@@ -155,7 +210,12 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     });
   }
 
+  static const _seekSliderDelay = Duration(milliseconds: 500);
+
   late final VideoPlayerController controller;
+  CancelableOperation<PlayerEvent>? _positionTask;
+  CancelableOperation<PlayerEvent>? _volumeTask;
+  CancelableOperation<PlayerEvent>? _speedTask;
 
   late final focusScopeNode = FocusScopeNode();
   late final playerNode = FocusNode();
@@ -206,6 +266,15 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   @override
   Future<void> close() {
+    _positionTask?.cancel();
+    _positionTask = null;
+
+    _volumeTask?.cancel();
+    _volumeTask = null;
+
+    _speedTask?.cancel();
+    _speedTask = null;
+
     controller.removeListener(_playerListener);
     positionNode.removeListener(_positionFocusListener);
     volumeNode.removeListener(_volumeFocusListener);

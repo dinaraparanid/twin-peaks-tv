@@ -9,6 +9,8 @@ import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/ext/format.dart';
 import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
+import 'package:twin_peaks_tv/feature/player/widget/playback_position.dart';
+import 'package:twin_peaks_tv/feature/player/widget/speed.dart';
 import 'package:twin_peaks_tv/feature/player/widget/volume.dart';
 
 final class Controls extends StatelessWidget {
@@ -44,25 +46,16 @@ final class Controls extends StatelessWidget {
 
         return KeyEventResult.handled;
       },
+      onSelect: (_, _) {
+        context.playerBloc.add(const PlayPauseEvent());
+        return KeyEventResult.handled;
+      },
       builder: (_, _) {
         final radius = BorderRadius.all(Radius.circular(24.r));
 
         return AnimatedSelectionBorders(
-          focusNode: context.playerBloc.controlsMenuNode,
           borderRadius: radius,
-          onLeft: (_, _) {
-            context.playerBloc.add(const RequestFocusOnVolumeEvent());
-            return KeyEventResult.handled;
-          },
-          onRight: (_, _) {
-            context.playerBloc.add(const RequestFocusOnSpeedEvent());
-            return KeyEventResult.handled;
-          },
-          onDown: (_, _) {
-            context.playerBloc.add(const RequestFocusOnPositionEvent());
-            return KeyEventResult.handled;
-          },
-          builder: (context, _) =>
+          builder: (context) =>
               ClipRRect(borderRadius: radius, child: const _MaterialContent()),
         );
       },
@@ -93,29 +86,64 @@ final class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return Stack(
       children: [
-        Row(
-          spacing: 8.s,
-          children: const [
-            Volume(),
-            Expanded(child: _VideoTitle()),
-            SizedBox(), // TODO(paranid5): speed
-          ],
-        ),
+        const _MenuNode(),
 
-        SizedBox(height: 16.s),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              spacing: 24.s,
+              children: const [
+                Volume(),
+                Expanded(child: _VideoTitle()),
+                Speed(),
+              ],
+            ),
 
-        Row(
-          spacing: 8.s,
-          children: const [
-            _Position(),
-            Expanded(child: SizedBox()), // TODO(paranid5): progress
-            _Duration(),
+            SizedBox(height: 16.s),
+
+            Row(
+              spacing: 24.s,
+              children: const [
+                _Position(),
+                Expanded(child: PlaybackPosition()),
+                _Duration(),
+              ],
+            ),
           ],
         ),
       ],
+    );
+  }
+}
+
+final class _MenuNode extends StatelessWidget {
+  const _MenuNode();
+
+  @override
+  Widget build(BuildContext context) {
+    return DpadFocus(
+      focusNode: context.playerBloc.controlsMenuNode,
+      onLeft: (_, _) {
+        context.playerBloc.add(const RequestFocusOnVolumeEvent());
+        return KeyEventResult.handled;
+      },
+      onRight: (_, _) {
+        context.playerBloc.add(const RequestFocusOnSpeedEvent());
+        return KeyEventResult.handled;
+      },
+      onDown: (_, _) {
+        context.playerBloc.add(const RequestFocusOnPositionEvent());
+        return KeyEventResult.handled;
+      },
+      onFocusChanged: (_, hasFocus) async {
+        await AnimatedSelectionBorders.of(
+          context,
+        ).controller.setSelected(hasFocus);
+      },
+      builder: (_, _) => const SizedBox(),
     );
   }
 }

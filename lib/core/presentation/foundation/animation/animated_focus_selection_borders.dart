@@ -1,14 +1,9 @@
-import 'package:flutter/widgets.dart';
-import 'package:flutter_scalify/flutter_scalify.dart';
-import 'package:gradient_borders/gradient_borders.dart';
-import 'package:tv_plus/tv_plus.dart';
-import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
+part of 'animation.dart';
 
-const _defaultDuration = Duration(milliseconds: 300);
-
-final class AnimatedSelectionBorders extends StatefulWidget {
-  AnimatedSelectionBorders({
+final class AnimatedFocusSelectionBorders extends StatefulWidget {
+  AnimatedFocusSelectionBorders({
     super.key,
+    this.controller,
     this.focusNode,
     this.duration = _defaultDuration,
     this.autoScroll = false,
@@ -29,6 +24,7 @@ final class AnimatedSelectionBorders extends StatefulWidget {
   }) : borderRadius = borderRadius ?? BorderRadius.all(Radius.circular(16.r)),
        borderWidth = borderWidth ?? 2.s;
 
+  final AnimatedSelectionBordersController? controller;
   final FocusNode? focusNode;
   final Duration duration;
   final bool autoScroll;
@@ -48,35 +44,53 @@ final class AnimatedSelectionBorders extends StatefulWidget {
   final Widget Function(BuildContext, FocusNode) builder;
 
   @override
-  State<StatefulWidget> createState() => _AnimatedSelectionBordersState();
+  State<StatefulWidget> createState() => _AnimatedFocusSelectionBordersState();
 }
 
-final class _AnimatedSelectionBordersState
-    extends State<AnimatedSelectionBorders>
+final class _AnimatedFocusSelectionBordersState
+    extends State<AnimatedFocusSelectionBorders>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<double> _borderAnimation;
+  late final AnimatedSelectionBordersController _controller;
+  var _ownsController = false;
 
   late final FocusNode _focusNode;
   var _ownsNode = false;
 
   @override
   void initState() {
+    _controller = widget.controller ?? AnimatedSelectionBordersController(
+      animationController: AnimationController(
+        vsync: this,
+        duration: widget.duration,
+      ),
+    );
+    _ownsController = widget.controller == null;
+
     _focusNode = widget.focusNode ?? FocusNode();
     _ownsNode = widget.focusNode == null;
-
-    _controller = AnimationController(vsync: this, duration: widget.duration);
-    _borderAnimation = Tween<double>(begin: 0, end: 1).animate(_controller);
 
     super.initState();
   }
 
   @override
-  void didUpdateWidget(covariant AnimatedSelectionBorders oldWidget) {
+  void didUpdateWidget(covariant AnimatedFocusSelectionBorders oldWidget) {
+    final passedController = widget.controller;
+
+    if (passedController != null && passedController != oldWidget.controller) {
+      if (_ownsController) {
+        _controller.dispose();
+      }
+
+      _controller = passedController;
+      _ownsController = false;
+    }
+
     final passedNode = widget.focusNode;
 
     if (passedNode != null && passedNode != oldWidget.focusNode) {
-      _focusNode.dispose();
+      if (_ownsNode) {
+        _focusNode.dispose();
+      }
 
       _focusNode = passedNode;
       _ownsNode = false;
@@ -91,7 +105,6 @@ final class _AnimatedSelectionBordersState
       _focusNode.dispose();
     }
 
-    _controller.dispose();
     super.dispose();
   }
 
@@ -108,63 +121,20 @@ final class _AnimatedSelectionBordersState
       onSelect: widget.onSelect,
       onBack: widget.onBack,
       onKeyEvent: widget.onKeyEvent,
-      onFocusChanged: (node, hasFocus) {
-        if (hasFocus) {
-          _controller.forward();
-        } else {
-          _controller.reverse();
-        }
-
+      onFocusChanged: (node, hasFocus) async {
+        await _controller.setSelected(hasFocus);
         widget.onFocusChanged?.call(node, hasFocus);
       },
       onFocusDisabledWhenWasFocused: widget.onFocusDisabledWhenWasFocused,
-      builder: (context, node) => _Content(
-        borderAnimation: _borderAnimation,
+      builder: (context, node) => AnimatedSelectionBorders(
+        controller: _controller,
+        duration: widget.duration,
         paddingBuilder: widget.paddingBuilder,
         borderRadius: widget.borderRadius,
         borderWidth: widget.borderWidth,
         shape: widget.shape,
-        child: widget.builder(context, node),
+        builder: (context) => widget.builder(context, node),
       ),
-    );
-  }
-}
-
-final class _Content extends AnimatedWidget {
-  const _Content({
-    required Animation<double> borderAnimation,
-    required this.paddingBuilder,
-    required this.borderRadius,
-    required this.borderWidth,
-    required this.shape,
-    required this.child,
-  }) : super(listenable: borderAnimation);
-
-  final EdgeInsetsGeometry Function(double)? paddingBuilder;
-  final BorderRadiusGeometry borderRadius;
-  final double borderWidth;
-  final BoxShape shape;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final borderAnimation = listenable as Animation<double>;
-
-    return Container(
-      padding: paddingBuilder?.call(borderAnimation.value),
-      decoration: BoxDecoration(
-        borderRadius: shape == BoxShape.circle ? null : borderRadius,
-        border: GradientBoxBorder(
-          gradient: Gradient.lerp(
-            context.appTheme.colors.gradients.transparent,
-            context.appTheme.colors.gradients.selection,
-            borderAnimation.value,
-          )!,
-          width: borderWidth,
-        ),
-        shape: shape,
-      ),
-      child: child,
     );
   }
 }

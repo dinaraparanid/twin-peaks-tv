@@ -48,7 +48,7 @@ final class _SceneItemState extends State<SceneItem>
       width: SceneItem.thumbnailFocusedWidth,
       height: SceneItem.thumbnailFocusedHeight,
       alignment: Alignment.center,
-      child: AnimatedSelectionBorders(
+      child: AnimatedFocusSelectionBorders(
         focusNode: widget.focusNode,
         autoScroll: true,
         onFocusChanged: (_, hasFocus) {
