@@ -53,7 +53,7 @@ dependencies:
   logger: ^2.6.2
   flutter_scalify: ^3.1.0
   liquid_glass_renderer: ^0.2.0-dev.4
-  video_player: ^2.11.1
+  video_player: ^2.10.1
   bloc_concurrency: ^0.3.0
   async: ^2.13.0
 
@@ -144,59 +144,67 @@ dependency_overrides:
       path: packages/sandstone
 
   # !!! TVOS ONLY !!!
+#  video_player:
+#    git:
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
+#      path: packages/video_player/video_player
+#  video_player_android:
+#    git:
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
+#      path: packages/video_player/video_player_android
 #  video_player_avfoundation:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/video_player/video_player_avfoundation
 #  video_player_platform_interface:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/video_player/video_player_platform_interface
 #  shared_preferences:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/shared_preferences/shared_preferences
 #  shared_preferences_android:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/shared_preferences/shared_preferences_android
 #  shared_preferences_foundation:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/shared_preferences/shared_preferences_foundation
 #  shared_preferences_linux:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/shared_preferences/shared_preferences_linux
 #  shared_preferences_platform_interface:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/shared_preferences/shared_preferences_platform_interface
 #  shared_preferences_windows:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/shared_preferences/shared_preferences_windows
 #  path_provider:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/path_provider/path_provider
 #  path_provider_android:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/path_provider/path_provider_android
 #  path_provider_foundation:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/path_provider/path_provider_foundation
 #  path_provider_linux:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/path_provider/path_provider_linux
 #  path_provider_platform_interface:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/path_provider/path_provider_platform_interface
 #  path_provider_windows:
 #    git:
-#      url: https://github.com/DenisovAV/flutter-tvos-packages.git
+#      url: https://github.com/dinaraparanid/flutter-tvos-packages.git
 #      path: packages/path_provider/path_provider_windows
