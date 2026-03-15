@@ -1,13 +1,14 @@
 import 'dart:ui';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/ext/format.dart';
-import 'package:twin_peaks_tv/core/utils/functions/functions.dart';
+import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/player/widget/playback_position.dart';
 import 'package:twin_peaks_tv/feature/player/widget/speed.dart';
@@ -55,8 +56,12 @@ final class Controls extends StatelessWidget {
 
         return AnimatedSelectionBorders(
           borderRadius: radius,
-          builder: (context) =>
-              ClipRRect(borderRadius: radius, child: const _MaterialContent()),
+          builder: (context) => ClipRRect(
+            borderRadius: radius,
+            child: AppPlatform.isTvOS
+                ? const _CupertinoContent()
+                : const _MaterialContent(),
+          ),
         );
       },
     );
@@ -76,6 +81,30 @@ final class _MaterialContent extends StatelessWidget {
           color: context.appTheme.colors.background.primary60,
         ),
         child: const _Content(),
+      ),
+    );
+  }
+}
+
+final class _CupertinoContent extends StatelessWidget {
+  const _CupertinoContent();
+
+  @override
+  Widget build(BuildContext context) {
+    return LiquidGlassLayer(
+      settings: AppLiquidGlass.defaultSettings(
+        context,
+        color: CupertinoColors.transparent,
+      ),
+      child: FakeGlass(
+        shape: LiquidRoundedRectangle(borderRadius: 24.r),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.s, vertical: 12.s),
+          decoration: BoxDecoration(
+            color: context.appTheme.colors.background.primary60,
+          ),
+          child: const _Content(),
+        ),
       ),
     );
   }

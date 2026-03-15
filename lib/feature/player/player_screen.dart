@@ -22,6 +22,7 @@ final class PlayerScreen extends StatelessWidget {
         buildWhen: ignoreState(),
         builder: (context, state) => DpadFocusScope(
           focusScopeNode: context.playerBloc.focusScopeNode,
+          // TODO(paranid5): check if playback positions were initialized
           builder: (context, _) =>
               const Stack(children: [Player(), PositionedPlaybackMenu()]),
         ),
