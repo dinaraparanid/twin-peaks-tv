@@ -23,191 +23,31 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       if (!isClosed) add(const PlayPauseEvent());
     });
 
-    on<PlayPauseEvent>((event, emit) async {
-      try {
-        await (state.isPlaying ? controller.pause() : controller.play());
-        emit(state.copyWith(isPlaying: !state.isPlaying));
-      } catch (e) {
-        AppLogger.instance.e(e);
-      }
-    }, transformer: sequential());
+    on<PlayPauseEvent>(_onPlayPause, transformer: sequential());
+    on<ChangeControlsVisibilityEvent>(_onChangeControlsVisibility);
 
-    on<ChangeControlsVisibilityEvent>((event, emit) {
-      emit(state.copyWith(controlsVisibility: event.visibility));
+    on<SeekPositionsEvent>(_onSeekPositions);
+    on<UpdatePositionEvent>(_onUpdatePosition, transformer: restartable());
+    on<StartPositionDragEvent>(_onStartPositionDrag, transformer: droppable());
+    on<SetPositionEvent>(_onSetPosition, transformer: droppable());
+    on<UpdatePositionFocusEvent>(_onUpdatePositionFocus);
 
-      switch (event.visibility) {
-        case ControlsVisibility.hidden:
-          playerNode.requestFocus();
-        case ControlsVisibility.controls:
-          controlsScopeNode.requestFocusOnChild(child: controlsMenuNode);
-        case ControlsVisibility.episodes:
-          episodesScopeNode.requestFocusOnChild();
-      }
-    });
+    on<SeekVolumeEvent>(_onSeekVolume);
+    on<UpdateVolumeEvent>(_onUpdateVolume, transformer: restartable());
+    on<StartVolumeDragEvent>(_onStartVolumeDrag, transformer: droppable());
+    on<SetVolumeEvent>(_onSetVolume, transformer: droppable());
+    on<UpdateVolumeFocusEvent>(_onUpdateVolumeFocus);
 
-    on<SeekPositionsEvent>((event, emit) {
-      if (!state.position.isDragging) {
-        emit(
-          state.copyWith(
-            position: state.position.copyWith(value: event.position),
-            duration: event.duration,
-          ),
-        );
-      }
-    });
+    on<SeekSpeedEvent>(_onSeekSpeed, transformer: restartable());
+    on<UpdateSpeedEvent>(_onUpdateSpeed, transformer: restartable());
+    on<StartSpeedDragEvent>(_onStartSpeedDrag, transformer: droppable());
+    on<SetSpeedEvent>(_onSetSpeed, transformer: droppable());
+    on<UpdateSpeedFocusEvent>(_onUpdateSpeedFocus);
 
-    on<UpdatePositionEvent>((event, emit) async {
-      emit(
-        state.copyWith(
-          position: state.position.copyWith(value: event.position),
-        ),
-      );
-
-      await _positionTask?.cancel();
-
-      _positionTask = CancelableOperation.fromFuture(
-        Future.delayed(
-          _seekSliderDelay,
-          () => SetPositionEvent(position: event.position),
-        ),
-      );
-
-      final positionEvent = await _positionTask?.value;
-
-      if (!isClosed && positionEvent != null) {
-        add(positionEvent);
-      }
-    }, transformer: restartable());
-
-    on<StartPositionDragEvent>((event, emit) {
-      emit(state.copyWith(position: state.position.copyWith(isDragging: true)));
-    }, transformer: droppable());
-
-    on<SetPositionEvent>((event, emit) async {
-      try {
-        await controller.seekTo(event.position);
-      } catch (e) {
-        AppLogger.instance.e(e);
-      }
-
-      emit(
-        state.copyWith(position: state.position.copyWith(isDragging: false)),
-      );
-    }, transformer: droppable());
-
-    on<UpdatePositionFocusEvent>((event, emit) {
-      emit(
-        state.copyWith(
-          position: state.position.copyWith(isFocused: event.isFocused),
-        ),
-      );
-    });
-
-    on<SeekVolumeEvent>((event, emit) {
-      if (!state.volume.isDragging) {
-        emit(
-          state.copyWith(volume: state.volume.copyWith(value: event.volume)),
-        );
-      }
-    });
-
-    on<UpdateVolumeEvent>((event, emit) async {
-      emit(state.copyWith(volume: state.volume.copyWith(value: event.volume)));
-
-      await _volumeTask?.cancel();
-
-      _volumeTask = CancelableOperation.fromFuture(
-        Future.delayed(
-          _seekSliderDelay,
-          () => SetVolumeEvent(volume: event.volume),
-        ),
-      );
-
-      final volumeEvent = await _volumeTask?.value;
-
-      if (!isClosed && volumeEvent != null) {
-        add(volumeEvent);
-      }
-    }, transformer: restartable());
-
-    on<StartVolumeDragEvent>((event, emit) {
-      emit(state.copyWith(volume: state.volume.copyWith(isDragging: true)));
-    }, transformer: droppable());
-
-    on<SetVolumeEvent>((event, emit) async {
-      try {
-        await controller.setVolume(event.volume);
-      } catch (e) {
-        AppLogger.instance.e(e);
-      }
-    }, transformer: droppable());
-
-    on<UpdateVolumeFocusEvent>((event, emit) {
-      emit(
-        state.copyWith(
-          volume: state.volume.copyWith(isFocused: event.isFocused),
-        ),
-      );
-    });
-
-    on<SeekSpeedEvent>((event, emit) {
-      if (!state.speed.isDragging) {
-        emit(state.copyWith(speed: state.speed.copyWith(value: event.speed)));
-      }
-    }, transformer: restartable());
-
-    on<UpdateSpeedEvent>((event, emit) async {
-      emit(state.copyWith(speed: state.speed.copyWith(value: event.speed)));
-
-      await _speedTask?.cancel();
-
-      _speedTask = CancelableOperation.fromFuture(
-        Future.delayed(
-          _seekSliderDelay,
-          () => SetSpeedEvent(speed: event.speed),
-        ),
-      );
-
-      final speedEvent = await _volumeTask?.value;
-
-      if (!isClosed && speedEvent != null) {
-        add(speedEvent);
-      }
-    }, transformer: restartable());
-
-    on<StartSpeedDragEvent>((event, emit) {
-      emit(state.copyWith(speed: state.speed.copyWith(isDragging: true)));
-    }, transformer: droppable());
-
-    on<SetSpeedEvent>((event, emit) async {
-      try {
-        await controller.setPlaybackSpeed(event.speed);
-      } catch (e) {
-        AppLogger.instance.e(e);
-      }
-    }, transformer: droppable());
-
-    on<UpdateSpeedFocusEvent>((event, emit) {
-      emit(
-        state.copyWith(speed: state.speed.copyWith(isFocused: event.isFocused)),
-      );
-    });
-
-    on<RequestFocusOnControlsMenuEvent>((event, emit) {
-      controlsMenuNode.requestFocus();
-    });
-
-    on<RequestFocusOnVolumeEvent>((event, emit) {
-      volumeNode.requestFocus();
-    });
-
-    on<RequestFocusOnSpeedEvent>((event, emit) {
-      speedNode.requestFocus();
-    });
-
-    on<RequestFocusOnPositionEvent>((event, emit) {
-      positionNode.requestFocus();
-    });
+    on<RequestFocusOnControlsMenuEvent>(_onRequestFocusOnControlsMenu);
+    on<RequestFocusOnVolumeEvent>(_onRequestFocusOnVolume);
+    on<RequestFocusOnSpeedEvent>(_onRequestFocusOnSpeed);
+    on<RequestFocusOnPositionEvent>(_onRequestFocusOnPosition);
   }
 
   static const _seekSliderDelay = Duration(milliseconds: 500);
@@ -225,6 +65,232 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   late final speedNode = FocusNode();
   late final positionNode = FocusNode();
   late final episodesScopeNode = FocusScopeNode();
+
+  Future<void> _onPlayPause(
+    PlayPauseEvent event,
+    Emitter<PlayerState> emit,
+  ) async {
+    try {
+      await (state.isPlaying ? controller.pause() : controller.play());
+      emit(state.copyWith(isPlaying: !state.isPlaying));
+    } catch (e) {
+      AppLogger.instance.e(e);
+    }
+  }
+
+  void _onChangeControlsVisibility(
+    ChangeControlsVisibilityEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    emit(state.copyWith(controlsVisibility: event.visibility));
+
+    switch (event.visibility) {
+      case ControlsVisibility.hidden:
+        playerNode.requestFocus();
+      case ControlsVisibility.controls:
+        controlsScopeNode.requestFocusOnChild(child: controlsMenuNode);
+      case ControlsVisibility.episodes:
+        episodesScopeNode.requestFocusOnChild();
+    }
+  }
+
+  void _onSeekPositions(SeekPositionsEvent event, Emitter<PlayerState> emit) {
+    if (!state.position.isDragging) {
+      emit(
+        state.copyWith(
+          position: state.position.copyWith(value: event.position),
+          duration: event.duration,
+        ),
+      );
+    }
+  }
+
+  Future<void> _onUpdatePosition(
+    UpdatePositionEvent event,
+    Emitter<PlayerState> emit,
+  ) async {
+    emit(
+      state.copyWith(position: state.position.copyWith(value: event.position)),
+    );
+
+    await _positionTask?.cancel();
+
+    _positionTask = CancelableOperation.fromFuture(
+      Future.delayed(
+        _seekSliderDelay,
+        () => SetPositionEvent(position: event.position),
+      ),
+    );
+
+    final positionEvent = await _positionTask?.value;
+
+    if (!isClosed && positionEvent != null) {
+      add(positionEvent);
+    }
+  }
+
+  void _onStartPositionDrag(
+    StartPositionDragEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    emit(state.copyWith(position: state.position.copyWith(isDragging: true)));
+  }
+
+  Future<void> _onSetPosition(
+    SetPositionEvent event,
+    Emitter<PlayerState> emit,
+  ) async {
+    try {
+      await controller.seekTo(event.position);
+    } catch (e) {
+      AppLogger.instance.e(e);
+    }
+
+    emit(state.copyWith(position: state.position.copyWith(isDragging: false)));
+  }
+
+  void _onUpdatePositionFocus(
+    UpdatePositionFocusEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        position: state.position.copyWith(isFocused: event.isFocused),
+      ),
+    );
+  }
+
+  void _onSeekVolume(SeekVolumeEvent event, Emitter<PlayerState> emit) {
+    if (!state.volume.isDragging) {
+      emit(state.copyWith(volume: state.volume.copyWith(value: event.volume)));
+    }
+  }
+
+  Future<void> _onUpdateVolume(
+    UpdateVolumeEvent event,
+    Emitter<PlayerState> emit,
+  ) async {
+    emit(state.copyWith(volume: state.volume.copyWith(value: event.volume)));
+
+    await _volumeTask?.cancel();
+
+    _volumeTask = CancelableOperation.fromFuture(
+      Future.delayed(
+        _seekSliderDelay,
+        () => SetVolumeEvent(volume: event.volume),
+      ),
+    );
+
+    final volumeEvent = await _volumeTask?.value;
+
+    if (!isClosed && volumeEvent != null) {
+      add(volumeEvent);
+    }
+  }
+
+  void _onStartVolumeDrag(
+    StartVolumeDragEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    emit(state.copyWith(volume: state.volume.copyWith(isDragging: true)));
+  }
+
+  Future<void> _onSetVolume(
+    SetVolumeEvent event,
+    Emitter<PlayerState> emit,
+  ) async {
+    try {
+      await controller.setVolume(event.volume);
+    } catch (e) {
+      AppLogger.instance.e(e);
+    }
+  }
+
+  void _onUpdateVolumeFocus(
+    UpdateVolumeFocusEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    emit(
+      state.copyWith(volume: state.volume.copyWith(isFocused: event.isFocused)),
+    );
+  }
+
+  void _onSeekSpeed(SeekSpeedEvent event, Emitter<PlayerState> emit) {
+    if (!state.speed.isDragging) {
+      emit(state.copyWith(speed: state.speed.copyWith(value: event.speed)));
+    }
+  }
+
+  Future<void> _onUpdateSpeed(
+    UpdateSpeedEvent event,
+    Emitter<PlayerState> emit,
+  ) async {
+    emit(state.copyWith(speed: state.speed.copyWith(value: event.speed)));
+
+    await _speedTask?.cancel();
+
+    _speedTask = CancelableOperation.fromFuture(
+      Future.delayed(_seekSliderDelay, () => SetSpeedEvent(speed: event.speed)),
+    );
+
+    final speedEvent = await _speedTask?.value;
+
+    if (!isClosed && speedEvent != null) {
+      add(speedEvent);
+    }
+  }
+
+  void _onStartSpeedDrag(StartSpeedDragEvent event, Emitter<PlayerState> emit) {
+    emit(state.copyWith(speed: state.speed.copyWith(isDragging: true)));
+  }
+
+  Future<void> _onSetSpeed(
+    SetSpeedEvent event,
+    Emitter<PlayerState> emit,
+  ) async {
+    try {
+      await controller.setPlaybackSpeed(event.speed);
+    } catch (e) {
+      AppLogger.instance.e(e);
+    }
+  }
+
+  void _onUpdateSpeedFocus(
+    UpdateSpeedFocusEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    emit(
+      state.copyWith(speed: state.speed.copyWith(isFocused: event.isFocused)),
+    );
+  }
+
+  void _onRequestFocusOnControlsMenu(
+    RequestFocusOnControlsMenuEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    controlsMenuNode.requestFocus();
+  }
+
+  void _onRequestFocusOnVolume(
+    RequestFocusOnVolumeEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    volumeNode.requestFocus();
+  }
+
+  void _onRequestFocusOnSpeed(
+    RequestFocusOnSpeedEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    speedNode.requestFocus();
+  }
+
+  void _onRequestFocusOnPosition(
+    RequestFocusOnPositionEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    positionNode.requestFocus();
+  }
 
   void _playerListener() {
     final position = controller.value.position;
