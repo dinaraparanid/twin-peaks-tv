@@ -1,5 +1,0 @@
-package com.paranid5.twin_peaks_tv
-
-import io.flutter.embedding.android.FlutterActivity
-
-class MainActivity : FlutterActivity()
