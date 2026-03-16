@@ -45,35 +45,47 @@ final class _MaterialVolume extends StatelessWidget {
 
           SizedBox(
             width: 100.s,
-            child: TvSlider(
-              focusNode: context.playerBloc.volumeNode,
-              value: state.volume.value,
-              step: 0.1,
-              label: state.volume.value.toStringAsFixed(1),
-              showValueIndicator: ShowValueIndicator.never,
-              activeColor: context.appTheme.colors.primary.primary60,
-              thumbColor: switch (state.volume.isFocused) {
-                true => Colors.white,
-                false => Colors.grey,
-              },
-              padding: EdgeInsets.zero,
-              onChanged: (value) {
-                if (!state.volume.isDragging) {
-                  context.playerBloc.add(const StartVolumeDragEvent());
-                }
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                year2023: false,
+                trackHeight: 8.s,
+                thumbSize: WidgetStateProperty.fromMap({
+                  WidgetState.focused: Size(2.s, 24.s),
+                  WidgetState.any: Size(4.s, 24.s),
+                }),
+              ),
+              child: TvSlider(
+                focusNode: context.playerBloc.volumeNode,
+                value: state.volume.value,
+                step: 0.1,
+                label: state.volume.value.toStringAsFixed(1),
+                showValueIndicator: ShowValueIndicator.never,
+                activeColor: context.appTheme.colors.primary.primary60,
+                thumbColor: switch (state.volume.isFocused) {
+                  true => Colors.white,
+                  false => Colors.grey,
+                },
+                padding: EdgeInsets.zero,
+                onChanged: (value) {
+                  if (!state.volume.isDragging) {
+                    context.playerBloc.add(const StartVolumeDragEvent());
+                  }
 
-                context.playerBloc.add(UpdateVolumeEvent(volume: value));
-              },
-              onChangeStart: (value) {
-                context.playerBloc.add(const StartVolumeDragEvent());
-              },
-              onChangeEnd: (value) {
-                context.playerBloc.add(SetVolumeEvent(volume: value));
-              },
-              onRight: (_, _) {
-                context.playerBloc.add(const RequestFocusOnControlsMenuEvent());
-                return KeyEventResult.handled;
-              },
+                  context.playerBloc.add(UpdateVolumeEvent(volume: value));
+                },
+                onChangeStart: (value) {
+                  context.playerBloc.add(const StartVolumeDragEvent());
+                },
+                onChangeEnd: (value) {
+                  context.playerBloc.add(SetVolumeEvent(volume: value));
+                },
+                onRight: (_, _) {
+                  context.playerBloc.add(
+                    const RequestFocusOnControlsMenuEvent(),
+                  );
+                  return KeyEventResult.handled;
+                },
+              ),
             ),
           ),
         ],

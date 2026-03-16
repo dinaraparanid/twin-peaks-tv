@@ -42,37 +42,49 @@ final class _MaterialSpeed extends StatelessWidget {
 
           SizedBox(
             width: 100.s,
-            child: TvSlider(
-              focusNode: context.playerBloc.speedNode,
-              value: state.speed.value,
-              divisions: Speed._divisions,
-              min: Speed._minSpeed,
-              max: Speed._maxSpeed,
-              label: state.speed.value.toStringAsFixed(2),
-              showValueIndicator: ShowValueIndicator.never,
-              activeColor: context.appTheme.colors.primary.primary60,
-              thumbColor: switch (state.speed.isFocused) {
-                true => Colors.white,
-                false => Colors.grey,
-              },
-              padding: EdgeInsets.zero,
-              onChanged: (value) {
-                if (!state.speed.isDragging) {
-                  context.playerBloc.add(const StartSpeedDragEvent());
-                }
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                year2023: false,
+                trackHeight: 8.s,
+                thumbSize: WidgetStateProperty.fromMap({
+                  WidgetState.focused: Size(2.s, 24.s),
+                  WidgetState.any: Size(4.s, 24.s),
+                }),
+              ),
+              child: TvSlider(
+                focusNode: context.playerBloc.speedNode,
+                value: state.speed.value,
+                divisions: Speed._divisions,
+                min: Speed._minSpeed,
+                max: Speed._maxSpeed,
+                label: state.speed.value.toStringAsFixed(2),
+                showValueIndicator: ShowValueIndicator.never,
+                activeColor: context.appTheme.colors.primary.primary60,
+                thumbColor: switch (state.speed.isFocused) {
+                  true => Colors.white,
+                  false => Colors.grey,
+                },
+                padding: EdgeInsets.zero,
+                onChanged: (value) {
+                  if (!state.speed.isDragging) {
+                    context.playerBloc.add(const StartSpeedDragEvent());
+                  }
 
-                context.playerBloc.add(UpdateSpeedEvent(speed: value));
-              },
-              onChangeStart: (value) {
-                context.playerBloc.add(const StartSpeedDragEvent());
-              },
-              onChangeEnd: (value) {
-                context.playerBloc.add(SetSpeedEvent(speed: value));
-              },
-              onLeft: (_, _) {
-                context.playerBloc.add(const RequestFocusOnControlsMenuEvent());
-                return KeyEventResult.handled;
-              },
+                  context.playerBloc.add(UpdateSpeedEvent(speed: value));
+                },
+                onChangeStart: (value) {
+                  context.playerBloc.add(const StartSpeedDragEvent());
+                },
+                onChangeEnd: (value) {
+                  context.playerBloc.add(SetSpeedEvent(speed: value));
+                },
+                onLeft: (_, _) {
+                  context.playerBloc.add(
+                    const RequestFocusOnControlsMenuEvent(),
+                  );
+                  return KeyEventResult.handled;
+                },
+              ),
             ),
           ),
         ],

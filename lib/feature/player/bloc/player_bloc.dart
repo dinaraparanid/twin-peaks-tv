@@ -301,33 +301,15 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   }
 
   void _positionFocusListener() {
-    final hasFocus = positionNode.hasFocus;
-
-    add(UpdatePositionFocusEvent(isFocused: hasFocus));
-
-    if (hasFocus) {
-      add(const StartPositionDragEvent());
-    }
+    add(UpdatePositionFocusEvent(isFocused: positionNode.hasFocus));
   }
 
   void _volumeFocusListener() {
-    final hasFocus = volumeNode.hasFocus;
-
-    add(UpdateVolumeFocusEvent(isFocused: hasFocus));
-
-    if (hasFocus) {
-      add(const StartVolumeDragEvent());
-    }
+    add(UpdateVolumeFocusEvent(isFocused: volumeNode.hasFocus));
   }
 
   void _speedFocusListener() {
-    final hasFocus = speedNode.hasFocus;
-
-    add(UpdateSpeedFocusEvent(isFocused: hasFocus));
-
-    if (hasFocus) {
-      add(const StartSpeedDragEvent());
-    }
+    add(UpdateSpeedFocusEvent(isFocused: speedNode.hasFocus));
   }
 
   @override
