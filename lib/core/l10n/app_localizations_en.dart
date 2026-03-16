@@ -64,4 +64,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get movie_scenes_from_movie => 'Scenes from the movie';
+
+  @override
+  String get player_watch_next => 'Watch next';
 }

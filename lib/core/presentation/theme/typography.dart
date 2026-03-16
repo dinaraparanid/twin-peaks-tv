@@ -213,8 +213,16 @@ final class PlayerTypography {
       fontWeight: FontWeight.w500,
       fontSize: 18.fz,
     );
+
+    label = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 24.fz,
+    );
   }
 
   late final TextStyle videoTitle;
   late final TextStyle timestamp;
+  late final TextStyle label;
 }

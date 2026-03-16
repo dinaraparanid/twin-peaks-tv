@@ -195,6 +195,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Scenes from the movie'**
   String get movie_scenes_from_movie;
+
+  /// No description provided for @player_watch_next.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch next'**
+  String get player_watch_next;
 }
 
 class _AppLocalizationsDelegate

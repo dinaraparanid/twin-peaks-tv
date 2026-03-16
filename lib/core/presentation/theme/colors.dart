@@ -14,6 +14,7 @@ const _white20 = Color(0x33FFFFFF);
 const _white50 = Color(0x80FFFFFF);
 const _white80 = Color(0xCCFFFFFF);
 const _pureSilver = Color(0xFFC4C7C5);
+const _pureSilver10 = Color(0x1AC4C7C5);
 const _pearlBlack = Color(0xFF303030);
 const _gray50 = Color(0x80808080);
 const _elegantBlack = Color(0xFF131313);
@@ -39,6 +40,7 @@ final class AppColors {
     this.tabBar = const TabBarColors(),
     this.carousel = const CarouselColors(),
     this.button = const ButtonColors(),
+    this.slider = const SliderColors(),
     this.cupertino = const AppCupertinoColors(),
     this.gradients = const Gradients(),
   });
@@ -51,6 +53,7 @@ final class AppColors {
   final TabBarColors tabBar;
   final CarouselColors carousel;
   final ButtonColors button;
+  final SliderColors slider;
   final AppCupertinoColors cupertino;
   final Gradients gradients;
 }
@@ -182,6 +185,17 @@ final class FilledButtonColors {
   final Color focusedContainer;
   final Color content;
   final Color focusedContent;
+}
+
+@immutable
+final class SliderColors {
+  const SliderColors({
+    this.active = _limeGreen60,
+    this.inactive = _pureSilver10,
+  });
+
+  final Color active;
+  final Color inactive;
 }
 
 @immutable

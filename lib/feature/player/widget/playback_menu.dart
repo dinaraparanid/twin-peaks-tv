@@ -4,8 +4,8 @@ import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/utils/ext/key_ext.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
-import 'package:twin_peaks_tv/feature/player/widget/controls.dart';
-import 'package:twin_peaks_tv/feature/player/widget/episodes.dart';
+import 'package:twin_peaks_tv/feature/player/widget/controls/controls.dart';
+import 'package:twin_peaks_tv/feature/player/widget/episode/episodes.dart';
 
 final class PositionedPlaybackMenu extends StatefulWidget {
   const PositionedPlaybackMenu({super.key});
@@ -23,19 +23,21 @@ final class _PositionedPlaybackMenuState extends State<PositionedPlaybackMenu> {
     final screenHeight = MediaQuery.sizeOf(context).height;
 
     return BlocBuilder<PlayerBloc, PlayerState>(
-      buildWhen: distinctState((x) => x.controlsVisibility),
+      buildWhen: distinctState((x) => (x.controlsVisibility, x.entry)),
       builder: (context, state) {
+        final entry = state.entry;
+
         final child = Column(
           mainAxisSize: MainAxisSize.min,
+          spacing: 16.s,
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 64.s),
               child: Controls(key: _controlsKey),
             ),
 
-            SizedBox(height: 16.s),
-
-            Episodes(key: _episodesKey),
+            if (entry is PlayerEntrySeason)
+              Episodes(key: _episodesKey, episodes: entry.episodes),
           ],
         );
 
@@ -47,13 +49,13 @@ final class _PositionedPlaybackMenuState extends State<PositionedPlaybackMenu> {
             ControlsVisibility.hidden => screenHeight,
 
             ControlsVisibility.controls =>
-              screenHeight - (_controlsKey.size?.height ?? 0) - 64.s,
+              screenHeight - (_controlsKey.size?.height ?? 0) - 80.s,
 
             ControlsVisibility.episodes =>
               screenHeight -
                   (_controlsKey.size?.height ?? 0) -
                   (_episodesKey.size?.height ?? 0) -
-                  64.s,
+                  32.s,
           },
           child: switch (AppPlatform.isTvOS) {
             true => child,

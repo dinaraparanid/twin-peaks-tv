@@ -15,6 +15,11 @@ final class ChangeControlsVisibilityEvent extends PlayerEvent {
   final ControlsVisibility visibility;
 }
 
+final class SelectEpisodeEvent extends PlayerEvent {
+  const SelectEpisodeEvent({required this.index});
+  final int index;
+}
+
 final class SeekPositionsEvent extends PlayerEvent {
   const SeekPositionsEvent({required this.position, required this.duration});
   final Duration position;

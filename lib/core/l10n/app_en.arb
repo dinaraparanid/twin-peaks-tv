@@ -52,5 +52,7 @@
   },
   "movie_cast": "Cast",
   "movie_watch": "Watch",
-  "movie_scenes_from_movie": "Scenes from the movie"
+  "movie_scenes_from_movie": "Scenes from the movie",
+
+  "player_watch_next": "Watch next"
 }

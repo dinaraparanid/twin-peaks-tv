@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twin_peaks_tv/core/log/app_logger.dart';
 import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
+import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/controls_visibility.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/player_entry.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/player_event.dart';
@@ -12,8 +13,15 @@ import 'package:video_player/video_player.dart';
 
 final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc({required PlayerEntry entry}) : super(PlayerState(entry: entry)) {
-    controller = VideoPlayerController.networkUrl(Uri.parse(entry.videoUrl))
+    _controller = VideoPlayerController.networkUrl(Uri.parse(entry.videoUrl))
       ..addListener(_playerListener);
+
+    episodesNodes = switch (entry) {
+      PlayerEntrySeason(episodes: final episodes) =>
+        episodes.map((_) => FocusNode()).toList(growable: false),
+
+      PlayerEntryMovie() => [],
+    };
 
     positionNode.addListener(_positionFocusListener);
     volumeNode.addListener(_volumeFocusListener);
@@ -25,6 +33,7 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     on<PlayPauseEvent>(_onPlayPause, transformer: sequential());
     on<ChangeControlsVisibilityEvent>(_onChangeControlsVisibility);
+    on<SelectEpisodeEvent>(_onSelectEpisode);
 
     on<SeekPositionsEvent>(_onSeekPositions);
     on<UpdatePositionEvent>(_onUpdatePosition, transformer: restartable());
@@ -52,7 +61,9 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   static const _seekSliderDelay = Duration(milliseconds: 500);
 
-  late final VideoPlayerController controller;
+  late VideoPlayerController _controller;
+  VideoPlayerController get controller => _controller;
+
   CancelableOperation<PlayerEvent>? _positionTask;
   CancelableOperation<PlayerEvent>? _volumeTask;
   CancelableOperation<PlayerEvent>? _speedTask;
@@ -65,6 +76,7 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   late final speedNode = FocusNode();
   late final positionNode = FocusNode();
   late final episodesScopeNode = FocusScopeNode();
+  late final List<FocusNode> episodesNodes;
 
   Future<void> _onPlayPause(
     PlayPauseEvent event,
@@ -84,13 +96,43 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   ) {
     emit(state.copyWith(controlsVisibility: event.visibility));
 
-    switch (event.visibility) {
-      case ControlsVisibility.hidden:
+    switch ((event.visibility, state.entry)) {
+      case (ControlsVisibility.hidden, _):
         playerNode.requestFocus();
-      case ControlsVisibility.controls:
+      case (ControlsVisibility.controls, _):
         controlsScopeNode.requestFocusOnChild(child: controlsMenuNode);
-      case ControlsVisibility.episodes:
-        episodesScopeNode.requestFocusOnChild();
+      case (
+        ControlsVisibility.episodes,
+        PlayerEntrySeason(episodeIndex: final index),
+      ):
+        episodesNodes[index].requestFocus();
+      case _:
+        doNothing;
+    }
+  }
+
+  Future<void> _onSelectEpisode(
+    SelectEpisodeEvent event,
+    Emitter<PlayerState> emit,
+  ) async {
+    final currentEntry = state.entry as PlayerEntrySeason;
+    final nextEntry = currentEntry.copyWith(episodeIndex: event.index);
+    emit(state.copyWith(entry: nextEntry));
+
+    try {
+      _controller.removeListener(_playerListener);
+      await _controller.dispose();
+
+      _controller = VideoPlayerController.networkUrl(
+        Uri.parse(nextEntry.videoUrl),
+      )..addListener(_playerListener);
+
+      await _controller.initialize();
+      await _controller.play();
+
+      emit(state.copyWith(isPlaying: true));
+    } catch (e) {
+      AppLogger.instance.e(e);
     }
   }
 

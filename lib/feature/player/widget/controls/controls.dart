@@ -10,9 +10,9 @@ import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/ext/format.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
-import 'package:twin_peaks_tv/feature/player/widget/playback_position.dart';
-import 'package:twin_peaks_tv/feature/player/widget/speed.dart';
-import 'package:twin_peaks_tv/feature/player/widget/volume.dart';
+import 'package:twin_peaks_tv/feature/player/widget/controls/playback_position.dart';
+import 'package:twin_peaks_tv/feature/player/widget/controls/speed.dart';
+import 'package:twin_peaks_tv/feature/player/widget/controls/volume.dart';
 
 final class Controls extends StatelessWidget {
   const Controls({super.key});
@@ -165,6 +165,10 @@ final class _MenuNode extends StatelessWidget {
       },
       onDown: (_, _) {
         context.playerBloc.add(const RequestFocusOnPositionEvent());
+        return KeyEventResult.handled;
+      },
+      onSelect: (_, _) {
+        context.playerBloc.add(const PlayPauseEvent());
         return KeyEventResult.handled;
       },
       onFocusChanged: (_, hasFocus) async {
