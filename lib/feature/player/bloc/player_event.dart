@@ -1,9 +1,15 @@
 import 'package:flutter/foundation.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/controls_visibility.dart';
 
 @immutable
 sealed class PlayerEvent {
   const PlayerEvent();
+}
+
+final class UpdatePlayerStateEvent extends PlayerEvent {
+  const UpdatePlayerStateEvent({required this.state});
+  final UiState<void> state;
 }
 
 final class PlayPauseEvent extends PlayerEvent {

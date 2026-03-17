@@ -3,6 +3,7 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twin_peaks_tv/core/log/app_logger.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/controls_visibility.dart';
@@ -13,9 +14,6 @@ import 'package:video_player/video_player.dart';
 
 final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc({required PlayerEntry entry}) : super(PlayerState(entry: entry)) {
-    _controller = VideoPlayerController.networkUrl(Uri.parse(entry.videoUrl))
-      ..addListener(_playerListener);
-
     episodesNodes = switch (entry) {
       PlayerEntrySeason(episodes: final episodes) =>
         episodes.map((_) => FocusNode()).toList(growable: false),
@@ -27,10 +25,9 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     volumeNode.addListener(_volumeFocusListener);
     speedNode.addListener(_speedFocusListener);
 
-    controller.initialize().then((_) {
-      if (!isClosed) add(const PlayPauseEvent());
-    });
+    _initVideoController(url: entry.videoUrl);
 
+    on<UpdatePlayerStateEvent>(_onUpdatePlayerState);
     on<PlayPauseEvent>(_onPlayPause, transformer: sequential());
     on<ChangeControlsVisibilityEvent>(_onChangeControlsVisibility);
     on<SelectEpisodeEvent>(_onSelectEpisode);
@@ -78,6 +75,30 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   late final episodesScopeNode = FocusScopeNode();
   late final List<FocusNode> episodesNodes;
 
+  Future<void> _initVideoController({required String url}) async {
+    add(const UpdatePlayerStateEvent(state: UiState.loading()));
+
+    _controller = VideoPlayerController.networkUrl(Uri.parse(url))
+      ..addListener(_playerListener);
+
+    try {
+      await controller.initialize();
+
+      add(const PlayPauseEvent());
+      add(const UpdatePlayerStateEvent(state: UiState.success()));
+    } catch (e) {
+      AppLogger.instance.e(e);
+      add(const UpdatePlayerStateEvent(state: UiState.error()));
+    }
+  }
+
+  void _onUpdatePlayerState(
+    UpdatePlayerStateEvent event,
+    Emitter<PlayerState> emit,
+  ) {
+    emit(state.copyWith(playerState: event.state));
+  }
+
   Future<void> _onPlayPause(
     PlayPauseEvent event,
     Emitter<PlayerState> emit,
@@ -115,6 +136,8 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     SelectEpisodeEvent event,
     Emitter<PlayerState> emit,
   ) async {
+    add(const UpdatePlayerStateEvent(state: UiState.loading()));
+
     final currentEntry = state.entry as PlayerEntrySeason;
     final nextEntry = currentEntry.copyWith(episodeIndex: event.index);
     emit(state.copyWith(entry: nextEntry));
@@ -131,8 +154,10 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       await _controller.play();
 
       emit(state.copyWith(isPlaying: true));
+      add(const UpdatePlayerStateEvent(state: UiState.success()));
     } catch (e) {
       AppLogger.instance.e(e);
+      add(const UpdatePlayerStateEvent(state: UiState.error()));
     }
   }
 
