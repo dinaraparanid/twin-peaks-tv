@@ -14,19 +14,6 @@ import 'package:video_player/video_player.dart';
 
 final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   PlayerBloc({required PlayerEntry entry}) : super(PlayerState(entry: entry)) {
-    episodesNodes = switch (entry) {
-      PlayerEntrySeason(episodes: final episodes) =>
-        episodes.map((_) => FocusNode()).toList(growable: false),
-
-      PlayerEntryMovie() => [],
-    };
-
-    positionNode.addListener(_positionFocusListener);
-    volumeNode.addListener(_volumeFocusListener);
-    speedNode.addListener(_speedFocusListener);
-
-    _initVideoController(url: entry.videoUrl);
-
     on<UpdatePlayerStateEvent>(_onUpdatePlayerState);
     on<PlayPauseEvent>(_onPlayPause, transformer: sequential());
     on<ChangeControlsVisibilityEvent>(_onChangeControlsVisibility);
@@ -54,6 +41,18 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<RequestFocusOnVolumeEvent>(_onRequestFocusOnVolume);
     on<RequestFocusOnSpeedEvent>(_onRequestFocusOnSpeed);
     on<RequestFocusOnPositionEvent>(_onRequestFocusOnPosition);
+
+    _episodesNodes = switch (entry) {
+      PlayerEntrySeason(episodes: final episodes) =>
+        episodes.map((_) => FocusNode()).toList(growable: false),
+
+      PlayerEntryMovie() => [],
+    };
+
+    _initVideoController(url: entry.videoUrl);
+    positionNode.addListener(_positionFocusListener);
+    volumeNode.addListener(_volumeFocusListener);
+    speedNode.addListener(_speedFocusListener);
   }
 
   static const _seekSliderDelay = Duration(milliseconds: 500);
@@ -61,19 +60,21 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   late VideoPlayerController _controller;
   VideoPlayerController get controller => _controller;
 
+  List<FocusNode> _episodesNodes = [];
+  List<FocusNode> get episodesNodes => _episodesNodes;
+
   CancelableOperation<PlayerEvent>? _positionTask;
   CancelableOperation<PlayerEvent>? _volumeTask;
   CancelableOperation<PlayerEvent>? _speedTask;
 
-  late final focusScopeNode = FocusScopeNode();
-  late final playerNode = FocusNode();
-  late final controlsScopeNode = FocusScopeNode();
-  late final controlsMenuNode = FocusNode();
-  late final volumeNode = FocusNode();
-  late final speedNode = FocusNode();
-  late final positionNode = FocusNode();
-  late final episodesScopeNode = FocusScopeNode();
-  late final List<FocusNode> episodesNodes;
+  final focusScopeNode = FocusScopeNode();
+  final playerNode = FocusNode();
+  final controlsScopeNode = FocusScopeNode();
+  final controlsMenuNode = FocusNode();
+  final volumeNode = FocusNode();
+  final speedNode = FocusNode();
+  final positionNode = FocusNode();
+  final episodesScopeNode = FocusScopeNode();
 
   Future<void> _initVideoController({required String url}) async {
     add(const UpdatePlayerStateEvent(state: UiState.loading()));

@@ -58,12 +58,14 @@ final class _AnimatedFocusSelectionBordersState
 
   @override
   void initState() {
-    _controller = widget.controller ?? AnimatedSelectionBordersController(
-      animationController: AnimationController(
-        vsync: this,
-        duration: widget.duration,
-      ),
-    );
+    _controller =
+        widget.controller ??
+        AnimatedSelectionBordersController(
+          animationController: AnimationController(
+            vsync: this,
+            duration: widget.duration,
+          ),
+        );
     _ownsController = widget.controller == null;
 
     _focusNode = widget.focusNode ?? FocusNode();
@@ -101,6 +103,10 @@ final class _AnimatedFocusSelectionBordersState
 
   @override
   void dispose() {
+    if (_ownsController) {
+      _controller.dispose();
+    }
+
     if (_ownsNode) {
       _focusNode.dispose();
     }
