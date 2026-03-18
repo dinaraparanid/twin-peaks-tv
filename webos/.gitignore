@@ -8,5 +8,8 @@ flutter_bootstrap.js
 flutter_service_worker.js
 flutter.js
 main.dart.js
+main.dart.js.map
+main.dart.mjs
+main.dart.wasm
 manifest.json
 version.json

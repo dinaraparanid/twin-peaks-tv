@@ -83,8 +83,7 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       ..addListener(_playerListener);
 
     try {
-      await controller.initialize();
-
+      await _controller.initialize();
       add(const PlayPauseEvent());
       add(const UpdatePlayerStateEvent(state: UiState.success()));
     } catch (e) {
@@ -209,7 +208,7 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     Emitter<PlayerState> emit,
   ) async {
     try {
-      await controller.seekTo(event.position);
+      await _controller.seekTo(event.position);
     } catch (e) {
       AppLogger.instance.e(e);
     }
@@ -268,7 +267,7 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     Emitter<PlayerState> emit,
   ) async {
     try {
-      await controller.setVolume(event.volume);
+      await _controller.setVolume(event.volume);
     } catch (e) {
       AppLogger.instance.e(e);
     }
@@ -317,7 +316,7 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     Emitter<PlayerState> emit,
   ) async {
     try {
-      await controller.setPlaybackSpeed(event.speed);
+      await _controller.setPlaybackSpeed(event.speed);
     } catch (e) {
       AppLogger.instance.e(e);
     }
@@ -361,11 +360,11 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   }
 
   void _playerListener() {
-    final position = controller.value.position;
-    final duration = controller.value.duration;
+    final position = _controller.value.position;
+    final duration = _controller.value.duration;
     add(SeekPositionsEvent(position: position, duration: duration));
-    add(SeekVolumeEvent(volume: controller.value.volume));
-    add(SeekSpeedEvent(speed: controller.value.playbackSpeed));
+    add(SeekVolumeEvent(volume: _controller.value.volume));
+    add(SeekSpeedEvent(speed: _controller.value.playbackSpeed));
   }
 
   void _positionFocusListener() {
@@ -391,12 +390,12 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     _speedTask?.cancel();
     _speedTask = null;
 
-    controller.removeListener(_playerListener);
+    _controller.removeListener(_playerListener);
     positionNode.removeListener(_positionFocusListener);
     volumeNode.removeListener(_volumeFocusListener);
     speedNode.removeListener(_speedFocusListener);
 
-    controller.dispose();
+    _controller.dispose();
     playerNode.dispose();
     controlsScopeNode.dispose();
     controlsMenuNode.dispose();
