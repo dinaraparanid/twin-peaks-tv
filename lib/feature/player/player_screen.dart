@@ -27,11 +27,8 @@ final class PlayerScreen extends StatelessWidget {
           focusScopeNode: context.playerBloc.focusScopeNode,
           builder: (context, _) {
             final child = switch (state.playerState) {
-              Success() => AspectRatio(
-                aspectRatio: context.playerBloc.controller.value.aspectRatio,
-                child: const Stack(
-                  children: [Player(), PositionedPlaybackMenu()],
-                ),
+              Success() => const Stack(
+                children: [Player(), PositionedPlaybackMenu()],
               ),
 
               _ => const SizedBox(),
