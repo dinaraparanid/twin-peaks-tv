@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
@@ -8,30 +7,10 @@ import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/router/app_router.dart';
 import 'package:twin_peaks_tv/core/utils/image_cache.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
-import 'package:twin_peaks_tv/core/utils/webgl_context_lost_handler.dart';
 
-final class App extends StatefulWidget {
+final class App extends StatelessWidget {
   const App({super.key, required this.router});
   final AppRouter router;
-
-  @override
-  State<StatefulWidget> createState() => _AppState();
-}
-
-final class _AppState extends State<App> {
-  @override
-  void initState() {
-    super.initState();
-
-    if (kIsWeb) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Future.delayed(
-          const Duration(seconds: 3),
-          setupWebGLContextLostListener,
-        );
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +30,12 @@ final class _AppState extends State<App> {
               AppPlatform.targetPlatform,
             )) {
               (ConnectionState.done, AppPlatforms.tvos) => _CupertinoUi(
-                router: widget.router,
+                router: router,
                 theme: theme,
               ),
 
               (ConnectionState.done, _) => _MaterialUi(
-                router: widget.router,
+                router: router,
                 theme: theme,
               ),
 

@@ -52,47 +52,50 @@ final class _EpisodeItemState extends State<EpisodeItem>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 8.s,
-      children: [
-        Container(
-          width: _thumbnailFocusedWidth,
-          height: _thumbnailFocusedHeight,
-          alignment: Alignment.center,
-          child: AnimatedFocusSelectionBorders(
-            focusNode: widget.focusNode,
-            autoScroll: true,
-            onSelect: (_, _) {
-              widget.onSelect();
-              return KeyEventResult.handled;
-            },
-            onFocusChanged: (_, hasFocus) {
-              if (hasFocus) {
-                _controller.forward();
-              } else {
-                _controller.reverse();
-              }
-            },
-            builder: (context, node) => ClipRRect(
-              borderRadius: BorderRadius.circular(_thumbnailBorderRadius),
-              child: _Thumbnail(
-                thumbnailUrl: widget.episode.thumbnailUrl,
-                thumbnailScale: _thumbnailScale,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: _thumbnailFocusedWidth),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 8.s,
+        children: [
+          Container(
+            width: _thumbnailFocusedWidth,
+            height: _thumbnailFocusedHeight,
+            alignment: Alignment.center,
+            child: AnimatedFocusSelectionBorders(
+              focusNode: widget.focusNode,
+              autoScroll: true,
+              onSelect: (_, _) {
+                widget.onSelect();
+                return KeyEventResult.handled;
+              },
+              onFocusChanged: (_, hasFocus) {
+                if (hasFocus) {
+                  _controller.forward();
+                } else {
+                  _controller.reverse();
+                }
+              },
+              builder: (context, node) => ClipRRect(
+                borderRadius: BorderRadius.circular(_thumbnailBorderRadius),
+                child: _Thumbnail(
+                  thumbnailUrl: widget.episode.thumbnailUrl,
+                  thumbnailScale: _thumbnailScale,
+                ),
               ),
             ),
           ),
-        ),
 
-        Text(
-          widget.episode.title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: context.appTheme.typography.episode.title.copyWith(
-            color: context.appTheme.colors.text.primary,
+          Text(
+            widget.episode.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: context.appTheme.typography.player.episode.copyWith(
+              color: context.appTheme.colors.text.primary,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
