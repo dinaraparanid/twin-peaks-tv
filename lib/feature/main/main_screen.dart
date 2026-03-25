@@ -77,8 +77,12 @@ final class _ContentScopeRouter extends StatelessWidget {
     return DpadFocusScope(
       focusScopeNode: state.contentScopeNode,
       onLeft: (_, _, isOutOfScope) {
-        state.navMenuController.requestFocusOnMenu();
-        return KeyEventResult.handled;
+        if (isOutOfScope) {
+          state.navMenuController.requestFocusOnMenu();
+          return KeyEventResult.handled;
+        }
+
+        return KeyEventResult.ignored;
       },
       builder: (_, _) => const AutoRouter(requestFocus: false),
     );
@@ -107,9 +111,10 @@ final class _MaterialUi extends StatelessWidget {
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
           state.contentScopeNode.requestFocusOnChild();
+          return KeyEventResult.handled;
         }
 
-        return KeyEventResult.handled;
+        return KeyEventResult.ignored;
       },
       builder: (_, _, _) => const _ContentScopeRouter(),
     );
@@ -147,9 +152,10 @@ final class _CupertinoUi extends StatelessWidget {
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
           state.contentScopeNode.requestFocusOnChild();
+          return KeyEventResult.handled;
         }
 
-        return KeyEventResult.handled;
+        return KeyEventResult.ignored;
       },
       builder: (_, _) => const _ContentScopeRouter(),
     );
@@ -177,9 +183,10 @@ final class _TizenUi extends StatelessWidget {
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
           state.contentScopeNode.requestFocusOnChild();
+          return KeyEventResult.handled;
         }
 
-        return KeyEventResult.handled;
+        return KeyEventResult.ignored;
       },
       builder: (_, _, _) => const _ContentScopeRouter(),
     );
@@ -203,9 +210,10 @@ final class _SandstoneUi extends StatelessWidget {
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
           state.contentScopeNode.requestFocusOnChild();
+          return KeyEventResult.handled;
         }
 
-        return KeyEventResult.handled;
+        return KeyEventResult.ignored;
       },
       builder: (_, _, _) => const _ContentScopeRouter(),
     );
