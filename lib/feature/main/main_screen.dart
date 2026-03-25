@@ -22,21 +22,26 @@ final class MainScreen extends StatefulWidget {
   static BoxConstraints get oneUiMenuConstraints =>
       BoxConstraints(minWidth: 64.s, maxWidth: 280.s);
 
+  static MainScreenState? maybeOf(BuildContext context) =>
+      context.findAncestorStateOfType<MainScreenState>();
+
+  static MainScreenState of(BuildContext context) => maybeOf(context)!;
+
   @override
-  State<StatefulWidget> createState() => _MainScreenState();
+  State<StatefulWidget> createState() => MainScreenState();
 }
 
-final class _MainScreenState extends State<MainScreen> {
-  late final _controller = TvNavigationMenuController(
+final class MainScreenState extends State<MainScreen> {
+  late final navMenuController = TvNavigationMenuController(
     initialEntry: const ItemEntry(key: ValueKey(MainTab.home)),
   );
 
-  late final _contentScopeNode = FocusScopeNode();
+  late final contentScopeNode = FocusScopeNode();
 
   @override
   void dispose() {
-    _controller.dispose();
-    _contentScopeNode.dispose();
+    navMenuController.dispose();
+    contentScopeNode.dispose();
     super.dispose();
   }
 
@@ -52,50 +57,44 @@ final class _MainScreenState extends State<MainScreen> {
         }
 
         return switch (AppPlatform.targetPlatform) {
-          AppPlatforms.android => _MaterialUi(
-            info: info,
-            controller: _controller,
-            contentScopeNode: _contentScopeNode,
-          ),
-
-          AppPlatforms.tizen => _TizenUi(
-            info: info,
-            controller: _controller,
-            contentScopeNode: _contentScopeNode,
-          ),
-
-          AppPlatforms.tvos => _CupertinoUi(
-            info: info,
-            controller: _controller,
-            contentScopeNode: _contentScopeNode,
-          ),
-
-          AppPlatforms.webos => _SandstoneUi(
-            info: info,
-            controller: _controller,
-            contentScopeNode: _contentScopeNode,
-          ),
+          AppPlatforms.android => _MaterialUi(info: info),
+          AppPlatforms.tizen => _TizenUi(info: info),
+          AppPlatforms.tvos => _CupertinoUi(info: info),
+          AppPlatforms.webos => _SandstoneUi(info: info),
         };
       },
     );
   }
 }
 
-final class _MaterialUi extends StatelessWidget {
-  const _MaterialUi({
-    required this.info,
-    required this.controller,
-    required this.contentScopeNode,
-  });
-
-  final PackageInfo info;
-  final TvNavigationMenuController controller;
-  final FocusScopeNode contentScopeNode;
+final class _ContentScopeRouter extends StatelessWidget {
+  const _ContentScopeRouter();
 
   @override
   Widget build(BuildContext context) {
+    final state = MainScreen.of(context);
+
+    return DpadFocusScope(
+      focusScopeNode: state.contentScopeNode,
+      onLeft: (_, _, isOutOfScope) {
+        state.navMenuController.requestFocusOnMenu();
+        return KeyEventResult.handled;
+      },
+      builder: (_, _) => const AutoRouter(requestFocus: false),
+    );
+  }
+}
+
+final class _MaterialUi extends StatelessWidget {
+  const _MaterialUi({required this.info});
+  final PackageInfo info;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = MainScreen.of(context);
+
     return TvNavigationDrawer(
-      controller: controller,
+      controller: MainScreen.of(context).navMenuController,
       backgroundColor: context.appTheme.colors.background.primary,
       mode: TvNavigationDrawerMode.modal,
       constraints: MainScreen.materialConstraints,
@@ -107,40 +106,28 @@ final class _MaterialUi extends StatelessWidget {
       },
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
-          contentScopeNode.requestFocusOnChild();
+          state.contentScopeNode.requestFocusOnChild();
         }
 
         return KeyEventResult.handled;
       },
-      builder: (_, _, _) => DpadFocusScope(
-        focusScopeNode: contentScopeNode,
-        onLeft: (_, _, isOutOfScope) {
-          controller.requestFocusOnMenu();
-          return KeyEventResult.handled;
-        },
-        builder: (_, _) => const AutoRouter(requestFocus: false),
-      ),
+      builder: (_, _, _) => const _ContentScopeRouter(),
     );
   }
 }
 
 final class _CupertinoUi extends StatelessWidget {
-  const _CupertinoUi({
-    required this.info,
-    required this.controller,
-    required this.contentScopeNode,
-  });
+  const _CupertinoUi({required this.info});
+  final PackageInfo info;
 
   static const _expandDuration = Duration(milliseconds: 300);
 
-  final PackageInfo info;
-  final TvNavigationMenuController controller;
-  final FocusScopeNode contentScopeNode;
-
   @override
   Widget build(BuildContext context) {
+    final state = MainScreen.of(context);
+
     return CupertinoTvSidebar(
-      controller: controller,
+      controller: state.navMenuController,
       drawerAnimationsDuration: _expandDuration,
       backgroundColor: context.appTheme.colors.background.primary,
       constraints: MainScreen.cupertinoConstraints,
@@ -150,7 +137,7 @@ final class _CupertinoUi extends StatelessWidget {
       drawerMargin: EdgeInsets.all(16.s),
       collapsedHeaderBuilder: (context, _, selectedItem) {
         return CupertinoFloatingHeader(
-          controller: controller,
+          controller: state.navMenuController,
           selectedItem: selectedItem,
         );
       },
@@ -159,38 +146,26 @@ final class _CupertinoUi extends StatelessWidget {
       },
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
-          contentScopeNode.requestFocusOnChild();
+          state.contentScopeNode.requestFocusOnChild();
         }
 
         return KeyEventResult.handled;
       },
-      builder: (_, _) => DpadFocusScope(
-        focusScopeNode: contentScopeNode,
-        onLeft: (_, _, isOutOfScope) {
-          controller.requestFocusOnMenu();
-          return KeyEventResult.handled;
-        },
-        builder: (_, _) => const AutoRouter(requestFocus: false),
-      ),
+      builder: (_, _) => const _ContentScopeRouter(),
     );
   }
 }
 
 final class _TizenUi extends StatelessWidget {
-  const _TizenUi({
-    required this.info,
-    required this.controller,
-    required this.contentScopeNode,
-  });
-
+  const _TizenUi({required this.info});
   final PackageInfo info;
-  final TvNavigationMenuController controller;
-  final FocusScopeNode contentScopeNode;
 
   @override
   Widget build(BuildContext context) {
+    final state = MainScreen.of(context);
+
     return OneUiTvNavigationDrawer(
-      controller: controller,
+      controller: state.navMenuController,
       backgroundColor: context.appTheme.colors.background.primary,
       constraints: MainScreen.oneUiMenuConstraints,
       separatorBuilder: (_) => SizedBox(height: 12.s),
@@ -201,57 +176,38 @@ final class _TizenUi extends StatelessWidget {
       },
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
-          contentScopeNode.requestFocusOnChild();
+          state.contentScopeNode.requestFocusOnChild();
         }
 
         return KeyEventResult.handled;
       },
-      builder: (_, _, _) => DpadFocusScope(
-        focusScopeNode: contentScopeNode,
-        onLeft: (_, _, isOutOfScope) {
-          controller.requestFocusOnMenu();
-          return KeyEventResult.handled;
-        },
-        builder: (_, _) => const AutoRouter(requestFocus: false),
-      ),
+      builder: (_, _, _) => const _ContentScopeRouter(),
     );
   }
 }
 
 final class _SandstoneUi extends StatelessWidget {
-  const _SandstoneUi({
-    required this.info,
-    required this.controller,
-    required this.contentScopeNode,
-  });
-
+  const _SandstoneUi({required this.info});
   final PackageInfo info;
-  final TvNavigationMenuController controller;
-  final FocusScopeNode contentScopeNode;
 
   @override
   Widget build(BuildContext context) {
+    final state = MainScreen.of(context);
+
     return SandstoneVerticalTabLayout(
-      controller: controller,
+      controller: state.navMenuController,
       backgroundColor: context.appTheme.colors.background.primary,
       tabs: buildSandstoneNavigationItems(context: context),
       tabsBuilder: (context, _, child) => SandstoneMainMenu(child: child),
       separatorBuilder: (_, _, _) => SizedBox(height: 12.s),
       onRight: (_, _, isOutOfScope) {
         if (isOutOfScope) {
-          contentScopeNode.requestFocusOnChild();
+          state.contentScopeNode.requestFocusOnChild();
         }
 
         return KeyEventResult.handled;
       },
-      builder: (_, _, _) => DpadFocusScope(
-        focusScopeNode: contentScopeNode,
-        onLeft: (_, _, isOutOfScope) {
-          controller.requestFocusOnMenu();
-          return KeyEventResult.handled;
-        },
-        builder: (_, _) => const AutoRouter(requestFocus: false),
-      ),
+      builder: (_, _, _) => const _ContentScopeRouter(),
     );
   }
 }
