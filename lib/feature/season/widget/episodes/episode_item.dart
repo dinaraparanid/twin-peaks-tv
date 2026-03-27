@@ -63,7 +63,7 @@ final class _EpisodeItemState extends State<EpisodeItem>
           alignment: Alignment.center,
           child: AnimatedFocusSelectionBorders(
             focusNode: widget.focusNode,
-            autoScroll: true,
+            autoscroll: true,
             onSelect: (_, _) {
               widget.onSelect();
               return KeyEventResult.handled;

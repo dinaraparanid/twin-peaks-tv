@@ -7,7 +7,7 @@ import 'package:twin_peaks_tv/core/domain/movie/movie.dart';
 
 @Singleton(as: MovieRepository)
 final class MovieRepositoryImpl extends MovieRepository {
-  MovieRepositoryImpl({required this.dio});
+  const MovieRepositoryImpl({required this.dio});
 
   final AppDio dio;
 

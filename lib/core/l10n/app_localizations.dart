@@ -201,6 +201,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Watch next'**
   String get player_watch_next;
+
+  /// No description provided for @settings_app_version_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String settings_app_version_info(Object version);
+
+  /// No description provided for @settings_developer.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter TV app by Paranid5'**
+  String get settings_developer;
 }
 
 class _AppLocalizationsDelegate

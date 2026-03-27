@@ -50,7 +50,7 @@ final class _SceneItemState extends State<SceneItem>
       alignment: Alignment.center,
       child: AnimatedFocusSelectionBorders(
         focusNode: widget.focusNode,
-        autoScroll: true,
+        autoscroll: true,
         onFocusChanged: (_, hasFocus) {
           if (hasFocus) {
             _controller.forward();

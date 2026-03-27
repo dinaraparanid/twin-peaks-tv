@@ -18,6 +18,10 @@ final class AppPlatform {
   static AppPlatforms get targetPlatform {
     // ignore: unnecessary_null_comparison
     if (_manualPlatform != null) return _manualPlatform;
+    return realPlatform;
+  }
+
+  static AppPlatforms get realPlatform {
     // ignore: dead_code
     if (kIsWeb) return AppPlatforms.webos;
     if (Platform.isAndroid) return AppPlatforms.android;

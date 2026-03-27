@@ -45,7 +45,7 @@ final class _MovieDescriptionState extends State<MovieDescription> {
     return AnimatedFocusSelectionBorders(
       focusNode: _focusNode,
       duration: _expandDuration,
-      autoScroll: true,
+      autoscroll: true,
       paddingBuilder: (animationValue) {
         return EdgeInsets.all(lerpDouble(0, 8.s, animationValue)!);
       },

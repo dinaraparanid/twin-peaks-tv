@@ -54,5 +54,16 @@
   "movie_watch": "Watch",
   "movie_scenes_from_movie": "Scenes from the movie",
 
-  "player_watch_next": "Watch next"
+  "player_watch_next": "Watch next",
+
+  "settings_app_version_info": "Version {version}",
+  "@settings_app_info": {
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "settings_developer": "Flutter TV app by Paranid5"
 }

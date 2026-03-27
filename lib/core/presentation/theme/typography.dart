@@ -19,6 +19,7 @@ final class AppTypography {
     actor = ActorTypography._(fontFamily: fontFamily);
     episode = EpisodeTypography._(fontFamily: fontFamily);
     player = PlayerTypography._(fontFamily: fontFamily);
+    settings = SettingsTypography._(fontFamily: fontFamily);
   }
 
   late final SplashTypography splash;
@@ -28,6 +29,7 @@ final class AppTypography {
   late final ActorTypography actor;
   late final EpisodeTypography episode;
   late final PlayerTypography player;
+  late final SettingsTypography settings;
 }
 
 @immutable
@@ -233,4 +235,27 @@ final class PlayerTypography {
   late final TextStyle timestamp;
   late final TextStyle label;
   late final TextStyle episode;
+}
+
+@immutable
+final class SettingsTypography {
+  SettingsTypography._({required String fontFamily}) {
+    label = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 24.fz,
+    );
+
+    property = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 16.fz,
+      height: 1,
+    );
+  }
+
+  late final TextStyle label;
+  late final TextStyle property;
 }

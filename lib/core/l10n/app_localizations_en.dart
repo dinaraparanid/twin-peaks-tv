@@ -67,4 +67,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get player_watch_next => 'Watch next';
+
+  @override
+  String settings_app_version_info(Object version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get settings_developer => 'Flutter TV app by Paranid5';
 }
