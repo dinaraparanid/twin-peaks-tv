@@ -75,7 +75,7 @@ final class _EpisodeItemState extends State<EpisodeItem>
                 _controller.reverse();
               }
             },
-            builder: (context, node) => ClipRRect(
+            builder: (_, _, _) => ClipRRect(
               borderRadius: BorderRadius.circular(_thumbnailBorderRadius),
               child: _Thumbnail(
                 thumbnailUrl: widget.episode.thumbnailUrl,

@@ -18,6 +18,7 @@ final class AppPlatform {
   static AppPlatforms get targetPlatform {
     // ignore: unnecessary_null_comparison
     if (_manualPlatform != null) return _manualPlatform;
+    // ignore: dead_code
     return realPlatform;
   }
 

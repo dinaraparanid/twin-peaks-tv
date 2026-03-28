@@ -213,6 +213,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Flutter TV app by Paranid5'**
   String get settings_developer;
+
+  /// No description provided for @settings_ui_settings_label.
+  ///
+  /// In en, this message translates to:
+  /// **'UI Settings'**
+  String get settings_ui_settings_label;
+
+  /// No description provided for @settings_ui_settings_lang.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settings_ui_settings_lang;
+
+  /// No description provided for @settings_ui_settings_text_scaling.
+  ///
+  /// In en, this message translates to:
+  /// **'Text scaling'**
+  String get settings_ui_settings_text_scaling;
+
+  /// No description provided for @settings_playback_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Playback'**
+  String get settings_playback_label;
+
+  /// No description provided for @settings_playback_switch_to_next_episode.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically switch to next episode'**
+  String get settings_playback_switch_to_next_episode;
+
+  /// No description provided for @settings_playback_show_remaining_time.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the remaining time'**
+  String get settings_playback_show_remaining_time;
+
+  /// No description provided for @settings_faq.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQ'**
+  String get settings_faq;
 }
 
 class _AppLocalizationsDelegate

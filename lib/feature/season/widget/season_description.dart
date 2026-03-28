@@ -48,7 +48,7 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
       focusNode: _focusNode,
       duration: _expandDuration,
       autoscroll: true,
-      paddingBuilder: (animationValue) {
+      paddingBuilder: (context, animationValue) {
         return EdgeInsets.all(lerpDouble(0, 8.s, animationValue)!);
       },
       onDown: (_, _) {
@@ -75,7 +75,7 @@ final class _SeasonDescriptionState extends State<SeasonDescription> {
         context.seasonBloc.add(const SwitchDescriptionExpanded());
         return KeyEventResult.handled;
       },
-      builder: (context, node) => BlocBuilder<SeasonBloc, SeasonState>(
+      builder: (context, node, _) => BlocBuilder<SeasonBloc, SeasonState>(
         buildWhen: distinctState((s) => s.isDescriptionExpanded),
         builder: (context, state) => _DescriptionContent(
           node: node,

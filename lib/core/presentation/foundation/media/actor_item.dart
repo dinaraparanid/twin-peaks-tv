@@ -22,7 +22,7 @@ final class ActorItem extends StatelessWidget {
           focusNode: focusNode,
           autoscroll: true,
           shape: BoxShape.circle,
-          builder: (context, node) => ClipOval(
+          builder: (_, _, _) => ClipOval(
             child: AppNetworkImage(
               imageUrl: actor.thumbnailUrl,
               fit: BoxFit.cover,

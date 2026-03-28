@@ -46,7 +46,7 @@ final class _MovieDescriptionState extends State<MovieDescription> {
       focusNode: _focusNode,
       duration: _expandDuration,
       autoscroll: true,
-      paddingBuilder: (animationValue) {
+      paddingBuilder: (context, animationValue) {
         return EdgeInsets.all(lerpDouble(0, 8.s, animationValue)!);
       },
       onDown: (_, _) {
@@ -57,7 +57,7 @@ final class _MovieDescriptionState extends State<MovieDescription> {
         context.movieBloc.add(const SwitchDescriptionExpanded());
         return KeyEventResult.handled;
       },
-      builder: (context, node) => BlocBuilder<MovieBloc, MovieState>(
+      builder: (context, node, _) => BlocBuilder<MovieBloc, MovieState>(
         buildWhen: distinctState((s) => s.isDescriptionExpanded),
         builder: (context, state) => _DescriptionContent(
           node: node,

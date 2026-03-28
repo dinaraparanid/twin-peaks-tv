@@ -15,9 +15,8 @@ final class Developer extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedFocusSelectionBorders(
       focusNode: context.settingsBloc.developerNode,
-      autofocus: true,
       autoscroll: true,
-      paddingBuilder: (animationValue) {
+      paddingBuilder: (context, animationValue) {
         return EdgeInsets.all(lerpDouble(0, 8.s, animationValue)!);
       },
       onSelect: (_, _) {
@@ -28,7 +27,7 @@ final class Developer extends StatelessWidget {
         context.settingsBloc.add(const RequestFocusOnLanguageEvent());
         return KeyEventResult.handled;
       },
-      builder: (_, _) => BlocBuilder<SettingsBloc, SettingsState>(
+      builder: (_, _, _) => BlocBuilder<SettingsBloc, SettingsState>(
         buildWhen: ignoreState(),
         builder: (context, state) => Text(
           context.ln.settings_developer,

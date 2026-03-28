@@ -1,7 +1,7 @@
 part of 'animation.dart';
 
-final class AnimatedFocusSelectionBorders extends StatefulWidget {
-  AnimatedFocusSelectionBorders({
+final class AnimatedFocusSelectionBox extends StatefulWidget {
+  const AnimatedFocusSelectionBox({
     super.key,
     this.controller,
     this.focusNode,
@@ -9,9 +9,6 @@ final class AnimatedFocusSelectionBorders extends StatefulWidget {
     this.autofocus = false,
     this.autoscroll = false,
     this.paddingBuilder,
-    final BorderRadiusGeometry? borderRadius,
-    final double? borderWidth,
-    this.shape = BoxShape.rectangle,
     this.onUp,
     this.onDown,
     this.onLeft,
@@ -22,8 +19,7 @@ final class AnimatedFocusSelectionBorders extends StatefulWidget {
     this.onFocusChanged,
     this.onFocusDisabledWhenWasFocused,
     required this.builder,
-  }) : borderRadius = borderRadius ?? BorderRadius.all(Radius.circular(16.r)),
-       borderWidth = borderWidth ?? 2.s;
+  });
 
   final AnimatedSelectionController? controller;
   final FocusNode? focusNode;
@@ -31,9 +27,6 @@ final class AnimatedFocusSelectionBorders extends StatefulWidget {
   final bool autofocus;
   final bool autoscroll;
   final EdgeInsetsGeometry Function(BuildContext, double)? paddingBuilder;
-  final BorderRadiusGeometry borderRadius;
-  final double borderWidth;
-  final BoxShape shape;
   final DpadEventCallback? onUp;
   final DpadEventCallback? onDown;
   final DpadEventCallback? onLeft;
@@ -46,11 +39,11 @@ final class AnimatedFocusSelectionBorders extends StatefulWidget {
   final Widget Function(BuildContext, FocusNode, double) builder;
 
   @override
-  State<StatefulWidget> createState() => _AnimatedFocusSelectionBordersState();
+  State<StatefulWidget> createState() => _AnimatedFocusSelectionBoxState();
 }
 
-final class _AnimatedFocusSelectionBordersState
-    extends State<AnimatedFocusSelectionBorders>
+final class _AnimatedFocusSelectionBoxState
+    extends State<AnimatedFocusSelectionBox>
     with SingleTickerProviderStateMixin {
   late final AnimatedSelectionController _controller;
   var _ownsController = false;
@@ -77,7 +70,7 @@ final class _AnimatedFocusSelectionBordersState
   }
 
   @override
-  void didUpdateWidget(covariant AnimatedFocusSelectionBorders oldWidget) {
+  void didUpdateWidget(covariant AnimatedFocusSelectionBox oldWidget) {
     final passedController = widget.controller;
 
     if (passedController != null && passedController != oldWidget.controller) {
@@ -135,13 +128,17 @@ final class _AnimatedFocusSelectionBordersState
         widget.onFocusChanged?.call(node, hasFocus);
       },
       onFocusDisabledWhenWasFocused: widget.onFocusDisabledWhenWasFocused,
-      builder: (context, node) => AnimatedSelectionBorders(
+      builder: (context, node) => AnimatedSelectionDecoration(
         controller: _controller,
         duration: widget.duration,
         paddingBuilder: widget.paddingBuilder,
-        borderRadius: widget.borderRadius,
-        borderWidth: widget.borderWidth,
-        shape: widget.shape,
+        decorationBuilder: (context, animation) => BoxDecoration(
+          color: Color.lerp(
+            context.appTheme.colors.transparent,
+            context.appTheme.colors.primary.primary80,
+            animation,
+          ),
+        ),
         builder: (context, animation) {
           return widget.builder(context, node, animation);
         },

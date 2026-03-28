@@ -251,8 +251,7 @@ final class SettingsTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
-      height: 1,
+      fontSize: 18.fz,
     );
   }
 

@@ -58,7 +58,7 @@ final class _SceneItemState extends State<SceneItem>
             _controller.reverse();
           }
         },
-        builder: (context, node) => ClipRRect(
+        builder: (context, node, _) => ClipRRect(
           borderRadius: BorderRadius.circular(16.0.r),
           child: _Thumbnail(
             thumbnailUrl: widget.thumbnailUrl,

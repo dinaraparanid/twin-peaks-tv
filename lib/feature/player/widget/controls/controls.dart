@@ -56,7 +56,7 @@ final class Controls extends StatelessWidget {
 
         return AnimatedSelectionBorders(
           borderRadius: radius,
-          builder: (context) => ClipRRect(
+          builder: (context, _) => ClipRRect(
             borderRadius: radius,
             child: AppPlatform.isTvOS
                 ? const _CupertinoContent()
@@ -172,7 +172,7 @@ final class _MenuNode extends StatelessWidget {
         return KeyEventResult.handled;
       },
       onFocusChanged: (_, hasFocus) async {
-        await AnimatedSelectionBorders.of(
+        await AnimatedSelectionDecoration.of(
           context,
         ).controller.setSelected(hasFocus);
       },

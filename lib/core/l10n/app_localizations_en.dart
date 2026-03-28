@@ -75,4 +75,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settings_developer => 'Flutter TV app by Paranid5';
+
+  @override
+  String get settings_ui_settings_label => 'UI Settings';
+
+  @override
+  String get settings_ui_settings_lang => 'Language';
+
+  @override
+  String get settings_ui_settings_text_scaling => 'Text scaling';
+
+  @override
+  String get settings_playback_label => 'Playback';
+
+  @override
+  String get settings_playback_switch_to_next_episode =>
+      'Automatically switch to next episode';
+
+  @override
+  String get settings_playback_show_remaining_time => 'Show the remaining time';
+
+  @override
+  String get settings_faq => 'FAQ';
 }

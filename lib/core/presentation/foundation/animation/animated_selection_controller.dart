@@ -1,7 +1,7 @@
 part of 'animation.dart';
 
-final class AnimatedSelectionBordersController extends ChangeNotifier {
-  AnimatedSelectionBordersController({
+final class AnimatedSelectionController extends ChangeNotifier {
+  AnimatedSelectionController({
     required AnimationController animationController,
   }) : _animationController = animationController {
     borderAnimation = Tween<double>(

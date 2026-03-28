@@ -28,6 +28,9 @@ const _blackout = Color(0xFF1E1E1E);
 const _transparent = Color(0x00000000);
 const _royalWhite = Color(0xFFFFFDFD);
 const _black50 = Color(0x80000000);
+const _funkyGray20 = Color(0x33787878);
+const _kawaiiSilver20 = Color(0x33DEDEDE);
+const _powerGray50 = Color(0x80727272);
 
 @immutable
 final class AppColors {
@@ -41,8 +44,10 @@ final class AppColors {
     this.carousel = const CarouselColors(),
     this.button = const ButtonColors(),
     this.slider = const SliderColors(),
+    this.settings = const SettingsColors(),
     this.cupertino = const AppCupertinoColors(),
     this.gradients = const Gradients(),
+    this.transparent = _transparent,
   });
 
   final PrimaryColors primary;
@@ -54,8 +59,10 @@ final class AppColors {
   final CarouselColors carousel;
   final ButtonColors button;
   final SliderColors slider;
+  final SettingsColors settings;
   final AppCupertinoColors cupertino;
   final Gradients gradients;
+  final Color transparent;
 }
 
 @immutable
@@ -196,6 +203,23 @@ final class SliderColors {
 
   final Color active;
   final Color inactive;
+}
+
+@immutable
+final class SettingsColors {
+  const SettingsColors({
+    this.block = _funkyGray20,
+    this.divider = _powerGray50,
+    this.blockGradient = const LinearGradient(
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+      colors: [_funkyGray20, _kawaiiSilver20],
+    ),
+  });
+
+  final Color block;
+  final Color divider;
+  final Gradient blockGradient;
 }
 
 @immutable
