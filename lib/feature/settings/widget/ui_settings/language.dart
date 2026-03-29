@@ -50,16 +50,12 @@ final class _LanguageItemState extends State<LanguageItem> {
             color: context.appTheme.colors.text.primary,
           ),
         ),
-        actionBuilder: (context, animation) => AppDropdownButton(
+        actionBuilder: (context, _) => AppDropdownButton(
           value: state.properties?.language?.localized(),
           menuOpenNotifier: _menuOpenNotifier,
           placeholder: context.ln.settings_ui_settings_lang_system,
           items: AppLanguage.values.map((e) => e.localized()).toList(),
-          color: Color.lerp(
-            context.appTheme.colors.primary.primary80,
-            context.appTheme.colors.text.primary,
-            animation,
-          )!,
+          color: context.appTheme.colors.primary.primary80,
           onChanged: (value) {
             if (value != null) {
               final lang = AppLanguage.fromLocalized(value);

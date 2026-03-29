@@ -74,7 +74,7 @@ final class _CupertinoSettingsContainer extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(8.r)),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: context.appTheme.colors.settings.blockGradient,
+          color: context.appTheme.colors.settings.block,
         ),
         child: Column(
           children: [

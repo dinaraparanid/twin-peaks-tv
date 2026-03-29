@@ -56,15 +56,11 @@ final class _TextScaleItemState extends State<TextScaleItem> {
             color: context.appTheme.colors.text.primary,
           ),
         ),
-        actionBuilder: (context, animation) => AppDropdownButton(
+        actionBuilder: (context, _) => AppDropdownButton(
           value: state.properties?.textScale?.localized(context),
           menuOpenNotifier: _menuOpenNotifier,
           items: TextScale.values.map((e) => e.localized(context)).toList(),
-          color: Color.lerp(
-            context.appTheme.colors.primary.primary80,
-            context.appTheme.colors.text.primary,
-            animation,
-          )!,
+          color: context.appTheme.colors.primary.primary80,
           onChanged: (value) {
             if (value != null) {
               final scale = TextScale.fromLocalized(

@@ -8,6 +8,7 @@ final class AnimatedFocusSelectionBox extends StatefulWidget {
     this.duration = _defaultDuration,
     this.autofocus = false,
     this.autoscroll = false,
+    this.color,
     this.paddingBuilder,
     this.onUp,
     this.onDown,
@@ -26,6 +27,7 @@ final class AnimatedFocusSelectionBox extends StatefulWidget {
   final Duration duration;
   final bool autofocus;
   final bool autoscroll;
+  final Color? color;
   final EdgeInsetsGeometry Function(BuildContext, double)? paddingBuilder;
   final DpadEventCallback? onUp;
   final DpadEventCallback? onDown;
@@ -135,7 +137,7 @@ final class _AnimatedFocusSelectionBoxState
         decorationBuilder: (context, animation) => BoxDecoration(
           color: Color.lerp(
             context.appTheme.colors.transparent,
-            context.appTheme.colors.primary.primary80,
+            widget.color ?? context.appTheme.colors.primary.primary80,
             animation,
           ),
         ),

@@ -8,7 +8,7 @@ import 'package:twin_peaks_tv/feature/main/main_screen.dart';
 import 'package:twin_peaks_tv/feature/settings/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/settings/widget/faq.dart';
 import 'package:twin_peaks_tv/feature/settings/widget/info/info.dart';
-import 'package:twin_peaks_tv/feature/settings/widget/playback.dart';
+import 'package:twin_peaks_tv/feature/settings/widget/playback/playback.dart';
 import 'package:twin_peaks_tv/feature/settings/widget/ui_settings/ui_settings.dart';
 
 @RoutePage()
