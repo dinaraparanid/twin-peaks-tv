@@ -35,7 +35,7 @@ final class Playback extends StatelessWidget {
               child: Icon(
                 CupertinoIcons.forward_end_fill,
                 size: 16.s,
-                color: context.appTheme.colors.settings.block,
+                color: context.appTheme.colors.background.primary,
               ),
             ),
 

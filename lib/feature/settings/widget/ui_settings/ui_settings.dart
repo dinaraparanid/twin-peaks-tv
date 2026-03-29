@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_scalify/flutter_scalify.dart';
-import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
-import 'package:twin_peaks_tv/core/utils/ext/color_ext.dart';
-import 'package:twin_peaks_tv/core/utils/platform.dart';
-import 'package:twin_peaks_tv/feature/settings/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/settings/widget/block/block.dart';
 import 'package:twin_peaks_tv/feature/settings/widget/ui_settings/language.dart';
+import 'package:twin_peaks_tv/feature/settings/widget/ui_settings/text_scale.dart';
 
 final class UISettings extends StatelessWidget {
   const UISettings({super.key});
@@ -15,42 +11,7 @@ final class UISettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return SettingsBlock(
       label: context.ln.settings_ui_settings_label,
-      children: [
-        const Language(),
-
-        SettingsItem(
-          focusNode: context.settingsBloc.textScaleNode,
-          onUp: (_, _) {
-            context.settingsBloc.languageNode.requestFocus();
-            return KeyEventResult.handled;
-          },
-          onDown: (_, _) {
-            context.settingsBloc.switchToNextEpisodeNode.requestFocus();
-            return KeyEventResult.handled;
-          },
-          iconBuilder: (context, _) => switch (AppPlatform.isTvOS) {
-            true => Icon(
-              CupertinoIcons.arrow_up_left_arrow_down_right,
-              color: context.appTheme.colors.text.primary,
-              size: 20.s,
-            ),
-
-            false => Assets.icons.textScale.svg(
-              width: 20.s,
-              height: 20.s,
-              fit: BoxFit.cover,
-              colorFilter: context.appTheme.colors.text.primary.toColorFilter(),
-            ),
-          },
-          titleBuilder: (context, _) => Text(
-            context.ln.settings_ui_settings_text_scaling,
-            style: context.appTheme.typography.settings.property.copyWith(
-              color: context.appTheme.colors.text.primary,
-            ),
-          ),
-          actionBuilder: (context, animation) => const SizedBox(),
-        ),
-      ],
+      children: const [LanguageItem(), TextScaleItem()],
     );
   }
 }

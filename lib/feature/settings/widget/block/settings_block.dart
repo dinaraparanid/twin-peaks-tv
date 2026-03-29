@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
-import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 
@@ -71,25 +70,19 @@ final class _CupertinoSettingsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LiquidGlassLayer(
-      settings: AppLiquidGlass.defaultSettings(
-        context,
-        color: CupertinoColors.transparent,
-      ),
-      child: FakeGlass(
-        shape: LiquidRoundedRectangle(borderRadius: 8.r),
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: context.appTheme.colors.settings.blockGradient,
-          ),
-          child: Column(
-            children: [
-              for (final (index, child) in children.indexed) ...[
-                if (index != 0) const _SettingsDivider(),
-                child,
-              ],
+    return ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: context.appTheme.colors.settings.blockGradient,
+        ),
+        child: Column(
+          children: [
+            for (final (index, child) in children.indexed) ...[
+              if (index != 0) const _SettingsDivider(),
+              child,
             ],
-          ),
+          ],
         ),
       ),
     );

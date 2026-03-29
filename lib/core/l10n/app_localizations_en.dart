@@ -89,6 +89,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_ui_settings_text_scaling => 'Text scaling';
 
   @override
+  String get settings_ui_settings_text_scaling_small => 'Small';
+
+  @override
+  String get settings_ui_settings_text_scaling_normal => 'Normal';
+
+  @override
+  String get settings_ui_settings_text_scaling_big => 'Big';
+
+  @override
   String get settings_playback_label => 'Playback';
 
   @override

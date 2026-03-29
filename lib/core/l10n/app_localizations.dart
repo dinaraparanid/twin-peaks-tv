@@ -238,6 +238,24 @@ abstract class AppLocalizations {
   /// **'Text scaling'**
   String get settings_ui_settings_text_scaling;
 
+  /// No description provided for @settings_ui_settings_text_scaling_small.
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get settings_ui_settings_text_scaling_small;
+
+  /// No description provided for @settings_ui_settings_text_scaling_normal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get settings_ui_settings_text_scaling_normal;
+
+  /// No description provided for @settings_ui_settings_text_scaling_big.
+  ///
+  /// In en, this message translates to:
+  /// **'Big'**
+  String get settings_ui_settings_text_scaling_big;
+
   /// No description provided for @settings_playback_label.
   ///
   /// In en, this message translates to:

@@ -78,7 +78,10 @@ final class _CupertinoUi extends StatelessWidget {
       title: 'Twin Peaks TV',
       routerConfig: router.config(),
       color: theme.colors.background.primary,
-      localizationsDelegates: const [AppLocalizations.delegate],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        DefaultMaterialLocalizations.delegate,
+      ],
       supportedLocales: AppLocalizations.supportedLocales,
     );
   }
