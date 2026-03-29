@@ -124,7 +124,7 @@ final class _MaterialDropdownButton extends StatelessWidget {
         ),
         menuItemStyleData: MenuItemStyleData(
           overlayColor: WidgetStateProperty.fromMap({
-            WidgetState.focused: context.appTheme.colors.primary.primary80,
+            WidgetState.focused: context.appTheme.colors.settings.block,
             WidgetState.any: Colors.transparent,
           }),
         ),
@@ -213,7 +213,7 @@ final class _OneUiDropdownButton extends StatelessWidget {
         menuItemStyleData: MenuItemStyleData(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
           overlayColor: WidgetStateProperty.fromMap({
-            WidgetState.focused: context.appTheme.colors.primary.primary80,
+            WidgetState.focused: context.appTheme.colors.settings.block,
             WidgetState.any: Colors.transparent,
           }),
         ),
@@ -297,7 +297,7 @@ final class _SandstoneDropdownButton extends StatelessWidget {
         menuItemStyleData: MenuItemStyleData(
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
           overlayColor: WidgetStateProperty.fromMap({
-            WidgetState.focused: context.appTheme.colors.primary.primary80,
+            WidgetState.focused: context.appTheme.colors.settings.block,
             WidgetState.any: Colors.transparent,
           }),
         ),
@@ -393,7 +393,7 @@ final class _CupertinoDropdownButton extends StatelessWidget {
           menuItemStyleData: MenuItemStyleData(
             borderRadius: BorderRadius.all(Radius.circular(8.r)),
             overlayColor: WidgetStateProperty.fromMap({
-              WidgetState.focused: context.appTheme.colors.primary.primary80,
+              WidgetState.focused: context.appTheme.colors.settings.block,
               WidgetState.any: Colors.transparent,
             }),
           ),
