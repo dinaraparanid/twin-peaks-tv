@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/assets/assets.gen.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/ext/color_ext.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 import 'package:twin_peaks_tv/feature/settings/bloc/bloc.dart';
-import 'package:twin_peaks_tv/feature/settings/widget/block/settings_block.dart';
-import 'package:twin_peaks_tv/feature/settings/widget/block/settings_item.dart';
+import 'package:twin_peaks_tv/feature/settings/widget/block/block.dart';
+import 'package:twin_peaks_tv/feature/settings/widget/ui_settings/language.dart';
 
 final class UISettings extends StatelessWidget {
   const UISettings({super.key});
@@ -17,33 +16,7 @@ final class UISettings extends StatelessWidget {
     return SettingsBlock(
       label: context.ln.settings_ui_settings_label,
       children: [
-        SettingsItem(
-          autofocus: true,
-          focusNode: context.settingsBloc.languageNode,
-          onUp: (_, _) {
-            context.settingsBloc.developerNode.requestFocus();
-            return KeyEventResult.handled;
-          },
-          onDown: (_, _) {
-            context.settingsBloc.textScaleNode.requestFocus();
-            return KeyEventResult.handled;
-          },
-          icon: Icon(
-            switch (AppPlatform.isTvOS) {
-              true => CupertinoIcons.globe,
-              false => Icons.language,
-            },
-            size: 20.s,
-            color: context.appTheme.colors.text.primary,
-          ),
-          title: Text(
-            context.ln.settings_ui_settings_lang,
-            style: context.appTheme.typography.settings.property.copyWith(
-              color: context.appTheme.colors.text.primary,
-            ),
-          ),
-          action: const SizedBox(), // TODO(paranid5): toggle
-        ),
+        const Language(),
 
         SettingsItem(
           focusNode: context.settingsBloc.textScaleNode,
@@ -55,7 +28,7 @@ final class UISettings extends StatelessWidget {
             context.settingsBloc.switchToNextEpisodeNode.requestFocus();
             return KeyEventResult.handled;
           },
-          icon: switch (AppPlatform.isTvOS) {
+          iconBuilder: (context, _) => switch (AppPlatform.isTvOS) {
             true => Icon(
               CupertinoIcons.arrow_up_left_arrow_down_right,
               color: context.appTheme.colors.text.primary,
@@ -69,13 +42,13 @@ final class UISettings extends StatelessWidget {
               colorFilter: context.appTheme.colors.text.primary.toColorFilter(),
             ),
           },
-          title: Text(
+          titleBuilder: (context, _) => Text(
             context.ln.settings_ui_settings_text_scaling,
             style: context.appTheme.typography.settings.property.copyWith(
               color: context.appTheme.colors.text.primary,
             ),
           ),
-          action: const SizedBox(), // TODO(paranid5): toggle
+          actionBuilder: (context, animation) => const SizedBox(),
         ),
       ],
     );

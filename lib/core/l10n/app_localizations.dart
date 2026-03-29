@@ -226,6 +226,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get settings_ui_settings_lang;
 
+  /// No description provided for @settings_ui_settings_lang_system.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get settings_ui_settings_lang_system;
+
   /// No description provided for @settings_ui_settings_text_scaling.
   ///
   /// In en, this message translates to:

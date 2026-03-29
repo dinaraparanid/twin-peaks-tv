@@ -59,6 +59,10 @@ dependencies:
   web: ^1.1.1
   url_launcher: ^6.3.2
   device_info_plus: ^12.3.0
+  dropdown_button2:
+    git:
+      url: https://github.com/dinaraparanid/dropdown_button2.git
+      path: packages/dropdown_button2
 
 dev_dependencies:
   flutter_test:

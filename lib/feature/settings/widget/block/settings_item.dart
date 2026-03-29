@@ -10,9 +10,9 @@ import 'package:twin_peaks_tv/core/utils/utils.dart';
 final class SettingsItem extends StatelessWidget {
   const SettingsItem({
     super.key,
-    required this.icon,
-    required this.title,
-    required this.action,
+    required this.iconBuilder,
+    required this.titleBuilder,
+    required this.actionBuilder,
     this.autofocus = false,
     required this.focusNode,
     this.onUp,
@@ -26,9 +26,9 @@ final class SettingsItem extends StatelessWidget {
     this.onFocusDisabledWhenWasFocused,
   });
 
-  final Widget icon;
-  final Widget title;
-  final Widget action;
+  final Widget Function(BuildContext, double) iconBuilder;
+  final Widget Function(BuildContext, double) titleBuilder;
+  final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
   final FocusNode focusNode;
   final DpadEventCallback? onUp;
@@ -49,9 +49,9 @@ final class SettingsItem extends StatelessWidget {
       AppPlatforms.tvos => _CupertinoSettingsItem.new,
       AppPlatforms.webos => _SandstoneSettingsItem.new,
     }(
-      icon: icon,
-      title: title,
-      action: action,
+      iconBuilder: iconBuilder,
+      titleBuilder: titleBuilder,
+      actionBuilder: actionBuilder,
       autofocus: autofocus,
       focusNode: focusNode,
       onUp: onUp,
@@ -69,9 +69,9 @@ final class SettingsItem extends StatelessWidget {
 
 final class _MaterialSettingsItem extends StatelessWidget {
   const _MaterialSettingsItem({
-    required this.icon,
-    required this.title,
-    required this.action,
+    required this.iconBuilder,
+    required this.titleBuilder,
+    required this.actionBuilder,
     required this.autofocus,
     required this.focusNode,
     required this.onUp,
@@ -85,9 +85,9 @@ final class _MaterialSettingsItem extends StatelessWidget {
     required this.onFocusDisabledWhenWasFocused,
   });
 
-  final Widget icon;
-  final Widget title;
-  final Widget action;
+  final Widget Function(BuildContext, double) iconBuilder;
+  final Widget Function(BuildContext, double) titleBuilder;
+  final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
   final FocusNode focusNode;
   final DpadEventCallback? onUp;
@@ -121,18 +121,25 @@ final class _MaterialSettingsItem extends StatelessWidget {
             EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
         builder: (context, _, animation) {
           final scale = lerpDouble(1.0, 1.2, animation)!;
-          final spacerScale = lerpDouble(1.0, 2.4, animation)!;
-          final spacer = SizedBox(width: 8.s * spacerScale);
+          final spacer = SizedBox(width: 8.s);
 
           return Row(
             children: [
-              Transform.scale(scale: scale, child: icon),
-              spacer,
-              Transform.scale(scale: scale, child: title),
-              spacer,
+              Transform.scale(
+                scale: scale,
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  spacing: 8.s,
+                  children: [
+                    iconBuilder(context, animation),
+                    titleBuilder(context, animation),
+                  ],
+                ),
+              ),
+
               const Expanded(child: SizedBox()),
               spacer,
-              Transform.scale(scale: scale, child: action),
+              actionBuilder(context, animation),
             ],
           );
         },
@@ -143,9 +150,9 @@ final class _MaterialSettingsItem extends StatelessWidget {
 
 final class _CupertinoSettingsItem extends StatelessWidget {
   const _CupertinoSettingsItem({
-    required this.icon,
-    required this.title,
-    required this.action,
+    required this.iconBuilder,
+    required this.titleBuilder,
+    required this.actionBuilder,
     required this.autofocus,
     required this.focusNode,
     required this.onUp,
@@ -159,9 +166,9 @@ final class _CupertinoSettingsItem extends StatelessWidget {
     required this.onFocusDisabledWhenWasFocused,
   });
 
-  final Widget icon;
-  final Widget title;
-  final Widget action;
+  final Widget Function(BuildContext, double) iconBuilder;
+  final Widget Function(BuildContext, double) titleBuilder;
+  final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
   final FocusNode focusNode;
   final DpadEventCallback? onUp;
@@ -193,18 +200,25 @@ final class _CupertinoSettingsItem extends StatelessWidget {
           EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
       builder: (context, _, animation) {
         final scale = lerpDouble(1.0, 1.2, animation)!;
-        final spacerScale = lerpDouble(1.0, 2.4, animation)!;
-        final spacer = SizedBox(width: 8.s * spacerScale);
+        final spacer = SizedBox(width: 8.s);
 
         return Row(
           children: [
-            Transform.scale(scale: scale, child: icon),
-            spacer,
-            Transform.scale(scale: scale, child: title),
-            spacer,
+            Transform.scale(
+              scale: scale,
+              alignment: Alignment.centerLeft,
+              child: Row(
+                spacing: 8.s,
+                children: [
+                  iconBuilder(context, animation),
+                  titleBuilder(context, animation),
+                ],
+              ),
+            ),
+
             const Expanded(child: SizedBox()),
             spacer,
-            Transform.scale(scale: scale, child: action),
+            actionBuilder(context, animation),
           ],
         );
       },
@@ -214,9 +228,9 @@ final class _CupertinoSettingsItem extends StatelessWidget {
 
 final class _OneUiSettingsItem extends StatelessWidget {
   const _OneUiSettingsItem({
-    required this.icon,
-    required this.title,
-    required this.action,
+    required this.iconBuilder,
+    required this.titleBuilder,
+    required this.actionBuilder,
     required this.autofocus,
     required this.focusNode,
     required this.onUp,
@@ -230,9 +244,9 @@ final class _OneUiSettingsItem extends StatelessWidget {
     required this.onFocusDisabledWhenWasFocused,
   });
 
-  final Widget icon;
-  final Widget title;
-  final Widget action;
+  final Widget Function(BuildContext, double) iconBuilder;
+  final Widget Function(BuildContext, double) titleBuilder;
+  final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
   final FocusNode focusNode;
   final DpadEventCallback? onUp;
@@ -273,20 +287,26 @@ final class _OneUiSettingsItem extends StatelessWidget {
           EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
       builder: (context, _, animation) {
         final scale = lerpDouble(1.0, 1.2, animation)!;
-        final spacerScale = lerpDouble(1.0, 2.4, animation)!;
-        final spacer = SizedBox(width: 8.s * spacerScale);
+        final spacer = SizedBox(width: 8.s);
 
         return Row(
           children: [
-            Transform.scale(scale: scale, child: icon),
-            spacer,
-            Transform.scale(scale: scale, child: title),
-            spacer,
+            Transform.scale(
+              scale: scale,
+              alignment: Alignment.centerLeft,
+              child: Row(
+                spacing: 8.s,
+                children: [
+                  iconBuilder(context, animation),
+                  titleBuilder(context, animation),
+                ],
+              ),
+            ),
+
             const Expanded(child: SizedBox()),
+            _buildDivider(context),
             spacer,
-            Transform.scale(scale: scale, child: _buildDivider(context)),
-            spacer,
-            Transform.scale(scale: scale, child: action),
+            actionBuilder(context, animation),
           ],
         );
       },
@@ -296,9 +316,9 @@ final class _OneUiSettingsItem extends StatelessWidget {
 
 final class _SandstoneSettingsItem extends StatelessWidget {
   const _SandstoneSettingsItem({
-    required this.icon,
-    required this.title,
-    required this.action,
+    required this.iconBuilder,
+    required this.titleBuilder,
+    required this.actionBuilder,
     required this.autofocus,
     required this.focusNode,
     required this.onUp,
@@ -312,9 +332,9 @@ final class _SandstoneSettingsItem extends StatelessWidget {
     required this.onFocusDisabledWhenWasFocused,
   });
 
-  final Widget icon;
-  final Widget title;
-  final Widget action;
+  final Widget Function(BuildContext, double) iconBuilder;
+  final Widget Function(BuildContext, double) titleBuilder;
+  final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
   final FocusNode focusNode;
   final DpadEventCallback? onUp;
@@ -346,18 +366,25 @@ final class _SandstoneSettingsItem extends StatelessWidget {
           EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
       builder: (context, _, animation) {
         final scale = lerpDouble(1.0, 1.2, animation)!;
-        final spacerScale = lerpDouble(1.0, 2.4, animation)!;
-        final spacer = SizedBox(width: 8.s * spacerScale);
+        final spacer = SizedBox(width: 8.s);
 
         return Row(
           children: [
-            Transform.scale(scale: scale, child: icon),
-            spacer,
-            Transform.scale(scale: scale, child: title),
-            spacer,
+            Transform.scale(
+              scale: scale,
+              alignment: Alignment.centerLeft,
+              child: Row(
+                spacing: 8.s,
+                children: [
+                  iconBuilder(context, animation),
+                  titleBuilder(context, animation),
+                ],
+              ),
+            ),
+
             const Expanded(child: SizedBox()),
             spacer,
-            Transform.scale(scale: scale, child: action),
+            actionBuilder(context, animation),
           ],
         );
       },

@@ -6,8 +6,10 @@ import 'package:twin_peaks_tv/core/di/app_module.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/main/main_screen.dart';
 import 'package:twin_peaks_tv/feature/settings/bloc/bloc.dart';
+import 'package:twin_peaks_tv/feature/settings/widget/faq.dart';
 import 'package:twin_peaks_tv/feature/settings/widget/info/info.dart';
-import 'package:twin_peaks_tv/feature/settings/widget/ui_settings.dart';
+import 'package:twin_peaks_tv/feature/settings/widget/playback.dart';
+import 'package:twin_peaks_tv/feature/settings/widget/ui_settings/ui_settings.dart';
 
 @RoutePage()
 final class SettingsScreen extends StatelessWidget {
@@ -39,6 +41,8 @@ final class SettingsScreen extends StatelessWidget {
                   SizedBox(height: 12.s),
                   const Info(),
                   Padding(padding: contentPadding, child: const UISettings()),
+                  Padding(padding: contentPadding, child: const Playback()),
+                  Padding(padding: contentPadding, child: const FAQ()),
                   SizedBox(height: 12.s),
                 ],
               ),

@@ -83,6 +83,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_ui_settings_lang => 'Language';
 
   @override
+  String get settings_ui_settings_lang_system => 'System';
+
+  @override
   String get settings_ui_settings_text_scaling => 'Text scaling';
 
   @override
