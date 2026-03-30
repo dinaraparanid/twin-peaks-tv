@@ -13,6 +13,12 @@ enum TextScale {
 }
 
 extension TextScaleExt on TextScale {
+  double get value => switch (this) {
+    TextScale.small => -2,
+    TextScale.normal => 0,
+    TextScale.big => 2,
+  };
+
   String localized(BuildContext context) => switch (this) {
     TextScale.small => context.ln.settings_ui_settings_text_scaling_small,
     TextScale.normal => context.ln.settings_ui_settings_text_scaling_normal,

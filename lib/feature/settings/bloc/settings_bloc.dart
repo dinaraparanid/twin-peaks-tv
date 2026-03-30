@@ -45,10 +45,10 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState>
     on<RequestFocusOnFAQEvent>(_onRequestFocusOnFAQ);
 
     _propsSub = CombineLatestStream.combine4(
-      _repository.appLanguage,
-      _repository.textScale,
+      _repository.appLanguageChanges,
+      _repository.textScaleChanges,
       _repository.automaticallySwitchEpisode,
-      _repository.showRemainingTime,
+      _repository.showRemainingTimeChanges,
       (lang, scale, switchToNextEpisode, showRemainingTime) {
         return SettingsProperties(
           language: lang,

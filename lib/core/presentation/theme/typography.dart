@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/responsive_scale/responsive_extensions.dart';
+import 'package:twin_peaks_tv/core/domain/settings/entity/entity.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 
 @immutable
 final class AppTypography {
-  AppTypography() {
+  AppTypography({required TextScale scale}) {
     final fontFamily = switch (AppPlatform.targetPlatform) {
       AppPlatforms.android => 'Roboto',
       AppPlatforms.tvos => 'SF Pro',
@@ -12,14 +13,17 @@ final class AppTypography {
       AppPlatforms.webos => 'MuseoSans',
     };
 
-    splash = SplashTypography._(fontFamily: fontFamily);
-    navigationMenu = NavigationMenuTypography._(fontFamily: fontFamily);
-    tabBar = TabBarTypography._(fontFamily: fontFamily);
-    movieInfo = MovieInfoTypography._(fontFamily: fontFamily);
-    actor = ActorTypography._(fontFamily: fontFamily);
-    episode = EpisodeTypography._(fontFamily: fontFamily);
-    player = PlayerTypography._(fontFamily: fontFamily);
-    settings = SettingsTypography._(fontFamily: fontFamily);
+    splash = SplashTypography._(fontFamily: fontFamily, scale: scale);
+    navigationMenu = NavigationMenuTypography._(
+      fontFamily: fontFamily,
+      scale: scale,
+    );
+    tabBar = TabBarTypography._(fontFamily: fontFamily, scale: scale);
+    movieInfo = MovieInfoTypography._(fontFamily: fontFamily, scale: scale);
+    actor = ActorTypography._(fontFamily: fontFamily, scale: scale);
+    episode = EpisodeTypography._(fontFamily: fontFamily, scale: scale);
+    player = PlayerTypography._(fontFamily: fontFamily, scale: scale);
+    settings = SettingsTypography._(fontFamily: fontFamily, scale: scale);
   }
 
   late final SplashTypography splash;
@@ -34,12 +38,12 @@ final class AppTypography {
 
 @immutable
 final class SplashTypography {
-  SplashTypography._({required String fontFamily}) {
+  SplashTypography._({required String fontFamily, required TextScale scale}) {
     splashHeader = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 48.fz,
+      fontSize: 48.fz + scale.value,
       letterSpacing: 4.fz,
     );
 
@@ -47,7 +51,7 @@ final class SplashTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 24.fz,
+      fontSize: 24.fz + scale.value,
       letterSpacing: 2.fz,
     );
   }
@@ -58,26 +62,29 @@ final class SplashTypography {
 
 @immutable
 final class NavigationMenuTypography {
-  NavigationMenuTypography._({required String fontFamily}) {
+  NavigationMenuTypography._({
+    required String fontFamily,
+    required TextScale scale,
+  }) {
     item = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 24.fz,
+      fontSize: 24.fz + scale.value,
     );
 
     footer = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 18.fz + scale.value,
     );
 
     floatingHeader = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w700,
-      fontSize: 18.fz,
+      fontSize: 18.fz + scale.value,
     );
   }
 
@@ -88,12 +95,12 @@ final class NavigationMenuTypography {
 
 @immutable
 final class TabBarTypography {
-  TabBarTypography._({required String fontFamily}) {
+  TabBarTypography._({required String fontFamily, required TextScale scale}) {
     primary = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 20.fz,
+      fontSize: 20.fz + scale.value,
     );
   }
 
@@ -102,40 +109,43 @@ final class TabBarTypography {
 
 @immutable
 final class MovieInfoTypography {
-  MovieInfoTypography._({required String fontFamily}) {
+  MovieInfoTypography._({
+    required String fontFamily,
+    required TextScale scale,
+  }) {
     title = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 36.fz,
+      fontSize: 36.fz + scale.value,
     );
 
     properties = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
+      fontSize: 16.fz + scale.value,
     );
 
     description = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 20.fz,
+      fontSize: 20.fz + scale.value,
     );
 
     playButton = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 18.fz + scale.value,
     );
 
     label = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 24.fz,
+      fontSize: 24.fz + scale.value,
     );
   }
 
@@ -148,12 +158,12 @@ final class MovieInfoTypography {
 
 @immutable
 final class ActorTypography {
-  ActorTypography._({required String fontFamily}) {
+  ActorTypography._({required String fontFamily, required TextScale scale}) {
     name = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 16.fz,
+      fontSize: 16.fz + scale.value,
       height: 1,
     );
 
@@ -161,7 +171,7 @@ final class ActorTypography {
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 12.fz,
+      fontSize: 12.fz + scale.value,
     );
   }
 
@@ -171,26 +181,26 @@ final class ActorTypography {
 
 @immutable
 final class EpisodeTypography {
-  EpisodeTypography._({required String fontFamily}) {
+  EpisodeTypography._({required String fontFamily, required TextScale scale}) {
     title = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 24.fz,
+      fontSize: 24.fz + scale.value,
     );
 
     rating = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 18.fz + scale.value,
     );
 
     description = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 18.fz + scale.value,
     );
   }
 
@@ -201,33 +211,33 @@ final class EpisodeTypography {
 
 @immutable
 final class PlayerTypography {
-  PlayerTypography._({required String fontFamily}) {
+  PlayerTypography._({required String fontFamily, required TextScale scale}) {
     videoTitle = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 24.fz,
+      fontSize: 24.fz + scale.value,
     );
 
     timestamp = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 18.fz + scale.value,
     );
 
     label = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 24.fz,
+      fontSize: 24.fz + scale.value,
     );
 
     episode = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 20.fz,
+      fontSize: 20.fz + scale.value,
     );
   }
 
@@ -239,19 +249,19 @@ final class PlayerTypography {
 
 @immutable
 final class SettingsTypography {
-  SettingsTypography._({required String fontFamily}) {
+  SettingsTypography._({required String fontFamily, required TextScale scale}) {
     label = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 24.fz,
+      fontSize: 24.fz + scale.value,
     );
 
     property = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
-      fontSize: 18.fz,
+      fontSize: 18.fz + scale.value,
     );
   }
 

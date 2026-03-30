@@ -1,0 +1,80 @@
+{
+  "general_more": "Развернуть",
+  "general_less": "Скрыть",
+
+  "splash_header": "TWIN PEAKS TV",
+  "splash_subtext": "Developed with Flutter",
+
+  "main_menu_home": "Домой",
+  "main_menu_encyclopedia": "Энциклопедия",
+  "main_menu_settings": "Настройки",
+  "main_app_version": "Версия {appVersion}",
+  "@main_app_version": {
+    "placeholders": {
+      "appVersion": {
+        "type": "String",
+        "example": "0.1.0"
+      }
+    }
+  },
+
+  "home_tab_season1": "Сезон 1",
+  "home_tab_season2": "Сезон 2",
+  "home_tab_movie": "Твин Пикс: Сквозь огонь",
+  "home_tab_season3": "Сезон 3",
+
+  "season_year_episodes_rating": "{year} • {episodesNum} серий • ",
+  "@season_year_episodes_rating": {
+    "placeholders": {
+      "year": {
+        "type": "int",
+        "example": "1990"
+      },
+      "episodesNum": {
+        "type": "int",
+        "example": "8"
+      }
+    }
+  },
+
+  "movie_year_duration_rating": "{year} • {duration} • ",
+  "@movie_year_duration_rating": {
+    "placeholders": {
+      "year": {
+        "type": "int",
+        "example": "1990"
+      },
+      "duration": {
+        "type": "String",
+        "example": "2 ч 15 мин"
+      }
+    }
+  },
+  "movie_cast": "В ролях",
+  "movie_watch": "Смотреть",
+  "movie_scenes_from_movie": "Сцены из фильма",
+
+  "player_watch_next": "Смотреть далее",
+
+  "settings_app_version_info": "Версия {version}",
+  "@settings_app_info": {
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "settings_developer": "Flutter TV-приложение от Paranid5",
+  "settings_ui_settings_label": "Настройки интерфейса",
+  "settings_ui_settings_lang": "Язык",
+  "settings_ui_settings_lang_system": "Системный",
+  "settings_ui_settings_text_scaling": "Масштаб текста",
+  "settings_ui_settings_text_scaling_small": "Маленький",
+  "settings_ui_settings_text_scaling_normal": "Обычный",
+  "settings_ui_settings_text_scaling_big": "Большой",
+  "settings_playback_label": "Воспроизведение",
+  "settings_playback_switch_to_next_episode": "Автоматически переключать на следующий эпизод",
+  "settings_playback_show_remaining_time": "Показывать оставшееся время",
+  "settings_faq": "FAQ"
+}

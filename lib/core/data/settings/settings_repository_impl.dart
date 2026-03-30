@@ -21,7 +21,7 @@ final class SettingsRepositoryImpl extends SettingsRepository {
   );
 
   @override
-  Stream<AppLanguage?> get appLanguage => _prefs
+  Stream<AppLanguage?> get appLanguageChanges => _prefs
       .getIntStream(_keyAppLanguage)
       .map((value) => value != null ? AppLanguage.values[value] : null)
       .distinct();
@@ -53,7 +53,7 @@ final class SettingsRepositoryImpl extends SettingsRepository {
   }
 
   @override
-  Stream<bool> get showRemainingTime => _prefs
+  Stream<bool> get showRemainingTimeChanges => _prefs
       .getBoolStream(_keyShowRemainingTime)
       .map((value) => value ?? false)
       .distinct();
@@ -68,7 +68,7 @@ final class SettingsRepositoryImpl extends SettingsRepository {
   }
 
   @override
-  Stream<TextScale> get textScale =>
+  Stream<TextScale> get textScaleChanges =>
       _prefs.getIntStream(_keyTextScale).map((value) {
         return value != null ? TextScale.values[value] : TextScale.normal;
       }).distinct();
