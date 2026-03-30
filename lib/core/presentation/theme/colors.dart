@@ -220,10 +220,12 @@ final class AppCupertinoColors {
   const AppCupertinoColors({
     this.background = _black50,
     this.collapsedHeaderContent = _white80,
+    this.glassBorder = _white20,
   });
 
   final Color background;
   final Color collapsedHeaderContent;
+  final Color glassBorder;
 }
 
 @immutable

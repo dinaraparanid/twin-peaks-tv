@@ -378,9 +378,15 @@ final class _CupertinoDropdownButton extends StatelessWidget {
                 context,
                 color: Colors.transparent,
               ),
-              child: LiquidGlass(
+              child: FakeGlass(
                 shape: LiquidRoundedRectangle(borderRadius: 16.r),
                 child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(16.r)),
+                    border: BoxBorder.all(
+                      color: context.appTheme.colors.cupertino.glassBorder,
+                    ),
+                  ),
                   padding: EdgeInsets.symmetric(
                     horizontal: 12.s,
                     vertical: 4.s,
