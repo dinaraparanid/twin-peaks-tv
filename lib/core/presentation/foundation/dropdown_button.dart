@@ -123,9 +123,12 @@ final class _MaterialDropdownButton extends StatelessWidget {
           ),
         ),
         menuItemStyleData: MenuItemStyleData(
-          overlayColor: WidgetStateProperty.fromMap({
-            WidgetState.focused: context.appTheme.colors.settings.block,
-            WidgetState.any: Colors.transparent,
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.focused)) {
+              return context.appTheme.colors.settings.block;
+            }
+
+            return Colors.transparent;
           }),
         ),
         items: [
