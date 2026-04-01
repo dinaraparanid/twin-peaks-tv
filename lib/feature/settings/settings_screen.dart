@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
+import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/di/app_module.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/main/main_screen.dart';
@@ -34,17 +35,19 @@ final class SettingsScreen extends StatelessWidget {
                 false => 0.s,
               },
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 12.s),
-                  const Info(),
-                  Padding(padding: contentPadding, child: const UISettings()),
-                  Padding(padding: contentPadding, child: const Playback()),
-                  Padding(padding: contentPadding, child: const FAQ()),
-                  SizedBox(height: 12.s),
-                ],
+            child: DpadFocusScope(
+              builder: (context, focusScopeNode) => SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 12.s),
+                    const Info(),
+                    Padding(padding: contentPadding, child: const UISettings()),
+                    Padding(padding: contentPadding, child: const Playback()),
+                    Padding(padding: contentPadding, child: const FAQ()),
+                    SizedBox(height: 12.s),
+                  ],
+                ),
               ),
             ),
           );
