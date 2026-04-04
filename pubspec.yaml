@@ -63,7 +63,8 @@ dependencies:
     git:
       url: https://github.com/dinaraparanid/dropdown_button2.git
       path: packages/dropdown_button2
-  device_info_plus_webos: ^0.1.1
+  device_info_plus_webos:
+    git: https://github.com/dinaraparanid/device_info_plus_webos.git
 
 dev_dependencies:
   flutter_test:
