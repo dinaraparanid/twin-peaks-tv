@@ -11,7 +11,7 @@ import 'package:twin_peaks_tv/feature/settings/bloc/settings_effect.dart';
 import 'package:twin_peaks_tv/feature/settings/bloc/settings_event.dart';
 import 'package:twin_peaks_tv/feature/settings/bloc/settings_state.dart';
 import 'package:twin_peaks_tv/feature/settings/domain/use_case/use_case.dart';
-import 'package:twin_peaks_tv/platform/audio_output_channel.dart';
+import 'package:twin_peaks_tv/platform/audio_output/audio_output_channel.dart';
 
 final class SettingsBloc extends Bloc<SettingsEvent, SettingsState>
     with BlocPresentationMixin<SettingsState, SettingsEffect> {

@@ -30,16 +30,39 @@ import Flutter
   }
 
   private func getAudioOutputDevice(result: FlutterResult) {
-      let device = AVAudioSession.sharedInstance().currentRoute.outputs.first?.portName
+      let device = AVAudioSession.sharedInstance().currentRoute.outputs.first
+      let deviceName = device?.portName
+      let deviceType = device?.portType.outputType
 
-      if device == nil {
+      if deviceName == nil || deviceType == nil {
           result(FlutterError(
             code: "UNAVAILABLE",
             message: "Audio output device not available",
             details: nil,
           ))
       } else {
-          result(device)
+          result(["name": deviceName, "type": deviceType])
       }
   }
+}
+
+extension AVAudioSession.Port {
+    var outputType: String {
+        return switch (self) {
+        case AVAudioSession.Port.builtInSpeaker,
+            AVAudioSession.Port.airPlay: "speeker"
+
+        case AVAudioSession.Port.bluetoothA2DP,
+            AVAudioSession.Port.bluetoothLE,
+            AVAudioSession.Port.bluetoothHFP: "bluetooth"
+
+        case AVAudioSession.Port.usbAudio: "usb"
+
+        case AVAudioSession.Port.HDMI: "hdmi"
+
+        case AVAudioSession.Port.headphones: "headphones"
+
+        default: "other"
+        }
+    }
 }
