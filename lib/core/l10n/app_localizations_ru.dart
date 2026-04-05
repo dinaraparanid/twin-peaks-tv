@@ -109,5 +109,8 @@ class AppLocalizationsRu extends AppLocalizations {
       'Показывать оставшееся время';
 
   @override
+  String get settings_playback_audio_output_device => 'Устройство вывода аудио';
+
+  @override
   String get settings_faq => 'FAQ';
 }

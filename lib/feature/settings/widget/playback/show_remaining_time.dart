@@ -17,7 +17,6 @@ final class ShowRemainingTimeItem extends StatelessWidget {
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: distinctState((s) => s.properties?.showRemainingTime),
       builder: (context, state) => SettingsItem(
-        focusNode: context.settingsBloc.showRemainingTimeNode,
         onSelect: (_, _) {
           final value = state.properties?.showRemainingTime ?? false;
 

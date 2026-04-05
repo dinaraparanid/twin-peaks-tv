@@ -76,5 +76,6 @@
   "settings_playback_label": "Playback",
   "settings_playback_switch_to_next_episode": "Automatically switch to next episode",
   "settings_playback_show_remaining_time": "Show the remaining time",
+  "settings_playback_audio_output_device": "Audio output device",
   "settings_faq": "FAQ"
 }

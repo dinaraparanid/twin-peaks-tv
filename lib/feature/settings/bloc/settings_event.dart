@@ -1,5 +1,6 @@
 import 'package:twin_peaks_tv/core/domain/settings/entity/entity.dart';
 import 'package:twin_peaks_tv/feature/settings/bloc/settings_state.dart';
+import 'package:twin_peaks_tv/platform/audio_output/audio_output_device.dart';
 
 sealed class SettingsEvent {
   const SettingsEvent();
@@ -13,6 +14,11 @@ final class UpdateAppVersionEvent extends SettingsEvent {
 final class UpdateOsEvent extends SettingsEvent {
   const UpdateOsEvent({required this.os});
   final String os;
+}
+
+final class UpdateAudioOutputDeviceEvent extends SettingsEvent {
+  const UpdateAudioOutputDeviceEvent({required this.device});
+  final AudioOutputDevice device;
 }
 
 final class UpdateLanguageEvent extends SettingsEvent {
@@ -46,28 +52,4 @@ final class OpenDeveloperEvent extends SettingsEvent {
 
 final class OpenFAQEvent extends SettingsEvent {
   const OpenFAQEvent();
-}
-
-final class RequestFocusOnDeveloperEvent extends SettingsEvent {
-  const RequestFocusOnDeveloperEvent();
-}
-
-final class RequestFocusOnLanguageEvent extends SettingsEvent {
-  const RequestFocusOnLanguageEvent();
-}
-
-final class RequestFocusOnTextScaleEvent extends SettingsEvent {
-  const RequestFocusOnTextScaleEvent();
-}
-
-final class RequestFocusOnSwitchToNextEpisodeEvent extends SettingsEvent {
-  const RequestFocusOnSwitchToNextEpisodeEvent();
-}
-
-final class RequestFocusOnShowRemainingTimeEvent extends SettingsEvent {
-  const RequestFocusOnShowRemainingTimeEvent();
-}
-
-final class RequestFocusOnFAQEvent extends SettingsEvent {
-  const RequestFocusOnFAQEvent();
 }

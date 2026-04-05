@@ -108,5 +108,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings_playback_show_remaining_time => 'Show the remaining time';
 
   @override
+  String get settings_playback_audio_output_device => 'Audio output device';
+
+  @override
   String get settings_faq => 'FAQ';
 }

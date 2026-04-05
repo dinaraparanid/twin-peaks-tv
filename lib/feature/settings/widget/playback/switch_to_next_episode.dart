@@ -16,7 +16,6 @@ final class SwitchToNextEpisodeItem extends StatelessWidget {
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: distinctState((s) => s.properties?.switchToNextEpisode),
       builder: (context, state) => SettingsItem(
-        focusNode: context.settingsBloc.switchToNextEpisodeNode,
         onSelect: (_, _) {
           final value = state.properties?.switchToNextEpisode ?? false;
 

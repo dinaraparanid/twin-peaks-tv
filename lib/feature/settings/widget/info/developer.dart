@@ -14,17 +14,12 @@ final class Developer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedFocusSelectionBorders(
-      focusNode: context.settingsBloc.developerNode,
       autoscroll: true,
       paddingBuilder: (context, animationValue) {
         return EdgeInsets.all(lerpDouble(0, 8.s, animationValue)!);
       },
       onSelect: (_, _) {
         context.settingsBloc.add(const OpenDeveloperEvent());
-        return KeyEventResult.handled;
-      },
-      onDown: (_, _) {
-        context.settingsBloc.add(const RequestFocusOnLanguageEvent());
         return KeyEventResult.handled;
       },
       builder: (_, _, _) => BlocBuilder<SettingsBloc, SettingsState>(

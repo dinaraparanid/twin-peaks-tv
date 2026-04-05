@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:twin_peaks_tv/core/domain/open_url_use_case.dart';
 import 'package:twin_peaks_tv/core/domain/settings/settings.dart';
+import 'package:twin_peaks_tv/core/log/app_logger.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/settings/bloc/settings_effect.dart';
 import 'package:twin_peaks_tv/feature/settings/bloc/settings_event.dart';
@@ -27,6 +28,7 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState>
        super(const SettingsState()) {
     on<UpdateAppVersionEvent>(_onUpdateAppVersion);
     on<UpdateOsEvent>(_onUpdateOS);
+    on<UpdateAudioOutputDeviceEvent>(_onUpdateAudioOutputDevice);
     on<UpdateLanguageEvent>(_onUpdateLanguage);
     on<UpdateTextScaleEvent>(_onUpdateTextScale);
     on<UpdateSwitchToNextEpisodeEvent>(_onUpdateSwitchToNextEpisode);
@@ -34,16 +36,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState>
     on<UpdatePropertiesEvent>(_onUpdateProperties);
     on<OpenDeveloperEvent>(_onOpenDeveloper);
     on<OpenFAQEvent>(_onOpenFAQ);
-    on<RequestFocusOnDeveloperEvent>(_onRequestFocusOnDeveloper);
-    on<RequestFocusOnLanguageEvent>(_onRequestFocusOnLanguage);
-    on<RequestFocusOnTextScaleEvent>(_onRequestFocusOnTextScale);
-    on<RequestFocusOnSwitchToNextEpisodeEvent>(
-      _onRequestFocusOnSwitchToNextEpisode,
-    );
-    on<RequestFocusOnShowRemainingTimeEvent>(
-      _onRequestFocusOnShowRemainingTime,
-    );
-    on<RequestFocusOnFAQEvent>(_onRequestFocusOnFAQ);
 
     _propsSub = CombineLatestStream.combine4(
       _repository.appLanguageChanges,
@@ -74,10 +66,12 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState>
 
     AudioOutputChannel.getAudioOutputDevice()
         .then((audioDevice) {
-          debugPrint('BIBA AUDIO OUTPUT $audioDevice');
+          if (audioDevice != null) {
+            add(UpdateAudioOutputDeviceEvent(device: audioDevice));
+          }
         })
-        .catchError((e) {
-          debugPrint('BIBA AUDIO OUTPUT ERROR $e');
+        .catchError((e, _) {
+          AppLogger.instance.e(e);
         });
   }
 
@@ -87,13 +81,6 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState>
   final FetchOSUseCase _fetchOSUseCase;
 
   late final StreamSubscription<SettingsProperties> _propsSub;
-
-  late final developerNode = FocusNode();
-  late final languageNode = FocusNode();
-  late final textScaleNode = FocusNode();
-  late final switchToNextEpisodeNode = FocusNode();
-  late final showRemainingTimeNode = FocusNode();
-  late final faqNode = FocusNode();
 
   Future<void> _onUpdateAppVersion(
     UpdateAppVersionEvent event,
@@ -107,6 +94,13 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState>
     Emitter<SettingsState> emit,
   ) async {
     emit(state.copyWith(os: event.os));
+  }
+
+  Future<void> _onUpdateAudioOutputDevice(
+    UpdateAudioOutputDeviceEvent event,
+    Emitter<SettingsState> emit,
+  ) async {
+    emit(state.copyWith(audioOutputDevice: event.device));
   }
 
   Future<void> _onUpdateLanguage(
@@ -164,56 +158,9 @@ final class SettingsBloc extends Bloc<SettingsEvent, SettingsState>
     );
   }
 
-  Future<void> _onRequestFocusOnDeveloper(
-    RequestFocusOnDeveloperEvent event,
-    Emitter<SettingsState> emit,
-  ) async {
-    developerNode.requestFocus();
-  }
-
-  Future<void> _onRequestFocusOnLanguage(
-    RequestFocusOnLanguageEvent event,
-    Emitter<SettingsState> emit,
-  ) async {
-    languageNode.requestFocus();
-  }
-
-  Future<void> _onRequestFocusOnTextScale(
-    RequestFocusOnTextScaleEvent event,
-    Emitter<SettingsState> emit,
-  ) async {
-    textScaleNode.requestFocus();
-  }
-
-  Future<void> _onRequestFocusOnSwitchToNextEpisode(
-    RequestFocusOnSwitchToNextEpisodeEvent event,
-    Emitter<SettingsState> emit,
-  ) async {
-    switchToNextEpisodeNode.requestFocus();
-  }
-
-  Future<void> _onRequestFocusOnShowRemainingTime(
-    RequestFocusOnShowRemainingTimeEvent event,
-    Emitter<SettingsState> emit,
-  ) async {
-    showRemainingTimeNode.requestFocus();
-  }
-
-  Future<void> _onRequestFocusOnFAQ(
-    RequestFocusOnFAQEvent event,
-    Emitter<SettingsState> emit,
-  ) async {
-    faqNode.requestFocus();
-  }
-
   @override
   Future<void> close() async {
     await _propsSub.cancel();
-    developerNode.dispose();
-    languageNode.dispose();
-    textScaleNode.dispose();
-    switchToNextEpisodeNode.dispose();
-    showRemainingTimeNode.dispose();
     return super.close();
   }
 }

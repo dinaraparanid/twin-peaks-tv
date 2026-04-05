@@ -14,11 +14,6 @@ final class FAQ extends StatelessWidget {
     return SettingsBlock(
       children: [
         SettingsItem(
-          focusNode: context.settingsBloc.faqNode,
-          onUp: (_, _) {
-            context.settingsBloc.showRemainingTimeNode.requestFocus();
-            return KeyEventResult.handled;
-          },
           onSelect: (_, _) {
             context.settingsBloc.add(const OpenFAQEvent());
             return KeyEventResult.handled;

@@ -14,7 +14,7 @@ final class SettingsItem extends StatelessWidget {
     required this.titleBuilder,
     required this.actionBuilder,
     this.autofocus = false,
-    required this.focusNode,
+    this.focusNode,
     this.onUp,
     this.onDown,
     this.onLeft,
@@ -30,7 +30,7 @@ final class SettingsItem extends StatelessWidget {
   final Widget Function(BuildContext, double) titleBuilder;
   final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final DpadEventCallback? onUp;
   final DpadEventCallback? onDown;
   final DpadEventCallback? onLeft;
@@ -89,7 +89,7 @@ final class _MaterialSettingsItem extends StatelessWidget {
   final Widget Function(BuildContext, double) titleBuilder;
   final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final DpadEventCallback? onUp;
   final DpadEventCallback? onDown;
   final DpadEventCallback? onLeft;
@@ -171,7 +171,7 @@ final class _CupertinoSettingsItem extends StatelessWidget {
   final Widget Function(BuildContext, double) titleBuilder;
   final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final DpadEventCallback? onUp;
   final DpadEventCallback? onDown;
   final DpadEventCallback? onLeft;
@@ -250,7 +250,7 @@ final class _OneUiSettingsItem extends StatelessWidget {
   final Widget Function(BuildContext, double) titleBuilder;
   final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final DpadEventCallback? onUp;
   final DpadEventCallback? onDown;
   final DpadEventCallback? onLeft;
@@ -339,7 +339,7 @@ final class _SandstoneSettingsItem extends StatelessWidget {
   final Widget Function(BuildContext, double) titleBuilder;
   final Widget Function(BuildContext, double) actionBuilder;
   final bool autofocus;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final DpadEventCallback? onUp;
   final DpadEventCallback? onDown;
   final DpadEventCallback? onLeft;

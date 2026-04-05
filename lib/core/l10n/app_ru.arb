@@ -76,5 +76,6 @@
   "settings_playback_label": "Воспроизведение",
   "settings_playback_switch_to_next_episode": "Автоматически переключать на следующий эпизод",
   "settings_playback_show_remaining_time": "Показывать оставшееся время",
+  "settings_playback_audio_output_device": "Устройство вывода аудио",
   "settings_faq": "FAQ"
 }

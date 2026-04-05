@@ -278,6 +278,12 @@ abstract class AppLocalizations {
   /// **'Show the remaining time'**
   String get settings_playback_show_remaining_time;
 
+  /// No description provided for @settings_playback_audio_output_device.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio output device'**
+  String get settings_playback_audio_output_device;
+
   /// No description provided for @settings_faq.
   ///
   /// In en, this message translates to:

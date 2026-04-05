@@ -50,7 +50,7 @@ extension AVAudioSession.Port {
     var outputType: String {
         return switch (self) {
         case AVAudioSession.Port.builtInSpeaker,
-            AVAudioSession.Port.airPlay: "speeker"
+            AVAudioSession.Port.airPlay: "speaker"
 
         case AVAudioSession.Port.bluetoothA2DP,
             AVAudioSession.Port.bluetoothLE,
