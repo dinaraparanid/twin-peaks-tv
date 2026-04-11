@@ -63,8 +63,7 @@ dependencies:
     git:
       url: https://github.com/dinaraparanid/dropdown_button2.git
       path: packages/dropdown_button2
-  device_info_plus_webos:
-    git: https://github.com/dinaraparanid/device_info_plus_webos.git
+  device_info_plus_webos: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -151,6 +150,7 @@ dependency_overrides:
       url: https://github.com/dinaraparanid/tv_plus.git
       ref: dev
       path: packages/sandstone
+  device_info_plus_platform_interface: ^7.0.3
 
   # !!! TVOS ONLY !!!
 #  video_player:

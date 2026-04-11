@@ -31,11 +31,9 @@ final class FetchOSUseCase {
         }),
 
         AppPlatforms.webos =>
-          DeviceInfoPlusWebOS.deviceInfo
-              .then((deviceInfo) {
-                final version = deviceInfo?.sdkVersion;
-                return version != null ? 'webOS $version' : 'webOS';
-              })
+          const DeviceInfoPluginWebOS()
+              .deviceInfo()
+              .then((deviceInfo) => 'webOS ${deviceInfo.sdkVersion}')
               .catchError((_) => 'web'),
       };
 
