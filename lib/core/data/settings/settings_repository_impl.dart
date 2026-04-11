@@ -10,10 +10,10 @@ import 'package:twin_peaks_tv/core/log/app_logger.dart';
 final class SettingsRepositoryImpl extends SettingsRepository {
   SettingsRepositoryImpl();
 
-  static const String _keyAppLanguage = 'app_language';
-  static const String _keySwitchEpisode = 'switch_episode';
-  static const String _keyShowRemainingTime = 'show_remaining_time';
-  static const String _keyTextScale = 'text_scale';
+  static const _keyAppLanguage = 'app_language';
+  static const _keySwitchEpisode = 'switch_episode';
+  static const _keyShowRemainingTime = 'show_remaining_time';
+  static const _keyTextScale = 'text_scale';
 
   final _prefs = RxSharedPreferences(
     SharedPreferences.getInstance(),
