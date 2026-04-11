@@ -31,6 +31,7 @@ final class _TextScaleItemState extends State<TextScaleItem> {
     return BlocBuilder<SettingsBloc, SettingsState>(
       buildWhen: distinctState((s) => s.properties?.textScale),
       builder: (context, state) => SettingsItem(
+        onClick: () => _menuOpenNotifier.value = !_menuOpenNotifier.value,
         onSelect: (_, _) {
           _menuOpenNotifier.value = !_menuOpenNotifier.value;
           return KeyEventResult.handled;

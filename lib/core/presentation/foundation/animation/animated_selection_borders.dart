@@ -37,6 +37,17 @@ final class AnimatedSelectionBorders extends StatelessWidget {
           )!,
           width: borderWidth,
         ),
+        boxShadow: [
+          ?BoxShadow.lerp(
+            BoxShadow(color: context.appTheme.colors.transparent),
+            BoxShadow(
+              color: context.appTheme.colors.primary.primary80,
+              blurRadius: 8.r,
+              blurStyle: BlurStyle.outer,
+            ),
+            animation,
+          ),
+        ],
         shape: shape,
       ),
       builder: builder,

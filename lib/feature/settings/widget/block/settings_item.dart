@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
@@ -21,6 +21,7 @@ final class SettingsItem extends StatelessWidget {
     this.onRight,
     this.onSelect,
     this.onBack,
+    this.onClick,
     this.onKeyEvent,
     this.onFocusChanged,
     this.onFocusDisabledWhenWasFocused,
@@ -37,6 +38,7 @@ final class SettingsItem extends StatelessWidget {
   final DpadEventCallback? onRight;
   final DpadEventCallback? onSelect;
   final DpadEventCallback? onBack;
+  final VoidCallback? onClick;
   final KeyEventResult Function(FocusNode, KeyEvent)? onKeyEvent;
   final void Function(FocusNode, bool)? onFocusChanged;
   final void Function()? onFocusDisabledWhenWasFocused;
@@ -60,6 +62,7 @@ final class SettingsItem extends StatelessWidget {
       onRight: onRight,
       onSelect: onSelect,
       onBack: onBack,
+      onClick: onClick,
       onKeyEvent: onKeyEvent,
       onFocusChanged: onFocusChanged,
       onFocusDisabledWhenWasFocused: onFocusDisabledWhenWasFocused,
@@ -80,6 +83,7 @@ final class _MaterialSettingsItem extends StatelessWidget {
     required this.onRight,
     required this.onSelect,
     required this.onBack,
+    required this.onClick,
     required this.onKeyEvent,
     required this.onFocusChanged,
     required this.onFocusDisabledWhenWasFocused,
@@ -96,14 +100,108 @@ final class _MaterialSettingsItem extends StatelessWidget {
   final DpadEventCallback? onRight;
   final DpadEventCallback? onSelect;
   final DpadEventCallback? onBack;
+  final VoidCallback? onClick;
   final KeyEventResult Function(FocusNode, KeyEvent)? onKeyEvent;
   final void Function(FocusNode, bool)? onFocusChanged;
   final void Function()? onFocusDisabledWhenWasFocused;
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: context.appTheme.colors.settings.block,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onClick,
+        hoverColor: context.appTheme.colors.settings.block,
+        highlightColor: context.appTheme.colors.settings.block,
+        splashColor: context.appTheme.colors.settings.block,
+        child: ColoredBox(
+          color: context.appTheme.colors.settings.block,
+          child: AnimatedFocusSelectionBox(
+            focusNode: focusNode,
+            autofocus: autofocus,
+            autoscroll: true,
+            color: context.appTheme.colors.settings.block,
+            onUp: onUp,
+            onDown: onDown,
+            onLeft: onLeft,
+            onRight: onRight,
+            onSelect: onSelect,
+            onBack: onBack,
+            onKeyEvent: onKeyEvent,
+            onFocusChanged: onFocusChanged,
+            onFocusDisabledWhenWasFocused: onFocusDisabledWhenWasFocused,
+            paddingBuilder: (context, animation) =>
+                EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
+            builder: (context, _, animation) {
+              final scale = lerpDouble(1.0, 1.2, animation)!;
+              final spacer = SizedBox(width: 8.s);
+
+              return Row(
+                children: [
+                  Transform.scale(
+                    scale: scale,
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      spacing: 8.s,
+                      children: [
+                        iconBuilder(context, animation),
+                        titleBuilder(context, animation),
+                      ],
+                    ),
+                  ),
+
+                  const Expanded(child: SizedBox()),
+                  spacer,
+                  actionBuilder(context, animation),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+final class _CupertinoSettingsItem extends StatelessWidget {
+  const _CupertinoSettingsItem({
+    required this.iconBuilder,
+    required this.titleBuilder,
+    required this.actionBuilder,
+    required this.autofocus,
+    required this.focusNode,
+    required this.onUp,
+    required this.onDown,
+    required this.onLeft,
+    required this.onRight,
+    required this.onSelect,
+    required this.onBack,
+    required this.onClick,
+    required this.onKeyEvent,
+    required this.onFocusChanged,
+    required this.onFocusDisabledWhenWasFocused,
+  });
+
+  final Widget Function(BuildContext, double) iconBuilder;
+  final Widget Function(BuildContext, double) titleBuilder;
+  final Widget Function(BuildContext, double) actionBuilder;
+  final bool autofocus;
+  final FocusNode? focusNode;
+  final DpadEventCallback? onUp;
+  final DpadEventCallback? onDown;
+  final DpadEventCallback? onLeft;
+  final DpadEventCallback? onRight;
+  final DpadEventCallback? onSelect;
+  final DpadEventCallback? onBack;
+  final VoidCallback? onClick;
+  final KeyEventResult Function(FocusNode, KeyEvent)? onKeyEvent;
+  final void Function(FocusNode, bool)? onFocusChanged;
+  final void Function()? onFocusDisabledWhenWasFocused;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onClick,
       child: AnimatedFocusSelectionBox(
         focusNode: focusNode,
         autofocus: autofocus,
@@ -149,85 +247,6 @@ final class _MaterialSettingsItem extends StatelessWidget {
   }
 }
 
-final class _CupertinoSettingsItem extends StatelessWidget {
-  const _CupertinoSettingsItem({
-    required this.iconBuilder,
-    required this.titleBuilder,
-    required this.actionBuilder,
-    required this.autofocus,
-    required this.focusNode,
-    required this.onUp,
-    required this.onDown,
-    required this.onLeft,
-    required this.onRight,
-    required this.onSelect,
-    required this.onBack,
-    required this.onKeyEvent,
-    required this.onFocusChanged,
-    required this.onFocusDisabledWhenWasFocused,
-  });
-
-  final Widget Function(BuildContext, double) iconBuilder;
-  final Widget Function(BuildContext, double) titleBuilder;
-  final Widget Function(BuildContext, double) actionBuilder;
-  final bool autofocus;
-  final FocusNode? focusNode;
-  final DpadEventCallback? onUp;
-  final DpadEventCallback? onDown;
-  final DpadEventCallback? onLeft;
-  final DpadEventCallback? onRight;
-  final DpadEventCallback? onSelect;
-  final DpadEventCallback? onBack;
-  final KeyEventResult Function(FocusNode, KeyEvent)? onKeyEvent;
-  final void Function(FocusNode, bool)? onFocusChanged;
-  final void Function()? onFocusDisabledWhenWasFocused;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedFocusSelectionBox(
-      focusNode: focusNode,
-      autofocus: autofocus,
-      autoscroll: true,
-      color: context.appTheme.colors.settings.block,
-      onUp: onUp,
-      onDown: onDown,
-      onLeft: onLeft,
-      onRight: onRight,
-      onSelect: onSelect,
-      onBack: onBack,
-      onKeyEvent: onKeyEvent,
-      onFocusChanged: onFocusChanged,
-      onFocusDisabledWhenWasFocused: onFocusDisabledWhenWasFocused,
-      paddingBuilder: (context, animation) =>
-          EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
-      builder: (context, _, animation) {
-        final scale = lerpDouble(1.0, 1.2, animation)!;
-        final spacer = SizedBox(width: 8.s);
-
-        return Row(
-          children: [
-            Transform.scale(
-              scale: scale,
-              alignment: Alignment.centerLeft,
-              child: Row(
-                spacing: 8.s,
-                children: [
-                  iconBuilder(context, animation),
-                  titleBuilder(context, animation),
-                ],
-              ),
-            ),
-
-            const Expanded(child: SizedBox()),
-            spacer,
-            actionBuilder(context, animation),
-          ],
-        );
-      },
-    );
-  }
-}
-
 final class _OneUiSettingsItem extends StatelessWidget {
   const _OneUiSettingsItem({
     required this.iconBuilder,
@@ -241,6 +260,7 @@ final class _OneUiSettingsItem extends StatelessWidget {
     required this.onRight,
     required this.onSelect,
     required this.onBack,
+    required this.onClick,
     required this.onKeyEvent,
     required this.onFocusChanged,
     required this.onFocusDisabledWhenWasFocused,
@@ -257,6 +277,7 @@ final class _OneUiSettingsItem extends StatelessWidget {
   final DpadEventCallback? onRight;
   final DpadEventCallback? onSelect;
   final DpadEventCallback? onBack;
+  final VoidCallback? onClick;
   final KeyEventResult Function(FocusNode, KeyEvent)? onKeyEvent;
   final void Function(FocusNode, bool)? onFocusChanged;
   final void Function()? onFocusDisabledWhenWasFocused;
@@ -272,47 +293,57 @@ final class _OneUiSettingsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedFocusSelectionBox(
-      focusNode: focusNode,
-      autofocus: autofocus,
-      autoscroll: true,
-      color: context.appTheme.colors.settings.block,
-      onUp: onUp,
-      onDown: onDown,
-      onLeft: onLeft,
-      onRight: onRight,
-      onSelect: onSelect,
-      onBack: onBack,
-      onKeyEvent: onKeyEvent,
-      onFocusChanged: onFocusChanged,
-      onFocusDisabledWhenWasFocused: onFocusDisabledWhenWasFocused,
-      paddingBuilder: (context, animation) =>
-          EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
-      builder: (context, _, animation) {
-        final scale = lerpDouble(1.0, 1.2, animation)!;
-        final spacer = SizedBox(width: 8.s);
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onClick,
+        focusColor: context.appTheme.colors.settings.block,
+        hoverColor: context.appTheme.colors.settings.block,
+        highlightColor: context.appTheme.colors.settings.block,
+        splashColor: context.appTheme.colors.settings.block,
+        child: AnimatedFocusSelectionBox(
+          focusNode: focusNode,
+          autofocus: autofocus,
+          autoscroll: true,
+          color: context.appTheme.colors.settings.block,
+          onUp: onUp,
+          onDown: onDown,
+          onLeft: onLeft,
+          onRight: onRight,
+          onSelect: onSelect,
+          onBack: onBack,
+          onKeyEvent: onKeyEvent,
+          onFocusChanged: onFocusChanged,
+          onFocusDisabledWhenWasFocused: onFocusDisabledWhenWasFocused,
+          paddingBuilder: (context, animation) =>
+              EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
+          builder: (context, _, animation) {
+            final scale = lerpDouble(1.0, 1.2, animation)!;
+            final spacer = SizedBox(width: 8.s);
 
-        return Row(
-          children: [
-            Transform.scale(
-              scale: scale,
-              alignment: Alignment.centerLeft,
-              child: Row(
-                spacing: 8.s,
-                children: [
-                  iconBuilder(context, animation),
-                  titleBuilder(context, animation),
-                ],
-              ),
-            ),
+            return Row(
+              children: [
+                Transform.scale(
+                  scale: scale,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    spacing: 8.s,
+                    children: [
+                      iconBuilder(context, animation),
+                      titleBuilder(context, animation),
+                    ],
+                  ),
+                ),
 
-            const Expanded(child: SizedBox()),
-            _buildDivider(context),
-            spacer,
-            actionBuilder(context, animation),
-          ],
-        );
-      },
+                const Expanded(child: SizedBox()),
+                _buildDivider(context),
+                spacer,
+                actionBuilder(context, animation),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -330,6 +361,7 @@ final class _SandstoneSettingsItem extends StatelessWidget {
     required this.onRight,
     required this.onSelect,
     required this.onBack,
+    required this.onClick,
     required this.onKeyEvent,
     required this.onFocusChanged,
     required this.onFocusDisabledWhenWasFocused,
@@ -346,52 +378,62 @@ final class _SandstoneSettingsItem extends StatelessWidget {
   final DpadEventCallback? onRight;
   final DpadEventCallback? onSelect;
   final DpadEventCallback? onBack;
+  final VoidCallback? onClick;
   final KeyEventResult Function(FocusNode, KeyEvent)? onKeyEvent;
   final void Function(FocusNode, bool)? onFocusChanged;
   final void Function()? onFocusDisabledWhenWasFocused;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedFocusSelectionBox(
-      focusNode: focusNode,
-      autofocus: autofocus,
-      autoscroll: true,
-      color: context.appTheme.colors.settings.block,
-      onUp: onUp,
-      onDown: onDown,
-      onLeft: onLeft,
-      onRight: onRight,
-      onSelect: onSelect,
-      onBack: onBack,
-      onKeyEvent: onKeyEvent,
-      onFocusChanged: onFocusChanged,
-      onFocusDisabledWhenWasFocused: onFocusDisabledWhenWasFocused,
-      paddingBuilder: (context, animation) =>
-          EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
-      builder: (context, _, animation) {
-        final scale = lerpDouble(1.0, 1.2, animation)!;
-        final spacer = SizedBox(width: 8.s);
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onClick,
+        hoverColor: context.appTheme.colors.settings.block,
+        highlightColor: context.appTheme.colors.settings.block,
+        splashColor: context.appTheme.colors.settings.block,
+        child: AnimatedFocusSelectionBox(
+          focusNode: focusNode,
+          autofocus: autofocus,
+          autoscroll: true,
+          color: context.appTheme.colors.settings.block,
+          onUp: onUp,
+          onDown: onDown,
+          onLeft: onLeft,
+          onRight: onRight,
+          onSelect: onSelect,
+          onBack: onBack,
+          onKeyEvent: onKeyEvent,
+          onFocusChanged: onFocusChanged,
+          onFocusDisabledWhenWasFocused: onFocusDisabledWhenWasFocused,
+          paddingBuilder: (context, animation) =>
+              EdgeInsets.all(16.s * lerpDouble(1.0, 1.2, animation)!),
+          builder: (context, focusNode, animation) {
+            final scale = lerpDouble(1.0, 1.2, animation)!;
+            final spacer = SizedBox(width: 8.s);
 
-        return Row(
-          children: [
-            Transform.scale(
-              scale: scale,
-              alignment: Alignment.centerLeft,
-              child: Row(
-                spacing: 8.s,
-                children: [
-                  iconBuilder(context, animation),
-                  titleBuilder(context, animation),
-                ],
-              ),
-            ),
+            return Row(
+              children: [
+                Transform.scale(
+                  scale: scale,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    spacing: 8.s,
+                    children: [
+                      iconBuilder(context, animation),
+                      titleBuilder(context, animation),
+                    ],
+                  ),
+                ),
 
-            const Expanded(child: SizedBox()),
-            spacer,
-            actionBuilder(context, animation),
-          ],
-        );
-      },
+                const Expanded(child: SizedBox()),
+                spacer,
+                actionBuilder(context, animation),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

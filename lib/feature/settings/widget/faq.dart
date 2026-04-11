@@ -14,6 +14,7 @@ final class FAQ extends StatelessWidget {
     return SettingsBlock(
       children: [
         SettingsItem(
+          onClick: () => context.settingsBloc.add(const OpenFAQEvent()),
           onSelect: (_, _) {
             context.settingsBloc.add(const OpenFAQEvent());
             return KeyEventResult.handled;

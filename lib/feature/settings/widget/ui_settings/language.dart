@@ -31,6 +31,7 @@ final class _LanguageItemState extends State<LanguageItem> {
       buildWhen: distinctState((s) => s.properties?.language),
       builder: (context, state) => SettingsItem(
         autofocus: true,
+        onClick: () => _menuOpenNotifier.value = !_menuOpenNotifier.value,
         onSelect: (_, _) {
           _menuOpenNotifier.value = !_menuOpenNotifier.value;
           return KeyEventResult.handled;
