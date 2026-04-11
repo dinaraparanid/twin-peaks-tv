@@ -10,4 +10,6 @@ abstract base class EncyclopediaRepository {
   Stream<List<Character>> get recentCharactersChanges;
 
   Future<void> markCharacterAsRecent(Character character);
+
+  Future<void> clearRecentCharacters();
 }

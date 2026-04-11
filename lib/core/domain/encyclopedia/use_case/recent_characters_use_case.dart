@@ -10,4 +10,8 @@ final class RecentCharactersUseCase {
   Stream<List<Character>> get changes {
     return _encyclopediaRepository.recentCharactersChanges;
   }
+
+  Future<void> markAsRecent(Character character) async {
+    await _encyclopediaRepository.markCharacterAsRecent(character);
+  }
 }

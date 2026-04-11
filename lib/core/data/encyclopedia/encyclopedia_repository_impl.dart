@@ -61,4 +61,9 @@ final class EncyclopediaRepositoryImpl extends EncyclopediaRepository {
     final jsons = CharacterMapper.toJsonList(characters);
     await _prefs.setStringList(_keyRecentCharacters, jsons);
   }
+
+  @override
+  Future<void> clearRecentCharacters() async {
+    await _prefs.remove(_keyRecentCharacters);
+  }
 }
