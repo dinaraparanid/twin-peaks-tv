@@ -13,6 +13,7 @@ final class AppTypography {
       AppPlatforms.webos => 'MuseoSans',
     };
 
+    general = GeneralTypography._(fontFamily: fontFamily, scale: scale);
     splash = SplashTypography._(fontFamily: fontFamily, scale: scale);
     navigationMenu = NavigationMenuTypography._(
       fontFamily: fontFamily,
@@ -24,8 +25,13 @@ final class AppTypography {
     episode = EpisodeTypography._(fontFamily: fontFamily, scale: scale);
     player = PlayerTypography._(fontFamily: fontFamily, scale: scale);
     settings = SettingsTypography._(fontFamily: fontFamily, scale: scale);
+    encyclopedia = EncyclopediaTypography._(
+      fontFamily: fontFamily,
+      scale: scale,
+    );
   }
 
+  late final GeneralTypography general;
   late final SplashTypography splash;
   late final NavigationMenuTypography navigationMenu;
   late final TabBarTypography tabBar;
@@ -34,6 +40,21 @@ final class AppTypography {
   late final EpisodeTypography episode;
   late final PlayerTypography player;
   late final SettingsTypography settings;
+  late final EncyclopediaTypography encyclopedia;
+}
+
+@immutable
+final class GeneralTypography {
+  GeneralTypography._({required String fontFamily, required TextScale scale}) {
+    label = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 24.fz + scale.value,
+    );
+  }
+
+  late final TextStyle label;
 }
 
 @immutable
@@ -140,20 +161,12 @@ final class MovieInfoTypography {
       fontWeight: FontWeight.w500,
       fontSize: 18.fz + scale.value,
     );
-
-    label = TextStyle(
-      fontFamily: fontFamily,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      fontSize: 24.fz + scale.value,
-    );
   }
 
   late final TextStyle title;
   late final TextStyle properties;
   late final TextStyle description;
   late final TextStyle playButton;
-  late final TextStyle label;
 }
 
 @immutable
@@ -226,13 +239,6 @@ final class PlayerTypography {
       fontSize: 18.fz + scale.value,
     );
 
-    label = TextStyle(
-      fontFamily: fontFamily,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      fontSize: 24.fz + scale.value,
-    );
-
     episode = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
@@ -243,20 +249,12 @@ final class PlayerTypography {
 
   late final TextStyle videoTitle;
   late final TextStyle timestamp;
-  late final TextStyle label;
   late final TextStyle episode;
 }
 
 @immutable
 final class SettingsTypography {
   SettingsTypography._({required String fontFamily, required TextScale scale}) {
-    label = TextStyle(
-      fontFamily: fontFamily,
-      fontStyle: FontStyle.normal,
-      fontWeight: FontWeight.w500,
-      fontSize: 24.fz + scale.value,
-    );
-
     property = TextStyle(
       fontFamily: fontFamily,
       fontStyle: FontStyle.normal,
@@ -265,6 +263,38 @@ final class SettingsTypography {
     );
   }
 
-  late final TextStyle label;
   late final TextStyle property;
+}
+
+@immutable
+final class EncyclopediaTypography {
+  EncyclopediaTypography._({
+    required String fontFamily,
+    required TextScale scale,
+  }) {
+    action = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 18.fz + scale.value,
+    );
+
+    itemTitle = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 24.fz + scale.value,
+    );
+
+    itemDescription = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w500,
+      fontSize: 12.fz + scale.value,
+    );
+  }
+
+  late final TextStyle action;
+  late final TextStyle itemTitle;
+  late final TextStyle itemDescription;
 }

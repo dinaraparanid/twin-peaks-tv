@@ -113,4 +113,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settings_faq => 'FAQ';
+
+  @override
+  String get encyclopedia_recent_label => 'Недавние';
+
+  @override
+  String get encyclopedia_recent_clear => 'Очистить';
+
+  @override
+  String get encyclopedia_browse_label => 'Коллекция';
 }

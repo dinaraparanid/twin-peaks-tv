@@ -111,12 +111,7 @@ final class _CastState extends State<Cast> {
         children: [
           Padding(
             padding: contentPadding,
-            child: Text(
-              context.ln.movie_cast,
-              style: context.appTheme.typography.movieInfo.label.copyWith(
-                color: context.appTheme.colors.text.primary,
-              ),
-            ),
+            child: AppLabel(text: context.ln.movie_cast),
           ),
 
           SizedBox(

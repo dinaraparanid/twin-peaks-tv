@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:twin_peaks_tv/core/domain/encyclopedia/encyclopedia.dart';
@@ -17,28 +18,33 @@ final class EncyclopediaBloc
        _clearRecentCharactersUseCase = clearRecentCharactersUseCase,
        _recentCharactersUseCase = recentCharactersUseCase,
        super(const EncyclopediaState()) {
+    on<UpdateBrowsedCharactersEvent>(_onUpdateBrowsedCharacters);
+    on<UpdateRecentCharactersEvent>(_onUpdateRecentCharacters);
     on<QueryChangeEvent>(_onQueryChange);
     on<StartSearchEvent>(_onStartSearch);
     on<ClearRecentsEvent>(_onClearRecents);
     on<CharacterClickEvent>(_onCharacterClick);
 
-    _browseChangesSubscription = browseCharactersUseCase.charactersChanges
-        .listen((charactersResult) {
-          add(
-            UpdateBrowsedCharactersEvent(
-              state: charactersResult.fold(
-                UiState.error,
-                (characters) => UiState.data(value: characters),
-              ),
-            ),
-          );
-        });
+    _browseChangesSubscription = browseCharactersUseCase.changes.listen((
+      charactersResult,
+    ) {
+      add(
+        UpdateBrowsedCharactersEvent(
+          state: charactersResult.fold(
+            UiState.error,
+            (characters) => UiState.data(value: characters),
+          ),
+        ),
+      );
+    });
 
     _recentChangesSubscription = recentCharactersUseCase.changes.listen((
       characters,
     ) {
       add(UpdateRecentCharactersEvent(state: UiState.data(value: characters)));
     });
+
+    _browseCharactersUseCase.submitQuery(null);
   }
 
   final BrowseCharactersUseCase _browseCharactersUseCase;
@@ -48,6 +54,20 @@ final class EncyclopediaBloc
   late final StreamSubscription<Either<Exception, List<Character>>>
   _browseChangesSubscription;
   late final StreamSubscription<List<Character>> _recentChangesSubscription;
+
+  void _onUpdateBrowsedCharacters(
+    UpdateBrowsedCharactersEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    emit(state.copyWith(browseCharacters: event.state));
+  }
+
+  void _onUpdateRecentCharacters(
+    UpdateRecentCharactersEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    emit(state.copyWith(recentCharacters: event.state));
+  }
 
   void _onQueryChange(QueryChangeEvent event, Emitter<EncyclopediaState> emit) {
     emit(state.copyWith(searchQuery: event.query));
@@ -79,4 +99,8 @@ final class EncyclopediaBloc
     await _recentChangesSubscription.cancel();
     return super.close();
   }
+}
+
+extension EncyclopediaBlocProvider on BuildContext {
+  EncyclopediaBloc get encyclopediaBloc => BlocProvider.of(this);
 }

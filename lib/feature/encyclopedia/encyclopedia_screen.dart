@@ -1,8 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:twin_peaks_tv/core/di/app_module.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
+import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/bloc/bloc.dart';
+import 'package:twin_peaks_tv/feature/encyclopedia/widget/browse/browse_block.dart';
+import 'package:twin_peaks_tv/feature/encyclopedia/widget/recent/recent_block.dart';
 
 @RoutePage()
 final class EncyclopediaScreen extends StatelessWidget {
@@ -12,7 +17,32 @@ final class EncyclopediaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => di<EncyclopediaBlocFactory>()(),
-      child: const Text('TODO: EncyclopediaScreen'),
+      child: BlocBuilder<EncyclopediaBloc, EncyclopediaState>(
+        buildWhen: distinctState((s) {
+          return (s.recentCharacters, s.browseCharacters);
+        }),
+        builder: (context, state) => switch ((
+          state.recentCharacters,
+          state.browseCharacters,
+        )) {
+          (Data(value: final recents), Data(value: final browse)) =>
+            CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(child: SizedBox(height: 32.s)),
+
+                if (recents.isNotEmpty) ...[
+                  SliverToBoxAdapter(child: RecentBlock(characters: recents)),
+                  SliverToBoxAdapter(child: SizedBox(height: 12.s)),
+                ],
+
+                SliverToBoxAdapter(child: SizedBox(height: 16.s)),
+                SliverBrowseBlock(characters: browse),
+              ],
+            ),
+
+          (_, _) => const SizedBox(), // TODO(paranid5): заглушки
+        },
+      ),
     );
   }
 }

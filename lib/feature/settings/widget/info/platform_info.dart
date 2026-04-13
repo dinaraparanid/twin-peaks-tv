@@ -22,7 +22,7 @@ final class PlatformInfo extends StatelessWidget {
 
         return Text(
           [versionText, state.os].nonNulls.join(' | '),
-          style: context.appTheme.typography.settings.label.copyWith(
+          style: context.appTheme.typography.general.label.copyWith(
             color: context.appTheme.colors.text.secondary,
           ),
         );

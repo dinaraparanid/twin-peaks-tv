@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/label.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 
@@ -15,13 +16,7 @@ final class SettingsBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: 16.s,
       children: [
-        if (label != null)
-          Text(
-            label!,
-            style: context.appTheme.typography.settings.label.copyWith(
-              color: context.appTheme.colors.text.primary,
-            ),
-          ),
+        if (label != null) AppLabel(text: label!),
 
         switch (AppPlatform.targetPlatform) {
           AppPlatforms.android => _MaterialSettingsContainer(children),

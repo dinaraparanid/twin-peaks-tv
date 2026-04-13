@@ -289,6 +289,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'FAQ'**
   String get settings_faq;
+
+  /// No description provided for @encyclopedia_recent_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get encyclopedia_recent_label;
+
+  /// No description provided for @encyclopedia_recent_clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get encyclopedia_recent_clear;
+
+  /// No description provided for @encyclopedia_browse_label.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse'**
+  String get encyclopedia_browse_label;
 }
 
 class _AppLocalizationsDelegate

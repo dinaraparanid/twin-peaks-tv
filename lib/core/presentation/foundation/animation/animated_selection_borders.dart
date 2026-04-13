@@ -21,33 +21,49 @@ final class AnimatedSelectionBorders extends StatelessWidget {
   final BoxShape shape;
   final Widget Function(BuildContext, double) builder;
 
+  static BoxDecoration buildDecoration({
+    required BuildContext context,
+    required double animation,
+    BorderRadiusGeometry? borderRadius,
+    double? borderWidth,
+    BoxShape shape = BoxShape.rectangle,
+  }) => BoxDecoration(
+    borderRadius: shape == BoxShape.circle
+        ? null
+        : borderRadius ?? BorderRadius.all(Radius.circular(16.r)),
+    border: GradientBoxBorder(
+      gradient: Gradient.lerp(
+        context.appTheme.colors.gradients.transparent,
+        context.appTheme.colors.gradients.selection,
+        animation,
+      )!,
+      width: borderWidth ?? 2.s,
+    ),
+    boxShadow: [
+      ?BoxShadow.lerp(
+        BoxShadow(color: context.appTheme.colors.transparent),
+        BoxShadow(
+          color: context.appTheme.colors.primary.primary80,
+          blurRadius: 8.r,
+          blurStyle: BlurStyle.outer,
+        ),
+        animation,
+      ),
+    ],
+    shape: shape,
+  );
+
   @override
   Widget build(BuildContext context) {
     return AnimatedSelectionDecoration(
       controller: controller,
       duration: duration,
       paddingBuilder: paddingBuilder,
-      decorationBuilder: (context, animation) => BoxDecoration(
-        borderRadius: shape == BoxShape.circle ? null : borderRadius,
-        border: GradientBoxBorder(
-          gradient: Gradient.lerp(
-            context.appTheme.colors.gradients.transparent,
-            context.appTheme.colors.gradients.selection,
-            animation,
-          )!,
-          width: borderWidth,
-        ),
-        boxShadow: [
-          ?BoxShadow.lerp(
-            BoxShadow(color: context.appTheme.colors.transparent),
-            BoxShadow(
-              color: context.appTheme.colors.primary.primary80,
-              blurRadius: 8.r,
-              blurStyle: BlurStyle.outer,
-            ),
-            animation,
-          ),
-        ],
+      decorationBuilder: (context, animation) => buildDecoration(
+        context: context,
+        animation: animation,
+        borderRadius: borderRadius,
+        borderWidth: borderWidth,
         shape: shape,
       ),
       builder: builder,

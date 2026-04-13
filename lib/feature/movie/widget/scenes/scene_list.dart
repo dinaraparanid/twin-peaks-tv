@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/label.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/movie/widget/scenes/scene_item.dart';
@@ -18,12 +19,7 @@ final class SceneList extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 32.s),
-          child: Text(
-            context.ln.movie_scenes_from_movie,
-            style: context.appTheme.typography.movieInfo.label.copyWith(
-              color: context.appTheme.colors.text.primary,
-            ),
-          ),
+          child: AppLabel(text: context.ln.movie_scenes_from_movie),
         ),
 
         SizedBox(

@@ -14,10 +14,10 @@ final class BrowseCharactersUseCase {
 
   late final _queryCollector = StreamController<String?>.broadcast();
 
-  Stream<Either<Exception, List<Character>>> get charactersChanges =>
-      _queryCollector.stream.debounceTime(_browseDebounceDuration).asyncMap((
-        query,
-      ) {
+  Stream<Either<Exception, List<Character>>> get changes => _queryCollector
+      .stream
+      .debounceTime(_browseDebounceDuration)
+      .asyncMap((query) {
         return _encyclopediaRepository.browseCharacters(query: query);
       });
 

@@ -6,6 +6,7 @@ import 'package:twin_peaks_tv/core/data/encyclopedia/entity/entity.dart';
 import 'package:twin_peaks_tv/core/data/encyclopedia/mapper/mapper.dart';
 import 'package:twin_peaks_tv/core/dio/dio.dart';
 import 'package:twin_peaks_tv/core/domain/encyclopedia/encyclopedia.dart';
+import 'package:twin_peaks_tv/core/log/app_logger.dart';
 
 @Singleton(as: EncyclopediaRepository)
 final class EncyclopediaRepositoryImpl extends EncyclopediaRepository {
@@ -25,8 +26,9 @@ final class EncyclopediaRepositoryImpl extends EncyclopediaRepository {
     String? query,
   }) async {
     try {
-      final response = await dio.value.get<List<Map<String, dynamic>>>(
+      final response = await dio.value.get<List>(
         '/encyclopedia/characters',
+        queryParameters: {'query': query},
       );
 
       final data = response.data!
@@ -39,6 +41,7 @@ final class EncyclopediaRepositoryImpl extends EncyclopediaRepository {
 
       return right(data);
     } on Exception catch (e) {
+      AppLogger.instance.e(e);
       return left(e);
     }
   }

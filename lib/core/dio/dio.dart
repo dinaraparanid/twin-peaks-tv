@@ -12,7 +12,7 @@ final class AppDio {
       baseUrl: 'https://t9sk0mds-8080.euw.devtunnels.ms',
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
-      sendTimeout: const Duration(seconds: 30),
+      // sendTimeout: const Duration(seconds: 30),
       followRedirects: true,
     ),
   )..interceptors.add(PrettyDioLogger());

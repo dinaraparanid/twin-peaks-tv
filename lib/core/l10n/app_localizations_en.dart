@@ -112,4 +112,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settings_faq => 'FAQ';
+
+  @override
+  String get encyclopedia_recent_label => 'Recent';
+
+  @override
+  String get encyclopedia_recent_clear => 'Clear';
+
+  @override
+  String get encyclopedia_browse_label => 'Browse';
 }

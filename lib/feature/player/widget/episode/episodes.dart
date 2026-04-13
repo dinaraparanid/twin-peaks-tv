@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/movie/entity/entity.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/label.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/player/widget/episode/episode_item.dart';
@@ -19,12 +20,7 @@ final class Episodes extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 64.s),
-          child: Text(
-            context.ln.player_watch_next,
-            style: context.appTheme.typography.player.label.copyWith(
-              color: context.appTheme.colors.text.primary,
-            ),
-          ),
+          child: AppLabel(text: context.ln.player_watch_next),
         ),
 
         SizedBox(

@@ -29,6 +29,9 @@ const _transparent = Color(0x00000000);
 const _royalWhite = Color(0xFFFFFDFD);
 const _black50 = Color(0x80000000);
 const _funkyGray20 = Color(0x33787878);
+const _funkyGray40 = Color(0x66787878);
+const _kawaiiSilver20 = Color(0x33DEDEDE);
+const _kawaiiSilver40 = Color(0x66DEDEDE);
 const _powerGray50 = Color(0x80727272);
 
 @immutable
@@ -44,6 +47,7 @@ final class AppColors {
     this.button = const ButtonColors(),
     this.slider = const SliderColors(),
     this.settings = const SettingsColors(),
+    this.encyclopedia = const EncyclopediaColors(),
     this.cupertino = const AppCupertinoColors(),
     this.gradients = const Gradients(),
     this.transparent = _transparent,
@@ -59,6 +63,7 @@ final class AppColors {
   final ButtonColors button;
   final SliderColors slider;
   final SettingsColors settings;
+  final EncyclopediaColors encyclopedia;
   final AppCupertinoColors cupertino;
   final Gradients gradients;
   final Color transparent;
@@ -213,6 +218,27 @@ final class SettingsColors {
 
   final Color block;
   final Color divider;
+}
+
+@immutable
+final class EncyclopediaColors {
+  const EncyclopediaColors({
+    this.browseUnfocused = const LinearGradient(
+      colors: [_funkyGray20, _kawaiiSilver20],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    ),
+    this.browseFocused = const LinearGradient(
+      colors: [_funkyGray40, _kawaiiSilver40],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    ),
+    this.recentFocused = _funkyGray20,
+  });
+
+  final Gradient browseUnfocused;
+  final Gradient browseFocused;
+  final Color recentFocused;
 }
 
 @immutable
