@@ -15,6 +15,14 @@ final class ClearRecentButton extends StatelessWidget {
       paddingBuilder: (context, animationValue) {
         return EdgeInsets.all(lerpDouble(0, 8.s, animationValue)!);
       },
+      onUp: (_, _) {
+        context.encyclopediaBloc.add(const FocusOnSearchFieldEvent());
+        return KeyEventResult.handled;
+      },
+      onDown: (_, _) {
+        context.encyclopediaBloc.add(const FocusOnBrowseEvent());
+        return KeyEventResult.handled;
+      },
       onSelect: (_, _) {
         context.encyclopediaBloc.add(const ClearRecentsEvent());
         return KeyEventResult.handled;

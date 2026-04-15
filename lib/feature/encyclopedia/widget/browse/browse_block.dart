@@ -5,6 +5,7 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/encyclopedia/encyclopedia.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
+import 'package:twin_peaks_tv/feature/encyclopedia/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/widget/browse/browse_item.dart';
 
 EdgeInsets get _padding => EdgeInsets.symmetric(horizontal: 24.s);
@@ -50,6 +51,15 @@ final class _SliverGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverTVScrollAdapter(
+      focusScopeNode: context.encyclopediaBloc.browseScopeNode,
+      onUp: (_, _, isOutOfScope) {
+        if (isOutOfScope) {
+          context.encyclopediaBloc.add(const FocusUpFromBrowseEvent());
+          return KeyEventResult.handled;
+        }
+
+        return KeyEventResult.ignored;
+      },
       sliver: SliverGrid.builder(
         itemCount: characters.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

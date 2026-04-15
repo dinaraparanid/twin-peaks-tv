@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:twin_peaks_tv/core/domain/encyclopedia/encyclopedia.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/ui_state.dart';
+import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/bloc/encyclopedia_event.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/bloc/encyclopedia_state.dart';
 
@@ -24,6 +25,12 @@ final class EncyclopediaBloc
     on<StartSearchEvent>(_onStartSearch);
     on<ClearRecentsEvent>(_onClearRecents);
     on<CharacterClickEvent>(_onCharacterClick);
+    on<FocusOnSearchFieldEvent>(_onFocusOnSearchField);
+    on<FocusOnClearRecentsEvent>(_onFocusOnClearRecents);
+    on<FocusOnRecentsEvent>(_onFocusOnRecents);
+    on<FocusOnBrowseEvent>(_onFocusOnBrowse);
+    on<FocusUpFromBrowseEvent>(_onFocusUpFromBrowse);
+    on<FocusDownFromSearchEvent>(_onFocusDownFromSearch);
 
     _browseChangesSubscription = browseCharactersUseCase.changes.listen((
       charactersResult,
@@ -50,6 +57,11 @@ final class EncyclopediaBloc
   final BrowseCharactersUseCase _browseCharactersUseCase;
   final ClearRecentCharactersUseCase _clearRecentCharactersUseCase;
   final RecentCharactersUseCase _recentCharactersUseCase;
+
+  late final FocusNode searchFieldNode = FocusNode();
+  late final FocusNode clearRecentsNode = FocusNode();
+  late final FocusScopeNode recentsScopeNode = FocusScopeNode();
+  late final FocusScopeNode browseScopeNode = FocusScopeNode();
 
   late final StreamSubscription<Either<Exception, List<Character>>>
   _browseChangesSubscription;
@@ -93,10 +105,67 @@ final class EncyclopediaBloc
     _recentCharactersUseCase.markAsRecent(event.character);
   }
 
+  void _onFocusOnSearchField(
+    FocusOnSearchFieldEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    searchFieldNode.requestFocus();
+  }
+
+  void _onFocusOnClearRecents(
+    FocusOnClearRecentsEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    clearRecentsNode.requestFocus();
+  }
+
+  void _onFocusOnRecents(
+    FocusOnRecentsEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    recentsScopeNode.requestFocusOnChild();
+  }
+
+  void _onFocusOnBrowse(
+    FocusOnBrowseEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    browseScopeNode.requestFocusOnChild();
+  }
+
+  void _onFocusUpFromBrowse(
+    FocusUpFromBrowseEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    if (state.isRecentsVisible) {
+      add(const FocusOnRecentsEvent());
+      return;
+    }
+
+    add(const FocusOnSearchFieldEvent());
+  }
+
+  void _onFocusDownFromSearch(
+    FocusDownFromSearchEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    if (state.isRecentsVisible) {
+      add(const FocusOnClearRecentsEvent());
+      return;
+    }
+
+    add(const FocusOnBrowseEvent());
+  }
+
   @override
   Future<void> close() async {
     await _browseChangesSubscription.cancel();
     await _recentChangesSubscription.cancel();
+
+    searchFieldNode.dispose();
+    clearRecentsNode.dispose();
+    recentsScopeNode.dispose();
+    browseScopeNode.dispose();
     return super.close();
   }
 }

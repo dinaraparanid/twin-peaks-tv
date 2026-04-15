@@ -4,6 +4,7 @@ import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/encyclopedia/encyclopedia.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
+import 'package:twin_peaks_tv/feature/encyclopedia/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/widget/recent/clear_recent_button.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/widget/recent/recent_item.dart';
 
@@ -50,9 +51,26 @@ final class _List extends StatelessWidget {
     return SizedBox(
       height: 80.s,
       child: TvListView.separated(
+        focusScopeNode: context.encyclopediaBloc.recentsScopeNode,
         scrollDirection: Axis.horizontal,
         padding: _padding,
         itemCount: characters.length,
+        onUp: (_, _, isOutOfScope) {
+          if (isOutOfScope) {
+            context.encyclopediaBloc.add(const FocusOnRecentsEvent());
+            return KeyEventResult.handled;
+          }
+
+          return KeyEventResult.ignored;
+        },
+        onDown: (_, _, isOutOfScope) {
+          if (isOutOfScope) {
+            context.encyclopediaBloc.add(const FocusOnBrowseEvent());
+            return KeyEventResult.handled;
+          }
+
+          return KeyEventResult.ignored;
+        },
         separatorBuilder: (_, _) => SizedBox(width: 8.s),
         itemBuilder: (_, index) => RecentItem(character: characters[index]),
       ),

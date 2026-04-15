@@ -13,3 +13,9 @@ abstract class EncyclopediaState with _$EncyclopediaState {
     @Default(UiState.initial()) UiState<List<Character>> browseCharacters,
   }) = _EncyclopediaState;
 }
+
+extension Properties on EncyclopediaState {
+  bool get isRecentsVisible {
+    return !isSearching && recentCharacters.getOrNull?.isNotEmpty == true;
+  }
+}
