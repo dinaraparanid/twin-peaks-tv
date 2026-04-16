@@ -53,7 +53,10 @@ final class CupertinoCarousel extends StatelessWidget {
     final carouselColors = context.appTheme.colors.carousel;
 
     return LiquidGlassLayer(
-      settings: AppLiquidGlass.defaultSettings(context),
+      settings: AppLiquidGlass.defaultSettings(
+        context,
+        color: context.appTheme.colors.cupertino.background,
+      ),
       child: LiquidGlass(
         shape: LiquidRoundedRectangle(borderRadius: 24.r),
         child: TvScrollCarouselPager(

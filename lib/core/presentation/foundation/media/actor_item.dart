@@ -15,7 +15,6 @@ final class ActorItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       spacing: 4.s,
       children: [
         AnimatedFocusSelectionBorders(
@@ -32,30 +31,31 @@ final class ActorItem extends StatelessWidget {
           ),
         ),
 
-        ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 108.s),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 2.s,
-            children: [
-              Text(
-                actor.name,
-                textAlign: TextAlign.center,
-                style: context.appTheme.typography.actor.name.copyWith(
-                  color: context.appTheme.colors.text.primary,
-                ),
-              ),
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  actor.character,
+        Expanded(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 112.s),
+            child: Column(
+              spacing: 2.s,
+              children: [
+                Text(
+                  actor.name,
                   textAlign: TextAlign.center,
-                  style: context.appTheme.typography.actor.character.copyWith(
-                    color: context.appTheme.colors.text.secondary,
+                  style: context.appTheme.typography.actor.name.copyWith(
+                    color: context.appTheme.colors.text.primary,
                   ),
                 ),
-              ),
-            ],
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    actor.character,
+                    textAlign: TextAlign.center,
+                    style: context.appTheme.typography.actor.character.copyWith(
+                      color: context.appTheme.colors.text.secondary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],

@@ -92,17 +92,11 @@ final class _CupertinoContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LiquidGlassLayer(
-      settings: AppLiquidGlass.defaultSettings(
-        context,
-        color: CupertinoColors.transparent,
-      ),
-      child: FakeGlass(
+      settings: AppLiquidGlass.defaultSettings(context),
+      child: LiquidGlass(
         shape: LiquidRoundedRectangle(borderRadius: 24.r),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.s, vertical: 12.s),
-          decoration: BoxDecoration(
-            color: context.appTheme.colors.background.primary60,
-          ),
           child: const _Content(),
         ),
       ),

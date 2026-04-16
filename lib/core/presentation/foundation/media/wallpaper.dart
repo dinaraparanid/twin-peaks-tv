@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
-import 'package:twin_peaks_tv/core/presentation/foundation/app_network_image.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/network_image.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/core/utils/platform.dart';
 

@@ -17,6 +17,14 @@ final class Player extends StatelessWidget {
         context.playerBloc.add(const PlayPauseEvent());
         return KeyEventResult.handled;
       },
+      onUp: (_, _) {
+        context.playerBloc.add(
+          const ChangeControlsVisibilityEvent(
+            visibility: ControlsVisibility.topBar,
+          ),
+        );
+        return KeyEventResult.handled;
+      },
       onDown: (_, _) {
         context.playerBloc.add(
           const ChangeControlsVisibilityEvent(

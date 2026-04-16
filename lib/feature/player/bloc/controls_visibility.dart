@@ -1,1 +1,1 @@
-enum ControlsVisibility { hidden, controls, episodes }
+enum ControlsVisibility { hidden, topBar, controls, episodes }

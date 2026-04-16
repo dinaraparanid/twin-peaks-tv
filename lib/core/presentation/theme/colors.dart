@@ -4,6 +4,7 @@ import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 
 const _limeGreen = Color(0xFF39C43C);
 const _limeGreen01 = Color(0x0339C43C);
+const _limeGreen10 = Color(0x1A39C43C);
 const _limeGreen50 = Color(0x8039C43C);
 const _limeGreen60 = Color(0x9939C43C);
 const _limeGreen80 = Color(0xCC39C43C);
@@ -74,6 +75,7 @@ final class PrimaryColors {
   const PrimaryColors({
     this.primary = _limeGreen,
     this.primary01 = _limeGreen01,
+    this.primary10 = _limeGreen10,
     this.primary50 = _limeGreen50,
     this.primary60 = _limeGreen60,
     this.primary80 = _limeGreen80,
@@ -81,6 +83,7 @@ final class PrimaryColors {
 
   final Color primary;
   final Color primary01;
+  final Color primary10;
   final Color primary50;
   final Color primary60;
   final Color primary80;
@@ -261,6 +264,11 @@ final class Gradients {
     this.transparent = const LinearGradient(
       colors: [_transparent, _transparent],
     ),
+    this.topBarScrim = const LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [_elegantBlack60, _elegantBlack01],
+    ),
     this.materialWallpaperScrim = const RadialGradient(
       radius: 1,
       center: Alignment.topRight,
@@ -313,6 +321,7 @@ final class Gradients {
 
   final Gradient selection;
   final Gradient transparent;
+  final Gradient topBarScrim;
   final Gradient materialWallpaperScrim;
   final Gradient oneUiWallpaperScrim;
   final Gradient oneUiMainMenuBorder;

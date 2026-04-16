@@ -46,7 +46,8 @@ final class _PositionedPlaybackMenuState extends State<PositionedPlaybackMenu> {
           left: 0,
           right: 0,
           top: switch (state.controlsVisibility) {
-            ControlsVisibility.hidden => screenHeight,
+            ControlsVisibility.hidden ||
+            ControlsVisibility.topBar => screenHeight,
 
             ControlsVisibility.controls =>
               screenHeight - (_controlsKey.size?.height ?? 0) - 80.s,

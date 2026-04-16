@@ -19,20 +19,23 @@ final class BrowseItem extends StatelessWidget {
         context.encyclopediaBloc.add(CharacterClickEvent(character: character));
         return KeyEventResult.handled;
       },
-      decorationBuilder: (context, animation) => BoxDecoration(
-        gradient: Gradient.lerp(
-          context.appTheme.colors.encyclopedia.browseUnfocused,
-          context.appTheme.colors.encyclopedia.browseFocused,
-          animation,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(12.r)),
-        boxShadow: [
-          ?BoxShadow.lerp(
-            const BoxShadow(),
-            BoxShadow(blurRadius: 1.s),
+      decorationBuilder: (context, animation, child) => DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: Gradient.lerp(
+            context.appTheme.colors.encyclopedia.browseUnfocused,
+            context.appTheme.colors.encyclopedia.browseFocused,
             animation,
           ),
-        ],
+          borderRadius: BorderRadius.all(Radius.circular(12.r)),
+          boxShadow: [
+            ?BoxShadow.lerp(
+              const BoxShadow(),
+              BoxShadow(blurRadius: 1.s),
+              animation,
+            ),
+          ],
+        ),
+        child: child,
       ),
       builder: (context, focusNode, animation) => Row(
         children: [

@@ -59,12 +59,16 @@ final class AnimatedSelectionBorders extends StatelessWidget {
       controller: controller,
       duration: duration,
       paddingBuilder: paddingBuilder,
-      decorationBuilder: (context, animation) => buildDecoration(
-        context: context,
-        animation: animation,
-        borderRadius: borderRadius,
-        borderWidth: borderWidth,
-        shape: shape,
+      decorationBuilder: (context, animation, child) => Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: buildDecoration(
+          context: context,
+          animation: animation,
+          borderRadius: borderRadius,
+          borderWidth: borderWidth,
+          shape: shape,
+        ),
+        child: child,
       ),
       builder: builder,
     );

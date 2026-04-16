@@ -69,6 +69,8 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
   final focusScopeNode = FocusScopeNode();
   final playerNode = FocusNode();
+  final topBarScopeNode = FocusScopeNode();
+  final backButtonNode = FocusNode();
   final controlsScopeNode = FocusScopeNode();
   final controlsMenuNode = FocusNode();
   final volumeNode = FocusNode();
@@ -120,6 +122,8 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     switch ((event.visibility, state.entry)) {
       case (ControlsVisibility.hidden, _):
         playerNode.requestFocus();
+      case (ControlsVisibility.topBar, _):
+        topBarScopeNode.requestFocusOnChild(child: backButtonNode);
       case (ControlsVisibility.controls, _):
         controlsScopeNode.requestFocusOnChild(child: controlsMenuNode);
       case (
@@ -397,6 +401,8 @@ final class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
 
     _controller.dispose();
     playerNode.dispose();
+    topBarScopeNode.dispose();
+    backButtonNode.dispose();
     controlsScopeNode.dispose();
     controlsMenuNode.dispose();
     volumeNode.dispose();

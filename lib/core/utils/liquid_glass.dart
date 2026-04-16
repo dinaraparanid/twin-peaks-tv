@@ -14,7 +14,7 @@ final class AppLiquidGlass {
       depth: 20,
       dispersion: 50,
       frost: 50,
-      glassColor: color ?? context.appTheme.colors.cupertino.background,
+      glassColor: color ?? context.appTheme.colors.transparent,
     );
   }
 }

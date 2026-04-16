@@ -13,24 +13,27 @@ final class RecentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedFocusSelectionBox(
-      decorationBuilder: (context, animation) => BoxDecoration(
-        color: Color.lerp(
-          null,
-          context.appTheme.colors.encyclopedia.recentFocused,
-          animation,
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(12.r)),
-        boxShadow: [
-          ?BoxShadow.lerp(
-            BoxShadow(color: context.appTheme.colors.transparent),
-            BoxShadow(
-              offset: Offset(1.s, 1.s),
-              blurRadius: 1.s,
-              blurStyle: BlurStyle.outer,
-            ),
+      decorationBuilder: (context, animation, child) => DecoratedBox(
+        decoration: BoxDecoration(
+          color: Color.lerp(
+            null,
+            context.appTheme.colors.encyclopedia.recentFocused,
             animation,
           ),
-        ],
+          borderRadius: BorderRadius.all(Radius.circular(12.r)),
+          boxShadow: [
+            ?BoxShadow.lerp(
+              BoxShadow(color: context.appTheme.colors.transparent),
+              BoxShadow(
+                offset: Offset(1.s, 1.s),
+                blurRadius: 1.s,
+                blurStyle: BlurStyle.outer,
+              ),
+              animation,
+            ),
+          ],
+        ),
+        child: child,
       ),
       builder: (context, focusNode, animation) => Row(
         children: [

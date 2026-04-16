@@ -10,11 +10,11 @@ import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/player/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/player/widget/playback_menu.dart';
 import 'package:twin_peaks_tv/feature/player/widget/player.dart';
+import 'package:twin_peaks_tv/feature/player/widget/top_bar.dart';
 
 @RoutePage()
 final class PlayerScreen extends StatelessWidget {
   const PlayerScreen({super.key, required this.entry});
-
   final PlayerEntry entry;
 
   @override
@@ -28,7 +28,11 @@ final class PlayerScreen extends StatelessWidget {
           builder: (context, _) {
             final child = switch (state.playerState) {
               Success() => const Stack(
-                children: [Player(), PositionedPlaybackMenu()],
+                children: [
+                  Player(),
+                  PositionedTopBar(),
+                  PositionedPlaybackMenu(),
+                ],
               ),
 
               _ => const SizedBox(),

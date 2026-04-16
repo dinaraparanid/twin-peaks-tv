@@ -13,7 +13,7 @@ final class AnimatedSelectionDecoration extends StatefulWidget {
   final AnimatedSelectionController? controller;
   final Duration duration;
   final EdgeInsetsGeometry Function(BuildContext, double)? paddingBuilder;
-  final Decoration Function(BuildContext, double) decorationBuilder;
+  final Widget Function(BuildContext, double, Widget) decorationBuilder;
   final Widget Function(BuildContext, double) builder;
 
   static AnimatedSelectionDecorationState? maybeOf(BuildContext context) =>
@@ -95,17 +95,23 @@ final class _AnimatedDecorationContent extends AnimatedWidget {
   }) : super(listenable: borderAnimation);
 
   final EdgeInsetsGeometry Function(BuildContext, double)? paddingBuilder;
-  final Decoration Function(BuildContext, double) decorationBuilder;
+  final Widget Function(BuildContext, double, Widget) decorationBuilder;
   final Widget Function(BuildContext, double) builder;
 
   @override
   Widget build(BuildContext context) {
     final borderAnimation = listenable as Animation<double>;
 
-    return Container(
-      padding: paddingBuilder?.call(context, borderAnimation.value),
-      decoration: decorationBuilder(context, borderAnimation.value),
-      child: builder(context, borderAnimation.value),
+    return decorationBuilder(
+      context,
+      borderAnimation.value,
+      switch (paddingBuilder) {
+        null => builder(context, borderAnimation.value),
+        final f => Padding(
+          padding: f(context, borderAnimation.value),
+          child: builder(context, borderAnimation.value),
+        ),
+      },
     );
   }
 }

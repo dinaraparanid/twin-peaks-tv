@@ -115,11 +115,11 @@ final class _CastState extends State<Cast> {
           ),
 
           SizedBox(
-            height: 148.s,
+            height: 164.s,
             child: TvListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: widget.actors.length,
-              padding: contentPadding,
+              padding: contentPadding.copyWith(top: 8.s),
               separatorBuilder: (_, _) => SizedBox(width: 12.s),
               itemBuilder: (_, index) => ActorItem(
                 focusNode: _focusNodes[index],
