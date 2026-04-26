@@ -1,8 +1,14 @@
 import 'package:twin_peaks_tv/core/domain/encyclopedia/encyclopedia.dart';
+import 'package:twin_peaks_tv/core/domain/settings/entity/lang.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/ui_state.dart';
 
 sealed class EncyclopediaEvent {
   const EncyclopediaEvent();
+}
+
+final class UpdateLanguageEvent extends EncyclopediaEvent {
+  const UpdateLanguageEvent({required this.lang});
+  final AppLanguage? lang;
 }
 
 final class UpdateBrowsedCharactersEvent extends EncyclopediaEvent {

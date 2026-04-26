@@ -15,6 +15,7 @@ final class BrowseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedFocusSelectionBox(
+      autoscroll: true,
       onSelect: (_, _) {
         context.encyclopediaBloc.add(CharacterClickEvent(character: character));
         return KeyEventResult.handled;
@@ -30,7 +31,7 @@ final class BrowseItem extends StatelessWidget {
           boxShadow: [
             ?BoxShadow.lerp(
               const BoxShadow(),
-              BoxShadow(blurRadius: 1.s),
+              BoxShadow(blurRadius: 1.r),
               animation,
             ),
           ],

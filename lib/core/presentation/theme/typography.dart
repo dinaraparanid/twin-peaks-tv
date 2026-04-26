@@ -6,7 +6,7 @@ import 'package:twin_peaks_tv/core/utils/platform.dart';
 @immutable
 final class AppTypography {
   AppTypography({required TextScale scale}) {
-    final fontFamily = switch (AppPlatform.targetPlatform) {
+    fontFamily = switch (AppPlatform.targetPlatform) {
       AppPlatforms.android => 'Roboto',
       AppPlatforms.tvos => 'SF Pro',
       AppPlatforms.tizen => 'Inter',
@@ -31,6 +31,7 @@ final class AppTypography {
     );
   }
 
+  late final String fontFamily;
   late final GeneralTypography general;
   late final SplashTypography splash;
   late final NavigationMenuTypography navigationMenu;

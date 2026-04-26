@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/domain/encyclopedia/encyclopedia.dart';
+import 'package:twin_peaks_tv/core/domain/settings/use_case/use_case.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/ui_state.dart';
 import 'package:twin_peaks_tv/core/utils/ext/focus_node_ext.dart';
+import 'package:twin_peaks_tv/core/utils/functions/do_nothing.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/bloc/encyclopedia_event.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/bloc/encyclopedia_state.dart';
 
@@ -15,10 +18,13 @@ final class EncyclopediaBloc
     required BrowseCharactersUseCase browseCharactersUseCase,
     required ClearRecentCharactersUseCase clearRecentCharactersUseCase,
     required RecentCharactersUseCase recentCharactersUseCase,
+    required FetchAppLangUseCase fetchAppLangUseCase,
   }) : _browseCharactersUseCase = browseCharactersUseCase,
        _clearRecentCharactersUseCase = clearRecentCharactersUseCase,
        _recentCharactersUseCase = recentCharactersUseCase,
+       _fetchAppLangUseCase = fetchAppLangUseCase,
        super(const EncyclopediaState()) {
+    on<UpdateLanguageEvent>(_onUpdateLanguage);
     on<UpdateBrowsedCharactersEvent>(_onUpdateBrowsedCharacters);
     on<UpdateRecentCharactersEvent>(_onUpdateRecentCharacters);
     on<QueryChangeEvent>(_onQueryChange);
@@ -52,20 +58,40 @@ final class EncyclopediaBloc
     });
 
     _browseCharactersUseCase.submitQuery(null);
+
+    searchController.addListener(_searchListener);
+
+    _fetchAppLangUseCase(
+      onSuccess: (lang) => add(UpdateLanguageEvent(lang: lang)),
+      onFailure: doNothingFuture,
+    );
   }
 
   final BrowseCharactersUseCase _browseCharactersUseCase;
   final ClearRecentCharactersUseCase _clearRecentCharactersUseCase;
   final RecentCharactersUseCase _recentCharactersUseCase;
+  final FetchAppLangUseCase _fetchAppLangUseCase;
 
-  late final FocusNode searchFieldNode = FocusNode();
-  late final FocusNode clearRecentsNode = FocusNode();
-  late final FocusScopeNode recentsScopeNode = FocusScopeNode();
-  late final FocusScopeNode browseScopeNode = FocusScopeNode();
+  late final searchController = TvSearchController();
+  late final searchFieldNode = FocusScopeNode();
+  late final clearRecentsNode = FocusNode();
+  late final recentsScopeNode = FocusScopeNode();
+  late final browseScopeNode = FocusScopeNode();
 
   late final StreamSubscription<Either<Exception, List<Character>>>
   _browseChangesSubscription;
   late final StreamSubscription<List<Character>> _recentChangesSubscription;
+
+  void _searchListener() {
+    add(QueryChangeEvent(query: searchController.query));
+  }
+
+  void _onUpdateLanguage(
+    UpdateLanguageEvent event,
+    Emitter<EncyclopediaState> emit,
+  ) {
+    emit(state.copyWith(language: event.lang));
+  }
 
   void _onUpdateBrowsedCharacters(
     UpdateBrowsedCharactersEvent event,
@@ -161,6 +187,9 @@ final class EncyclopediaBloc
   Future<void> close() async {
     await _browseChangesSubscription.cancel();
     await _recentChangesSubscription.cancel();
+
+    searchController.removeListener(_searchListener);
+    searchController.dispose();
 
     searchFieldNode.dispose();
     clearRecentsNode.dispose();

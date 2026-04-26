@@ -5,5 +5,6 @@ export 'gradient/gradient.dart';
 export 'label.dart';
 export 'media/media.dart';
 export 'network_image.dart';
+export 'search/search_bar.dart';
 export 'slider/slider.dart';
 export 'ui_state.dart';

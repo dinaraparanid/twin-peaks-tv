@@ -80,5 +80,6 @@
   "settings_faq": "FAQ",
   "encyclopedia_recent_label": "Recent",
   "encyclopedia_recent_clear": "Clear",
-  "encyclopedia_browse_label": "Browse"
+  "encyclopedia_browse_label": "Browse",
+  "encyclopedia_search_placeholder": "Character"
 }

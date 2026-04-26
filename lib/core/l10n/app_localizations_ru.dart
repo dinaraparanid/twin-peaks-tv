@@ -122,4 +122,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get encyclopedia_browse_label => 'Коллекция';
+
+  @override
+  String get encyclopedia_search_placeholder => 'Персонаж';
 }

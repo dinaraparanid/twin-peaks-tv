@@ -3,6 +3,7 @@ import 'package:twin_peaks_tv/core/domain/settings/entity/entity.dart';
 abstract class SettingsRepository {
   const SettingsRepository();
 
+  Future<AppLanguage?> get appLanguage;
   Stream<AppLanguage?> get appLanguageChanges;
   Future<void> setAppLanguage(AppLanguage language);
 

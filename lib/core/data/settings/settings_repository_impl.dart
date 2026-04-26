@@ -21,6 +21,11 @@ final class SettingsRepositoryImpl extends SettingsRepository {
   );
 
   @override
+  Future<AppLanguage?> get appLanguage => _prefs
+      .getInt(_keyAppLanguage)
+      .then((value) => value != null ? AppLanguage.values[value] : null);
+
+  @override
   Stream<AppLanguage?> get appLanguageChanges => _prefs
       .getIntStream(_keyAppLanguage)
       .map((value) => value != null ? AppLanguage.values[value] : null)

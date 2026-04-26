@@ -121,4 +121,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get encyclopedia_browse_label => 'Browse';
+
+  @override
+  String get encyclopedia_search_placeholder => 'Character';
 }

@@ -307,6 +307,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Browse'**
   String get encyclopedia_browse_label;
+
+  /// No description provided for @encyclopedia_search_placeholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Character'**
+  String get encyclopedia_search_placeholder;
 }
 
 class _AppLocalizationsDelegate

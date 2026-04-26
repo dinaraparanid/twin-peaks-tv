@@ -8,6 +8,7 @@ import 'package:twin_peaks_tv/core/utils/utils.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/widget/browse/browse_block.dart';
 import 'package:twin_peaks_tv/feature/encyclopedia/widget/recent/recent_block.dart';
+import 'package:twin_peaks_tv/feature/encyclopedia/widget/search_bar.dart';
 
 @RoutePage()
 final class EncyclopediaScreen extends StatelessWidget {
@@ -19,7 +20,7 @@ final class EncyclopediaScreen extends StatelessWidget {
       create: (_) => di<EncyclopediaBlocFactory>()(),
       child: BlocBuilder<EncyclopediaBloc, EncyclopediaState>(
         buildWhen: distinctState((s) {
-          return (s.recentCharacters, s.browseCharacters);
+          return (s.recentCharacters, s.browseCharacters, s.language);
         }),
         builder: (context, state) => switch ((
           state.recentCharacters,
@@ -28,6 +29,10 @@ final class EncyclopediaScreen extends StatelessWidget {
           (Data(value: final recents), Data(value: final browse)) =>
             CustomScrollView(
               slivers: [
+                SliverToBoxAdapter(
+                  child: SearchBar(currentLocale: state.language?.toLocale()),
+                ),
+
                 SliverToBoxAdapter(child: SizedBox(height: 32.s)),
 
                 if (recents.isNotEmpty) ...[

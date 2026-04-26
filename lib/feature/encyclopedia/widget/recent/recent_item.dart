@@ -26,7 +26,7 @@ final class RecentItem extends StatelessWidget {
               BoxShadow(color: context.appTheme.colors.transparent),
               BoxShadow(
                 offset: Offset(1.s, 1.s),
-                blurRadius: 1.s,
+                blurRadius: 1.r,
                 blurStyle: BlurStyle.outer,
               ),
               animation,

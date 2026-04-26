@@ -55,10 +55,9 @@ final class _SliverGrid extends StatelessWidget {
       onUp: (_, _, isOutOfScope) {
         if (isOutOfScope) {
           context.encyclopediaBloc.add(const FocusUpFromBrowseEvent());
-          return KeyEventResult.handled;
         }
 
-        return KeyEventResult.ignored;
+        return KeyEventResult.handled;
       },
       sliver: SliverGrid.builder(
         itemCount: characters.length,

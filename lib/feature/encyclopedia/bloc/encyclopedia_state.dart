@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:twin_peaks_tv/core/domain/encyclopedia/encyclopedia.dart';
+import 'package:twin_peaks_tv/core/domain/settings/entity/lang.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 
 part 'encyclopedia_state.freezed.dart';
@@ -9,6 +10,7 @@ abstract class EncyclopediaState with _$EncyclopediaState {
   const factory EncyclopediaState({
     @Default('') String searchQuery,
     @Default(false) bool isSearching,
+    AppLanguage? language,
     @Default(UiState.initial()) UiState<List<Character>> recentCharacters,
     @Default(UiState.initial()) UiState<List<Character>> browseCharacters,
   }) = _EncyclopediaState;

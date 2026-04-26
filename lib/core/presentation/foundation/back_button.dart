@@ -88,7 +88,7 @@ final class _MaterialDecoration extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             offset: Offset(1.s, 1.s),
-            blurRadius: 1.s,
+            blurRadius: 1.r,
             blurStyle: BlurStyle.outer,
           ),
         ],
@@ -145,7 +145,7 @@ final class _OneUiDecoration extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             offset: Offset(1.s, 1.s),
-            blurRadius: 1.s,
+            blurRadius: 1.r,
             blurStyle: BlurStyle.outer,
           ),
         ],
@@ -178,7 +178,7 @@ final class _SandstoneDecoration extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             offset: Offset(1.s, 1.s),
-            blurRadius: 1.s,
+            blurRadius: 1.r,
             blurStyle: BlurStyle.outer,
           ),
         ],

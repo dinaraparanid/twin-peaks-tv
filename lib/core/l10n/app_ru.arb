@@ -80,5 +80,6 @@
   "settings_faq": "FAQ",
   "encyclopedia_recent_label": "Недавние",
   "encyclopedia_recent_clear": "Очистить",
-  "encyclopedia_browse_label": "Коллекция"
+  "encyclopedia_browse_label": "Коллекция",
+  "encyclopedia_search_placeholder": "Персонаж"
 }
