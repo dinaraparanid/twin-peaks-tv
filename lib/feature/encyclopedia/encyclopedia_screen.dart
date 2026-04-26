@@ -29,8 +29,18 @@ final class EncyclopediaScreen extends StatelessWidget {
           (Data(value: final recents), Data(value: final browse)) =>
             CustomScrollView(
               slivers: [
-                SliverToBoxAdapter(
-                  child: SearchBar(currentLocale: state.language?.toLocale()),
+                SliverPadding(
+                  padding: EdgeInsets.only(
+                    top: switch (AppPlatform.isTvOS) {
+                      true => 24.s + 48.s,
+                      false => 24.s,
+                    },
+                    left: 24.s,
+                    right: 24.s,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: SearchBar(currentLocale: state.language?.toLocale()),
+                  ),
                 ),
 
                 SliverToBoxAdapter(child: SizedBox(height: 32.s)),

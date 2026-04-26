@@ -20,6 +20,7 @@ final class AppTypography {
       scale: scale,
     );
     tabBar = TabBarTypography._(fontFamily: fontFamily, scale: scale);
+    searchBar = SearchBarTypography._(fontFamily: fontFamily, scale: scale);
     movieInfo = MovieInfoTypography._(fontFamily: fontFamily, scale: scale);
     actor = ActorTypography._(fontFamily: fontFamily, scale: scale);
     episode = EpisodeTypography._(fontFamily: fontFamily, scale: scale);
@@ -36,6 +37,7 @@ final class AppTypography {
   late final SplashTypography splash;
   late final NavigationMenuTypography navigationMenu;
   late final TabBarTypography tabBar;
+  late final SearchBarTypography searchBar;
   late final MovieInfoTypography movieInfo;
   late final ActorTypography actor;
   late final EpisodeTypography episode;
@@ -123,6 +125,23 @@ final class TabBarTypography {
       fontStyle: FontStyle.normal,
       fontWeight: FontWeight.w500,
       fontSize: 20.fz + scale.value,
+    );
+  }
+
+  late final TextStyle primary;
+}
+
+@immutable
+final class SearchBarTypography {
+  SearchBarTypography._({
+    required String fontFamily,
+    required TextScale scale,
+  }) {
+    primary = TextStyle(
+      fontFamily: fontFamily,
+      fontStyle: FontStyle.normal,
+      fontWeight: FontWeight.w700,
+      fontSize: 24.fz + scale.value,
     );
   }
 

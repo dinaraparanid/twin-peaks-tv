@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:tv_plus/tv_plus.dart';
 import 'package:twin_peaks_tv/core/presentation/foundation/search/cupertino_search_bar.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/search/material_search_bar.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/search/sandstone_search_bar.dart';
 import 'package:twin_peaks_tv/core/utils/utils.dart';
 
 final class AppSearchBar extends StatefulWidget {
@@ -10,6 +12,7 @@ final class AppSearchBar extends StatefulWidget {
     this.currentLocale,
     required this.placeholder,
     this.focusScopeNode,
+    this.autofocus = false,
     this.onUp,
     this.onDown,
     this.onLeft,
@@ -25,6 +28,7 @@ final class AppSearchBar extends StatefulWidget {
   final Locale? currentLocale;
   final String placeholder;
   final FocusScopeNode? focusScopeNode;
+  final bool autofocus;
   final DpadScopeEventCallback? onUp;
   final DpadScopeEventCallback? onDown;
   final DpadScopeEventCallback? onLeft;
@@ -42,6 +46,8 @@ final class AppSearchBar extends StatefulWidget {
 final class _AppSearchBarState extends State<AppSearchBar> {
   late final TvSearchController _searchController;
   var _ownsController = false;
+
+  late final _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -73,16 +79,14 @@ final class _AppSearchBarState extends State<AppSearchBar> {
       _searchController.dispose();
     }
 
+    _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return switch (AppPlatform.targetPlatform) {
-      AppPlatforms.android => CupertinoSearchBar(
-        searchController: _searchController,
-        placeholder: widget.placeholder,
-        currentLocale: widget.currentLocale,
+      AppPlatforms.android => DpadFocusScope(
         focusScopeNode: widget.focusScopeNode,
         onUp: widget.onUp,
         onDown: widget.onDown,
@@ -91,14 +95,23 @@ final class _AppSearchBarState extends State<AppSearchBar> {
         onSelect: widget.onSelect,
         onBack: widget.onBack,
         onKeyEvent: widget.onKeyEvent,
-        onFocusChanged: widget.onFocusChanged,
         onFocusDisabledWhenWasFocused: widget.onFocusDisabledWhenWasFocused,
+        onFocusChanged: (node, isFocused) {
+          if (isFocused) {
+            _focusNode.requestFocus();
+          }
+
+          widget.onFocusChanged?.call(node, isFocused);
+        },
+        builder: (context, _) => MaterialSearchBar(
+          searchController: _searchController,
+          placeholder: widget.placeholder,
+          focusNode: _focusNode,
+          autofocus: widget.autofocus,
+        ),
       ),
 
-      AppPlatforms.tizen => CupertinoSearchBar(
-        searchController: _searchController,
-        placeholder: widget.placeholder,
-        currentLocale: widget.currentLocale,
+      AppPlatforms.tizen => DpadFocusScope(
         focusScopeNode: widget.focusScopeNode,
         onUp: widget.onUp,
         onDown: widget.onDown,
@@ -107,8 +120,20 @@ final class _AppSearchBarState extends State<AppSearchBar> {
         onSelect: widget.onSelect,
         onBack: widget.onBack,
         onKeyEvent: widget.onKeyEvent,
-        onFocusChanged: widget.onFocusChanged,
         onFocusDisabledWhenWasFocused: widget.onFocusDisabledWhenWasFocused,
+        onFocusChanged: (node, isFocused) {
+          if (isFocused) {
+            _focusNode.requestFocus();
+          }
+
+          widget.onFocusChanged?.call(node, isFocused);
+        },
+        builder: (context, _) => MaterialSearchBar(
+          searchController: _searchController,
+          placeholder: widget.placeholder,
+          focusNode: _focusNode,
+          autofocus: widget.autofocus,
+        ),
       ),
 
       AppPlatforms.tvos => CupertinoSearchBar(
@@ -127,10 +152,7 @@ final class _AppSearchBarState extends State<AppSearchBar> {
         onFocusDisabledWhenWasFocused: widget.onFocusDisabledWhenWasFocused,
       ),
 
-      AppPlatforms.webos => CupertinoSearchBar(
-        searchController: _searchController,
-        placeholder: widget.placeholder,
-        currentLocale: widget.currentLocale,
+      AppPlatforms.webos => DpadFocusScope(
         focusScopeNode: widget.focusScopeNode,
         onUp: widget.onUp,
         onDown: widget.onDown,
@@ -139,8 +161,20 @@ final class _AppSearchBarState extends State<AppSearchBar> {
         onSelect: widget.onSelect,
         onBack: widget.onBack,
         onKeyEvent: widget.onKeyEvent,
-        onFocusChanged: widget.onFocusChanged,
         onFocusDisabledWhenWasFocused: widget.onFocusDisabledWhenWasFocused,
+        onFocusChanged: (node, isFocused) {
+          if (isFocused) {
+            _focusNode.requestFocus();
+          }
+
+          widget.onFocusChanged?.call(node, isFocused);
+        },
+        builder: (context, _) => SandstoneSearchBar(
+          searchController: _searchController,
+          placeholder: widget.placeholder,
+          focusNode: _focusNode,
+          autofocus: widget.autofocus,
+        ),
       ),
     };
   }

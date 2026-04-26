@@ -10,6 +10,7 @@ final class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppSearchBar(
+      autofocus: true,
       searchController: context.encyclopediaBloc.searchController,
       currentLocale: currentLocale,
       placeholder: context.ln.encyclopedia_search_placeholder,

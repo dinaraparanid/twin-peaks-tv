@@ -47,6 +47,7 @@ final class AppColors {
     this.carousel = const CarouselColors(),
     this.button = const ButtonColors(),
     this.slider = const SliderColors(),
+    this.searchBar = const SearchBarColors(),
     this.settings = const SettingsColors(),
     this.encyclopedia = const EncyclopediaColors(),
     this.cupertino = const AppCupertinoColors(),
@@ -63,6 +64,7 @@ final class AppColors {
   final CarouselColors carousel;
   final ButtonColors button;
   final SliderColors slider;
+  final SearchBarColors searchBar;
   final SettingsColors settings;
   final EncyclopediaColors encyclopedia;
   final AppCupertinoColors cupertino;
@@ -210,6 +212,19 @@ final class SliderColors {
 
   final Color active;
   final Color inactive;
+}
+
+@immutable
+final class SearchBarColors {
+  const SearchBarColors({
+    this.input = _white,
+    this.placeholder = _pureSilver,
+    this.background = _funkyGray20,
+  });
+
+  final Color input;
+  final Color placeholder;
+  final Color background;
 }
 
 @immutable
