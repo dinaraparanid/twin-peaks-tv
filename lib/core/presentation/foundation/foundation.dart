@@ -3,6 +3,7 @@ export 'back_button.dart';
 export 'dropdown_button.dart';
 export 'gradient/gradient.dart';
 export 'label.dart';
+export 'loader.dart';
 export 'media/media.dart';
 export 'network_image.dart';
 export 'search/search_bar.dart';

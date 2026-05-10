@@ -55,7 +55,9 @@ final class EncyclopediaScreen extends StatelessWidget {
               ],
             ),
 
-          (_, _) => const SizedBox(), // TODO(paranid5): заглушки
+          (_, _) => Stack(
+            children: [Align(child: AppLoader(radius: 20.s))],
+          ),
         },
       ),
     );
