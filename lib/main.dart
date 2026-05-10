@@ -15,7 +15,9 @@ void main() {
       WidgetsFlutterBinding.ensureInitialized();
 
       FlutterError.onError = (details) {
-        AppLogger.instance.e('Flutter error: ${details.exception}');
+        AppLogger.instance.e(
+          'Flutter error: ${details.exception}\n${details.stack}',
+        );
       };
 
       PlatformDispatcher.instance.onError = (e, st) {

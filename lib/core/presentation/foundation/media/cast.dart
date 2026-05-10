@@ -34,6 +34,8 @@ final class Cast extends StatefulWidget {
   final void Function(FocusScopeNode)? onFocusDisabledWhenWasFocused;
   final List<Actor> actors;
 
+  static Widget shimmer() => const _CastShimmer();
+
   @override
   State<StatefulWidget> createState() => _CastState();
 }
@@ -129,6 +131,43 @@ final class _CastState extends State<Cast> {
           ),
         ],
       ),
+    );
+  }
+}
+
+final class _CastShimmer extends StatelessWidget {
+  const _CastShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    final contentPadding = EdgeInsets.symmetric(horizontal: 32.s);
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 8.s,
+      children: [
+        Padding(
+          padding: contentPadding,
+          child: AppShimmer.rounded(
+            borderRadius: BorderRadius.circular(4.s),
+            child: SizedBox(width: 120.s, height: 24.s),
+          ),
+        ),
+
+        SizedBox(
+          height: 164.s,
+          child: ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: 20,
+            padding: contentPadding.copyWith(top: 8.s),
+            separatorBuilder: (_, _) => SizedBox(width: 12.s),
+            itemBuilder: (_, index) => ActorItem.shimmer(),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -12,6 +12,8 @@ final class EpisodeList extends StatelessWidget {
   const EpisodeList({super.key, required this.episodes});
   final List<Episode> episodes;
 
+  static Widget shimmer() => const _EpisodeListShimmer();
+
   @override
   Widget build(BuildContext context) {
     return SliverTVScrollAdapter(
@@ -40,6 +42,23 @@ final class EpisodeList extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+final class _EpisodeListShimmer extends StatelessWidget {
+  const _EpisodeListShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 32.s),
+      child: ListView.separated(
+        itemCount: 5,
+        shrinkWrap: true,
+        separatorBuilder: (context, index) => SizedBox(height: 8.s),
+        itemBuilder: (context, index) => EpisodeItem.shimmer(),
       ),
     );
   }

@@ -15,6 +15,8 @@ final class SceneItem extends StatefulWidget {
   final FocusNode? focusNode;
   final String thumbnailUrl;
 
+  static Widget shimmer() => const _SceneItemShimmer();
+
   @override
   State<StatefulWidget> createState() => _SceneItemState();
 }
@@ -64,6 +66,26 @@ final class _SceneItemState extends State<SceneItem>
             thumbnailUrl: widget.thumbnailUrl,
             thumbnailScale: _thumbnailScale,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+final class _SceneItemShimmer extends StatelessWidget {
+  const _SceneItemShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: SceneItem.thumbnailFocusedWidth,
+      height: SceneItem.thumbnailFocusedHeight,
+      alignment: Alignment.center,
+      child: AppShimmer.rounded(
+        borderRadius: BorderRadius.all(Radius.circular(24.r)),
+        child: SizedBox(
+          width: SceneItem.thumbnailWidth,
+          height: SceneItem.thumbnailHeight,
         ),
       ),
     );

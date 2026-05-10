@@ -12,6 +12,8 @@ final class MovieScreenContent extends StatelessWidget {
   const MovieScreenContent({super.key, required this.movie});
   final Movie movie;
 
+  static Widget shimmer() => const _MovieScreenContentShimmer();
+
   @override
   Widget build(BuildContext context) {
     return MediaScreenContent(
@@ -25,6 +27,15 @@ final class MovieScreenContent extends StatelessWidget {
         child: SceneList(scenes: movie.scenesUrls),
       ),
     );
+  }
+}
+
+final class _MovieScreenContentShimmer extends StatelessWidget {
+  const _MovieScreenContentShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return MediaScreenContent.shimmer(contentShimmer: SceneList.shimmer());
   }
 }
 

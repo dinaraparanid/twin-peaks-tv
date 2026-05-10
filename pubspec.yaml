@@ -64,6 +64,7 @@ dependencies:
       url: https://github.com/dinaraparanid/dropdown_button2.git
       path: packages/dropdown_button2
   device_info_plus_webos: ^0.2.0
+  shimmer_animation: ^2.2.2+1
 
 dev_dependencies:
   flutter_test:

@@ -7,5 +7,6 @@ export 'loader.dart';
 export 'media/media.dart';
 export 'network_image.dart';
 export 'search/search_bar.dart';
+export 'shimmer.dart';
 export 'slider/slider.dart';
 export 'ui_state.dart';

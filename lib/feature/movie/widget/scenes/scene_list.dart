@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_scalify/flutter_scalify.dart';
 import 'package:tv_plus/tv_plus.dart';
-import 'package:twin_peaks_tv/core/presentation/foundation/label.dart';
+import 'package:twin_peaks_tv/core/presentation/foundation/foundation.dart';
 import 'package:twin_peaks_tv/core/presentation/theme/theme.dart';
 import 'package:twin_peaks_tv/feature/movie/bloc/bloc.dart';
 import 'package:twin_peaks_tv/feature/movie/widget/scenes/scene_item.dart';
@@ -9,6 +9,8 @@ import 'package:twin_peaks_tv/feature/movie/widget/scenes/scene_item.dart';
 final class SceneList extends StatelessWidget {
   const SceneList({super.key, required this.scenes});
   final List<String> scenes;
+
+  static Widget shimmer() => const _SceneListShimmer();
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +38,45 @@ final class SceneList extends StatelessWidget {
 
               return KeyEventResult.handled;
             },
-            separatorBuilder: (context, index) => SizedBox(height: 8.s),
+            separatorBuilder: (context, index) => SizedBox(width: 8.s),
             itemBuilder: (context, index) {
               return SceneItem(thumbnailUrl: scenes[index]);
             },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+final class _SceneListShimmer extends StatelessWidget {
+  const _SceneListShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 8.s,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32.s),
+          child: AppShimmer.rounded(
+            borderRadius: BorderRadius.circular(4.s),
+            child: SizedBox(width: 120.s, height: 24.s),
+          ),
+        ),
+
+        SizedBox(
+          height: SceneItem.thumbnailFocusedHeight,
+          child: ListView.separated(
+            itemCount: 20,
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 32.s),
+            separatorBuilder: (context, index) => SizedBox(width: 8.s),
+            itemBuilder: (context, index) => SceneItem.shimmer(),
           ),
         ),
       ],

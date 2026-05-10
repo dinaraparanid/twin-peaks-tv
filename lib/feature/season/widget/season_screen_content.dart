@@ -14,6 +14,8 @@ final class SeasonScreenContent extends StatelessWidget {
   const SeasonScreenContent({super.key, required this.season});
   final Season season;
 
+  static Widget shimmer() => const _SeasonScreenContentShimmer();
+
   @override
   Widget build(BuildContext context) {
     return MediaScreenContent(
@@ -32,6 +34,15 @@ final class SeasonScreenContent extends StatelessWidget {
       cast: _Cast(actors: season.actors),
       sliverContent: EpisodeList(episodes: season.episodes),
     );
+  }
+}
+
+final class _SeasonScreenContentShimmer extends StatelessWidget {
+  const _SeasonScreenContentShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return MediaScreenContent.shimmer(contentShimmer: EpisodeList.shimmer());
   }
 }
 

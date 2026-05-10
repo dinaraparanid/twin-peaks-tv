@@ -12,6 +12,7 @@ double get _thumbnailFocusedHeight => _thumbnailHeight * 1.2;
 double get _thumbnailBorderRadius => 16.0.r;
 const _durationThumbnailScale = Duration(milliseconds: 300);
 double get _starSize => 18.0.iz;
+const _descriptionMaxLines = 3;
 
 final class EpisodeItem extends StatefulWidget {
   const EpisodeItem({
@@ -25,8 +26,34 @@ final class EpisodeItem extends StatefulWidget {
   final Episode episode;
   final VoidCallback onSelect;
 
+  static Widget shimmer() => const _EpisodeItemShimmer();
+
   @override
   State<StatefulWidget> createState() => _EpisodeItemState();
+}
+
+final class _EpisodeItemShimmer extends StatelessWidget {
+  const _EpisodeItemShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      spacing: 16.s,
+      children: [
+        Container(
+          width: _thumbnailFocusedWidth,
+          height: _thumbnailFocusedHeight,
+          alignment: Alignment.center,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(_thumbnailBorderRadius),
+            child: _Thumbnail.shimmer(),
+          ),
+        ),
+
+        Expanded(child: _Content.shimmer()),
+      ],
+    );
+  }
 }
 
 final class _EpisodeItemState extends State<EpisodeItem>
@@ -99,6 +126,10 @@ final class _Thumbnail extends AnimatedWidget {
 
   final String thumbnailUrl;
 
+  static Widget shimmer() => AppShimmer(
+    child: SizedBox(width: _thumbnailWidth, height: _thumbnailHeight),
+  );
+
   @override
   Widget build(BuildContext context) {
     final thumbnailScale = listenable as Animation<double>;
@@ -114,6 +145,29 @@ final class _Thumbnail extends AnimatedWidget {
 final class _Content extends StatelessWidget {
   const _Content({required this.episode});
   final Episode episode;
+
+  static Widget shimmer() => Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    spacing: 8.s,
+    children: [
+      AppShimmer.rounded(
+        borderRadius: BorderRadius.circular(4.s),
+        child: SizedBox.fromSize(size: Size.fromHeight(24.s)),
+      ),
+
+      AppShimmer.rounded(
+        borderRadius: BorderRadius.circular(4.s),
+        child: SizedBox(width: 64.s, height: 16.s),
+      ),
+
+      for (int i = 0; i < _descriptionMaxLines; ++i)
+        AppShimmer.rounded(
+          borderRadius: BorderRadius.circular(4.s),
+          child: SizedBox.fromSize(size: Size.fromHeight(16.s)),
+        ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +202,7 @@ final class _Content extends StatelessWidget {
 
         Text(
           episode.description,
-          maxLines: 3,
+          maxLines: _descriptionMaxLines,
           overflow: TextOverflow.ellipsis,
           style: context.appTheme.typography.episode.description.copyWith(
             color: context.appTheme.colors.text.secondary,

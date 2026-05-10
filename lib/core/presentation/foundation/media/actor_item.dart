@@ -12,6 +12,8 @@ final class ActorItem extends StatelessWidget {
   final FocusNode? focusNode;
   final Actor actor;
 
+  static Widget shimmer() => const _ActorShimmer();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,6 +59,36 @@ final class ActorItem extends StatelessWidget {
               ],
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+final class _ActorShimmer extends StatelessWidget {
+  const _ActorShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 4.s,
+      children: [
+        AppShimmer.circle(child: SizedBox.square(dimension: _avatarSize)),
+
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 2.s,
+          children: [
+            AppShimmer.rounded(
+              borderRadius: BorderRadius.all(Radius.circular(4.r)),
+              child: SizedBox(width: 112.s, height: 16.s),
+            ),
+
+            AppShimmer.rounded(
+              borderRadius: BorderRadius.all(Radius.circular(2.r)),
+              child: SizedBox(width: 80.s, height: 8.s),
+            ),
+          ],
         ),
       ],
     );
