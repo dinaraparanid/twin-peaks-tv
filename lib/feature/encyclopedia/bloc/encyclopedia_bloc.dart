@@ -108,7 +108,15 @@ final class EncyclopediaBloc
   }
 
   void _onQueryChange(QueryChangeEvent event, Emitter<EncyclopediaState> emit) {
-    emit(state.copyWith(searchQuery: event.query));
+    emit(
+      state.copyWith(
+        searchQuery: event.query,
+        browseCharacters: UiState.flattenRefreshing(
+          value: state.browseCharacters,
+        ),
+      ),
+    );
+
     _browseCharactersUseCase.submitQuery(event.query);
   }
 
