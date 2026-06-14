@@ -82,7 +82,7 @@ final class _CupertinoSearchBarState extends State<CupertinoSearchBar> {
         ),
         WidgetState.any: TextStyle(
           fontSize: 18.fz,
-          color: const Color(0xCCC4C7C5),
+          color: const Color(0xFF000000),
           fontWeight: FontWeight.w700,
           height: 1.5,
           fontFamily: context.appTheme.typography.fontFamily,

@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
@@ -28,7 +29,7 @@ final class EncyclopediaRepositoryImpl extends EncyclopediaRepository {
     try {
       final response = await dio.value.get<List>(
         '/encyclopedia/characters',
-        queryParameters: {'query': query},
+        queryParameters: query.isNullOrBlank ? null : {'query': query},
       );
 
       final data = response.data!

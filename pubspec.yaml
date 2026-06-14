@@ -125,31 +125,31 @@ dependency_overrides:
   tv_plus:
     git:
       url: https://github.com/dinaraparanid/tv_plus.git
-      ref: dev
+      ref: compat
   tv_plus_cupertino:
     git:
       url: https://github.com/dinaraparanid/tv_plus.git
-      ref: dev
+      ref: compat
       path: packages/cupertino
   tv_plus_foundation:
     git:
       url: https://github.com/dinaraparanid/tv_plus.git
-      ref: dev
+      ref: compat
       path: packages/foundation
   tv_plus_material:
     git:
       url: https://github.com/dinaraparanid/tv_plus.git
-      ref: dev
+      ref: compat
       path: packages/material
   tv_plus_one_ui:
     git:
       url: https://github.com/dinaraparanid/tv_plus.git
-      ref: dev
+      ref: compat
       path: packages/one_ui
   tv_plus_sandstone:
     git:
       url: https://github.com/dinaraparanid/tv_plus.git
-      ref: dev
+      ref: compat
       path: packages/sandstone
   device_info_plus_platform_interface: ^7.0.3
 
